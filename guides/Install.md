@@ -9,6 +9,7 @@
 4. Choose the modules you need according to the guide below:
 -----
 |**Original modules**||
+|-----|-----|
 |`flasher`|Flash ZIP files.|
 |`profile`|Various commands to edit profile.|
 |`disease`|Spread your own virus across Telegram.|
