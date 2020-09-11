@@ -1,7 +1,7 @@
 import time
 import random
 
-from userbot import tgclient
+from userbot import tgclient, MODULE_DESC, MODULE_DICT
 from telethon.events import NewMessage
 
 @tgclient.on(NewMessage(pattern=r"^\.flash (.*)", outgoing=True))
@@ -17,3 +17,6 @@ async def flash(event):
 		await event.edit(f"`Successfully flashed` {text}.zip`!`")
 	elif r % 2 == 0:
 		await event.edit(f"`Flashing` {text}.zip `failed successfully!`")
+ 
+MODULE_DESC.update({"flasher": "Flash a zip file."})
+MODULE_DICT.update({"flasher": ".flash <file_name>\nUsage: Flash `file_name.zip`"})
