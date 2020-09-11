@@ -5,7 +5,7 @@
 ## Upgrading from HyperBot
 1. Add `nunopenim/modules-universe` and `githubcatw/HyperBot_Plus` as community repos in your config.
 2. Run `.pkg install req_installer`.
-3. Run `.req cowpy asyncurban google-play-scraper youtube-dl google-api-python-client pyfiglet beautifulsoup4==4.9.1`. to install the prerequisites for HyperBot++.
+3. Run `.req cowpy asyncurban google-play-scraper youtube-dl google-api-python-client pyfiglet beautifulsoup4==4.9.1` to install the prerequisites for HyperBot++.
 4. Choose the modules you need according to the guide below:
 -----
 |**Original modules**||
