@@ -3,7 +3,7 @@
 ### Pre-requisites
 Add `nunopenim/modules-universe` and `githubcatw/HyperBot_Plus` as community repos in your config.
 
-The first repo is used to install the requisite installer, and the second is the main repo.
+> The first repo is used to install the requisite installer, and the second is the main repo.
 
 Your community repo list should look like this:
 
