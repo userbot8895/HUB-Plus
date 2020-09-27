@@ -1,3 +1,8 @@
+# notes
+# HyperBot++
+# Licensed under the DBBPL
+# (C) 2020 githubcatw
+
 from userbot import tgclient, MODULE_DESC, MODULE_DICT
 from telethon.events import NewMessage
 import os.path
