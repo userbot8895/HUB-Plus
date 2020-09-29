@@ -10,13 +10,10 @@ from userbot import tgclient, MODULE_DESC, MODULE_DICT
 from telethon.events import NewMessage
 from os.path import basename
 import os
+from userbot.config.PlusConfig import HOMIES, VIRUS
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
-
-# temporary, until nuno says how to add stuff to config
-HOMIES = []
-VIRUS = "televirus"
 
 @tgclient.on(NewMessage(outgoing=True, pattern=r"^.infect"))
 async def infect(event):

@@ -20,7 +20,7 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               MaxDownloadsReached, PostProcessingError,
                               UnavailableVideoError, XAttrMetadataError)
 from search_engine_parser import GoogleSearch
-
+from userbot.config.PlusConfig import YOUTUBE_API_KEY
 
 @tgclient.on(NewMessage(outgoing=True, pattern="^\.ud (.*)"))
 async def urban_dict(ud_e):
@@ -71,7 +71,7 @@ async def playstore(ps_e):
     except gpse.NotFoundError:
         await ps_e.edit("Invalid package ID")
         return
-    if res.title is None:
+    if res["title"] is None:
         await ps_e.edit("Data error!")
         return
     await ps_e.edit("**"+res["title"]+"**\n\nBy "+res["developer"]+"\n\nSummary: "+res['summary']+"\n\n[link]("+res["url"]+")")

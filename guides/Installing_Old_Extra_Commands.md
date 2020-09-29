@@ -17,3 +17,13 @@ Once done, do `.pkg install <list of packages>`.
 |`.logoff`|`hpp_systools`|
 |`.inactive`|`hpp_chat`|
 |`.pinact`|`hpp_chat`|
+
+These packages are also completely ported:
+
+|To get|You install|
+|-----|-----|
+|`.decode`|`qrcode`|
+|`.encode`|`qrcode`|
+|`.kang`|`stickers`|
+|`.getsticker`|`stickers`|
+|`.stkrinfo`|`stickers`|

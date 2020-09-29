@@ -21,6 +21,8 @@ class PlusConfig(object):
     HOMIES = []
     # The name of your virus, required for disease
     VIRUS = "televirus"
+    # YouTube API key, get it from slickremix.com/get-api-key-for-youtube/. Required for scrapers.
+    YOUTUBE_API_KEY = None
 ```
 
 ### Installing HyperBot++
