@@ -51,7 +51,7 @@ async def share(event):
 			event.chat_id,
 			"patients.txt",
 			caption=f"This is a list of patients infected with the {VIRUS}.\
-			\nReply with .infmerge to add {VIRUS}'s patients to your own virus' patient list."
+			\nReply with .infmerge to add the {VIRUS}'s patients to your own virus' patient list."
         )
 		await event.delete()
 		
