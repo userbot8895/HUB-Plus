@@ -4,9 +4,16 @@ All of the extra commands from NunoBot++ have been moved to separate modules, an
 Use your browser's search function to find the commands you used in NunoBot++ on this page, and write down the respective HyperBot++ packages from the table below.
 
 Once done, do `.pkg install <list of packages>`.
-> Example: `.pkg install scrapers_plus memes_animated admin_plus` 
+> Example: `.pkg install hpp_scrappers memes_animated hpp_chat` 
 
 ## The package table
 |To get|You install|
 |-----|-----|
-|`.yt`|`scrapers_plus`|
+|`.yt`|`hpp_scrappers`|
+|`.ud`|`hpp_scrappers`|
+|`.play`|`hpp_scrappers`|
+|`.ytv`|`hpp_scrappers`|
+|`.google`|`hpp_scrappers`|
+|`.logoff`|`hpp_systools`|
+|`.inactive`|`hpp_chat`|
+|`.pinact`|`hpp_chat`|
