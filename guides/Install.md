@@ -37,8 +37,8 @@ Choose the modules you need from the table below:
 |`locks`|Block members from posting certain types of messages.|
 |`deldog`|del.dog client.|
 |`scramble`|Scramble a message.|
-|**Edited modules**||
-|`WIP`|Stay tuned!|
+
+For the extra commands, read [this](https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md) guide.
 
 In this guide, we will pick `notes` and `flasher`.
 
