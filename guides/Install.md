@@ -31,7 +31,7 @@ Choose the modules you need from the table below:
 |**Original modules**||
 |-----|-----|
 |`flasher`|Flash a ZIP file.|
-|`profile`|Various commands to edit profile.|
+|`profile`|Edit your name, bio and profile picture.|
 |`disease`|Spread your own plague across Telegram!|
 |`notes`|Save text and quickly send it later.|
 |`locks`|Prevent people from posting certain types of media in this chat.|
