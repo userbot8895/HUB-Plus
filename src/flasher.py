@@ -23,5 +23,5 @@ async def flash(event):
 	elif r % 2 == 0:
 		await event.edit(f"`Flashing` {text}.zip `failed successfully!`")
  
-MODULE_DESC.update({"flasher": "Flash a zip file."})
+MODULE_DESC.update({"flasher": "Flash a ZIP file."})
 MODULE_DICT.update({"flasher": ".flash <file_name>\nUsage: Flash `file_name.zip`"})
