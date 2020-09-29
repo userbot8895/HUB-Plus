@@ -1,3 +1,8 @@
+# deldog
+# HyperBot++
+# Licensed under the DBBPL
+# (C) 2020 githubcatw
+
 import os
 
 from telethon.errors import ImageProcessFailedError, PhotoCropSizeSmallError

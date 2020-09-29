@@ -36,7 +36,7 @@ Choose the modules you need from the table below:
 |`notes`|Save text and quickly send it later.|
 |`locks`|Prevent people from posting certain types of media in this chat.|
 |`deldog`|Create a del.dog from text.|
-|`scramble`|Scramble a message.|
+|`scramble`|Scramble text.|
 
 For the extra commands, read [this](https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md) guide.
 
