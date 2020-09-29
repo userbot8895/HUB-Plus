@@ -1,9 +1,9 @@
-# How to port modules from NunoBot/Paperplane to HyperBot
+# How to port modules from NunoBot/Paperplane to HyperUBot
 This guide has multiple chapters with example modules.
 ## Basic module
 <table>
 <tr>
-<td> NunoBot </td> <td> HyperBot </td>
+<td> NunoBot </td> <td> HyperUBot </td>
 </tr>
 <tr>
 <td>
@@ -39,7 +39,7 @@ async def ping(event):
 ## Basic module, with help
 <table>
 <tr>
-<td> NunoBot </td> <td> HyperBot </td>
+<td> NunoBot </td> <td> HyperUBot </td>
 </tr>
 <tr>
 <td>
