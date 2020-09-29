@@ -43,3 +43,7 @@ For the extra commands, read [this](https://github.com/githubcatw/HyperBot_Plus/
 In this guide, we will pick `notes` and `flasher`.
 
 In Telegram, run `.pkg install <the packages you picked, separated with spaces>`. In our case, the command is `.pkg install notes flasher`.
+
+Then, run `.modules`. You should see the modules you picked.
+
+### Enjoy!
