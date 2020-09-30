@@ -106,10 +106,10 @@ MODULE_DESC.update({
 MODULE_DICT.update({
     basename(__file__)[:-3]:
     ".infect\
-    \nUsage: Infect someone\
-	.infstats\
-    \nUsage: Stats on the people you infected\
-	.infmerge\
-    \nUsage: Merge a patient list\
-	.infshare\
-    \nUsage: Share a patient listy"})
+    \nUsage: Infect someone.\
+    \n\n.infstats\
+    \nUsage: Stats on the people you infected.\
+    \n\n.infmerge\
+    \nUsage: Merge a patient list with yours.\
+    \n\n.infshare\
+    \nUsage: Share your patient list."})
