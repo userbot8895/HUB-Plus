@@ -9,7 +9,7 @@ Your community repo list should look like this:
 ### Installing the pre-requisites
 In Telegram, run `.pkg install req_installer`.
 
-After the installation is done, run `.req cowpy asyncurban google-play-scraper youtube-dl google-api-python-client pyfiglet beautifulsoup4==4.9.1` to install the pre-requisites for HyperBot++.
+After the installation is done, run `.req cowpy asyncurban google-play-scraper youtube-dl google-api-python-client pyfiglet beautifulsoup4==4.9.1 pillow` to install the pre-requisites for HyperBot++.
 
 Then, to make sure the bot can install the extra modules, do `.pkg update`. Then, run `.pkg list` and make sure `hyperbot++` shows up there.
 
