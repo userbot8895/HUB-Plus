@@ -17,6 +17,47 @@ Once done, do `.pkg install <list of packages>`.
 |`.logoff`|`hpp_systools`|
 |`.inactive`|`hpp_chat`|
 |`.pinact`|`hpp_chat`|
+|`.oof`|`memes_animated`|
+|`.hmm`|`memes_animated`|
+|`.lool`|`memes_animated`|
+|`.gay`|`memes_animated`|
+|`.ree`|`memes_animated`|
+|`.x`|`memes_animated`|
+|`:/`|`memes_animated`|
+|`-_-`|`memes_animated`|
+|`×_×`|`memes_animated`|
+|`x_x`|`memes_animated`|
+|`O.o`|`memes_animated`|
+|`.hi`|`memes_rng`|
+|`.coinflip`|`memes_rng`|
+|`.punch`|`memes_rng`|
+|`.slap`|`memes_rng`|
+|`.decide`|`memes_rng`|
+|`.react`|`memes_rng`|
+|`.shg`|`memes_rng`|
+|`.cry`|`memes_rng`|
+|`.vapor`|`memes_text`|
+|`.str`|`memes_text`|
+|`.zal`|`memes_text`|
+|`.point`|`memes_text`|
+|`.cowsay`|`memes_text`|
+|`.cowthink`|`memes_text`|
+|`.figlet`|`memes_text`|
+|`.mock`|`memes_text`|
+|`.clap`|`memes_text`|
+|`.shout`|`memes_text`|
+|`.clap`|`memes_text`|
+|`.bt`|`memes_copypasta`|
+|`.gei`|`memes_copypasta`|
+|`.nou`|`memes_copypasta`|
+|`.say`|`memes_copypasta`|
+|`.uno`|`memes_copypasta`|
+|`.f`|`memes_misc`|
+|`.lol`|`memes_misc`|
+|`.lfy <query>`|`memes_misc`|
+|`.scam <action> <time>`|`memes_misc`|
+
+All meme commands require `memes_common` too.
 
 These packages are also completely ported:
 

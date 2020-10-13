@@ -3,6 +3,10 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
+from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from telethon.events import NewMessage
+from os.path import basename
+
 ZALG_LIST = [[
     "̖",
     " ̗",
@@ -678,3 +682,13 @@ DOUBT = [
     "Sure about that?",
     "Really?",
 ]
+
+MODULE_DESC.update({
+    basename(__file__)[:-3]:
+    "Memes! Common module, just contains data for the other memes_* modules."})
+
+MODULE_DICT.update({
+    basename(__file__)[:-3]:
+    "You cannot use this module. This is just common data.\
+    \nPlease install any of the other memes modules too."
+})
