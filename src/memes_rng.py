@@ -175,7 +175,7 @@ async def hoi(hello):  # hi
     if not hello.text[0].isalpha() and hello.text[0] in ("."):
         await hello.edit(random.choice(HELLOSTR))
 
-@register(outgoing=True, pattern="^\.react$")
+@tgclient.on(NewMessage(outgoing=True, pattern="^\.react$"))
 async def react_meme(react):
     """ Make your userbot react to everything. """
     await react.edit(random.choice(FACEREACTS))
