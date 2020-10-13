@@ -52,7 +52,7 @@ Once done, do `.pkg install <list of packages>`.
 |`.nou`|`memes_copypasta`|
 |`.say`|`memes_copypasta`|
 |`.uno`|`memes_copypasta`|
-|`.f`|`memes_misc`|
+|`.f`|[`memes_misc`](https://t.me/pawneeupdates/39)|
 |`.lol`|`memes_misc`|
 |`.lfy <query>`|`memes_misc`|
 |`.scam <action> <time>`|`memes_misc`|
