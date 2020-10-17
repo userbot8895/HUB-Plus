@@ -149,44 +149,6 @@ EMOJIS = [
     "😩",
     "🚰"]
 
-INSULT_STRINGS = [
-    "When you were born, your mom thought she just had shit herself.",
-    "Even a trained chimp does everything better than you.",
-    "You know what is the difference between you and cancer? Cancer evolves.",
-    "If you were in a room with Hitler and Stalin and I had a gun, I would shoot you twice.",
-    "Your girlfriend could have picked a better man, like Saddam Hussein or an indonesian pimp with lice and bad breath.",
-    "If stupidity was taxed, you would be all stamped.",
-    "Light travels faster than sound, which explains why you seemed bright until you speak.",
-    "Your teeth are like stars, light years away and yellow.",
-    "Your face is like a treasure, it needs to be burried very deep.",
-    "Why don't you slip into something more comfortable, like a coma?",
-    "I will never forget the first time we met, although I am trying.",
-    "If you were a bit more intelligent, you would still be stupid.",
-    "Not even your IQ test is positive.",
-    "I heard you are very kind to animals, so please return that face to the gorilla.",
-    "You got your head so far up your ass, you can chew food twice."]
-
-HELLOSTR = [
-    "Hi !",
-    "‘Ello, gov'nor!",
-    "What’s crackin’?",
-    "‘Sup, homeslice?",
-    "Howdy, howdy ,howdy!",
-    "Hello, who's there, I'm talking.",
-    "You know who this is.",
-    "Yo!",
-    "Whaddup.",
-    "Greetings and salutations!",
-    "Hello, sunshine!",
-    "Hey, howdy, hi!",
-    "What’s kickin’, little chicken?",
-    "Peek-a-boo!",
-    "Howdy-doody!",
-    "Hey there, freshman!",
-    "I come in peace!",
-    "Ahoy, matey!",
-    "Hiya!"]
-    
 PUNCH_TEMPLATES = [
     "{punches} {victim} to assert dominance.",
     "{punches} {victim} to see if they shut the fuck up for once.",

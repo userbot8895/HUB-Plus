@@ -28,7 +28,8 @@ Once done, do `.pkg install <list of packages>`.
 |`×_×`|`memes_animated`|
 |`x_x`|`memes_animated`|
 |`O.o`|`memes_animated`|
-|`.hi`|`memes_rng`|
+|`.hi`|`text_replies` (from modules_universe)|
+|`.insult`|`text_replies` (from modules_universe)|
 |`.coinflip`|`memes_rng`|
 |`.punch`|`memes_rng`|
 |`.slap`|`memes_rng`|

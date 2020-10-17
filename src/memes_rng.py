@@ -165,16 +165,6 @@ async def decide(event):  # yes/no
         await event.client.send_message(event.chat_id, str(r["answer"]).upper(), reply_to=message_id, file=r["image"])
         await event.delete()
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.insult$"))
-async def insult(e):  # insult from insult structure
-    if not e.text[0].isalpha() and e.text[0] in ("."):
-        await e.edit(random.choice(INSULT_STRINGS))
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^.hi$"))
-async def hoi(hello):  # hi
-    if not hello.text[0].isalpha() and hello.text[0] in ("."):
-        await hello.edit(random.choice(HELLOSTR))
-
 @tgclient.on(NewMessage(outgoing=True, pattern="^\.react$"))
 async def react_meme(react):
     """ Make your userbot react to everything. """
