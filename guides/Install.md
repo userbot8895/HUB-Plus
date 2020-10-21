@@ -1,5 +1,5 @@
 # How to install HyperBot++
-## Upgrading from HyperUBot
+You need to already have [HyperUBot](https://www.github.com/nunopenim/HyperUBot) installed.
 ### Pre-requisites
 Add `"userbot8895/HyperBot_Plus"` as a community repo in your config.
 
@@ -19,7 +19,7 @@ After the installation is done, run `.req cowpy asyncurban google-play-scraper y
 Then, to make sure the bot can install the extra modules, do `.pkg update`. Then, run `.pkg list` and make sure `hyperbot++` shows up there.
 
 ### Adding extra config fields
-Open `config.py` in a text editor, and add this after the end:
+Open the userbot's `config.py` (`config.env` is not supported) in a text editor, and add this after the end:
 ```
 class PlusConfig(object):
     # Your best friends. Required for some modules.
@@ -29,6 +29,7 @@ class PlusConfig(object):
     # YouTube API key, get it from slickremix.com/get-api-key-for-youtube/. Required for scrapers.
     YOUTUBE_API_KEY = None
 ```
+Fill in the relevant fields.
 
 ### Installing HyperBot++
 Thanks to HyperUBot featuring a package manager, you can now install only the modules you need.
@@ -45,7 +46,7 @@ Choose the modules you need from the table below:
 |`deldog`|Create a del.dog from text.|
 |`scramble`|Scramble text.|
 
-For the extra commands, read [this](https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md).
+For the ported extra commands from the old userbot, read [this](https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md) guide.
 
 In Telegram, run `.pkg install <the packages you picked, separated with spaces>`.
 
