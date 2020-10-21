@@ -6,6 +6,11 @@ Add `"userbot8895/HyperBot_Plus"` as a community repo in your config.
 Your community repo list should look like this:
 
 `COMMUNITY_REPOS = ["userbot8895/HyperBot_Plus"]`
+
+Or, in case you have more repos,
+
+`COMMUNITY_REPOS = ["some_other_repo","userbot8895/HyperBot_Plus"]`
+
 ### Installing the pre-requisites
 In Telegram, run `.pkg install req_installer`.
 
