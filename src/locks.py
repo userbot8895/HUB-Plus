@@ -6,7 +6,8 @@
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -198,3 +199,4 @@ MODULE_DICT.update({
 \n\nAvailable message types to lock/unlock are: \
 \n`all, msg, media, sticker, gif, game, inline, poll, invite, pin, info`"
 })
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Locks', version='1.0')})

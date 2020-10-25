@@ -6,7 +6,8 @@
 import time
 import random
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 
 @tgclient.on(NewMessage(pattern=r"^\.flash (.*)", outgoing=True))
@@ -25,3 +26,4 @@ async def flash(event):
  
 MODULE_DESC.update({"flasher": "Flash a ZIP file."})
 MODULE_DICT.update({"flasher": ".flash <file_name>\nUsage: Flash `file_name.zip`"})
+MODULE_INFO.update({"flasher": module_info(name='Flasher', version='1.0')})

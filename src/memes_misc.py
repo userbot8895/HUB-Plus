@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -104,3 +105,4 @@ MODULE_DICT.update({
     \n(Available actions: `typing, contact, game, location, voice, round, video, photo, document, cancel`)\
     \nUsage: Create fake chat actions, for fun. (Default action: `typing`)"
 })
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (miscellaneous)', version='1.0')})

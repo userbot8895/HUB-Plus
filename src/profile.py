@@ -21,7 +21,8 @@ from telethon.tl.functions.photos import (DeletePhotosRequest,
 
 from telethon.tl.types import InputPhoto, MessageMediaPhoto, User, Chat, Channel
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -116,7 +117,7 @@ async def remove_profilepic(delpfp):
         lim = 1
 
     pfplist = await delpfp.client(
-        GetUserPhotosRequest(user_id=delpfp.from_id,
+        GetUserPhotosRequest(user_id=delpfp.sender_id,
                              offset=0,
                              max_id=0,
                              limit=lim))
@@ -148,3 +149,5 @@ MODULE_DICT.update({
 \n\n.delpfp or .delpfp <number>/<all>\
 \nUsage: Deletes your Telegram profile picture(s)."
 })
+
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Profile', version='1.0')})

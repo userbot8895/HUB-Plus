@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -80,3 +81,5 @@ MODULE_DICT.update({
     \nUsage: Get the content from the replied QR Code/Bar Code.\
     \n\n`.makeqr <content>`\
     \nUsage: Make a QR Code from the given content."})
+
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='QR code', version='1.0')})

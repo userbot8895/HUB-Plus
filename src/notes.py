@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 import os.path
 from os import path
@@ -118,3 +119,4 @@ MODULE_DICT.update({
     \nUsage: Get all of your notes.\
     \n\n.delnote <notename>\
     \nUsage: Delete a note."})
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Notes', version='1.0')})

@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -81,3 +82,16 @@ async def forceactive(act):
             reply = reply+message
         await act.respond(reply)
         await act.delete()
+
+MODULE_DESC.update({
+    basename(__file__)[:-3]:
+    "Extra commands for the chat module."})
+
+MODULE_DICT.update({
+    basename(__file__)[:-3]:
+        ".inactive\
+    \nUsage: Lists inactive people.\
+    \n\n.pinact\
+    \nUsage: Pings inactive people."})
+
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Chat (extension)', version='1.0')})

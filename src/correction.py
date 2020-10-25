@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 import re
 from sre_constants import error as sre_err
@@ -128,3 +129,4 @@ MODULE_DICT.update({
     \nDelimiters: `/, :, |, _`\
     \n\n.dum\
     \nUsage: An automated version of .s that replaces common chat slang."})
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Corrections', version='1.0')})

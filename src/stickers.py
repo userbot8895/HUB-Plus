@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -369,3 +370,5 @@ MODULE_DICT.update({
     \n\n`.stkrinfo`\
     \nUsage: Gets info about the sticker pack."
 })
+
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Stickers', version='1.0')})

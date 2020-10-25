@@ -8,7 +8,8 @@ from datetime import datetime
 import os
 import requests
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -70,3 +71,5 @@ MODULE_DICT.update({
     basename(__file__)[:-3]:
     ".dog <text>\
     \nUsage: Create a del.dog from text."})
+
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Del.dog', version='1.0')})

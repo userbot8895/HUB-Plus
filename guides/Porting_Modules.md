@@ -35,6 +35,7 @@ async def ping(event):
 **Differences:**
 
 - There is no convenient `register` decorator. Instead, you manually import the bot's client and register a standard Telethon message handler. If you develop modules for UniBorg or regular Telethon apps this might be familiar.
+*This also means HyperUBot is more capable than NunoBot.*
 - The namespace changed from `tg_userbot` to simply `userbot`.
 ## Basic module, with help
 <table>
@@ -78,3 +79,19 @@ MODULE_DICT.update({"port_demo": ".ping\nUsage: Pong!"})
 
 - There is a new description field.
 - Instead of updating `CMD_HELP`, you update `MODULE_DICT`.
+
+HyperUBot 2.0 introduces a new `MODULE_INFO` field, which allows you to specify a module name and version:
+
+```python
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
+from telethon.events import NewMessage
+
+@tgclient.on(NewMessage(pattern=r"^.ping", outgoing=True))
+async def ping(event):
+  await event.edit("`Pong!`")
+
+MODULE_DESC.update({"port_demo": "A demonstration module."})
+MODULE_DICT.update({"port_demo": ".ping\nUsage: Pong!"})
+MODULE_INFO.update({"port_demo": module_info(name='Demonstration module', version='1.0')})
+```

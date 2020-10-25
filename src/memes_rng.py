@@ -3,7 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -51,7 +52,7 @@ async def who(event): #punch
 async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
+        replied_user = await event.client(GetFullUserRequest(previous_message.sender_id))
     else:
         user = event.pattern_match.group(1)
         if user.isnumeric():
@@ -106,7 +107,7 @@ async def who(event):  # slap
 async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
-        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
+        replied_user = await event.client(GetFullUserRequest(previous_message.sender_id))
     else:
         user = event.pattern_match.group(1)
         if user.isnumeric():
@@ -207,3 +208,4 @@ MODULE_DICT.update({
     \n\n.cry\
     \nUsage: y u du dis, i cri."
 })
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (RNG)', version='1.0')})

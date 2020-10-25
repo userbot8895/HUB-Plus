@@ -6,7 +6,8 @@
 import time
 import random
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 import os
@@ -113,3 +114,5 @@ MODULE_DICT.update({
     \nUsage: Merge a patient list with yours.\
     \n\n.infshare\
     \nUsage: Share your patient list."})
+
+MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Disease', version='1.0')})
