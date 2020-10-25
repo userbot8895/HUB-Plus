@@ -21,7 +21,7 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               MaxDownloadsReached, PostProcessingError,
                               UnavailableVideoError, XAttrMetadataError)
 from search_engine_parser import GoogleSearch
-from userbot.config.PlusConfig import YOUTUBE_API_KEY
+from userbot.config import PlusConfig as pc
 
 @tgclient.on(NewMessage(outgoing=True, pattern="^\.ud (.*)"))
 async def urban_dict(ud_e):
@@ -83,7 +83,7 @@ async def yt_search(yts):
     query = yts.pattern_match.group(1)
     result = ''
 
-    if not YOUTUBE_API_KEY:
+    if not pc.YOUTUBE_API_KEY:
         await yts.edit(
             "`Error: YouTube API key missing! Add it to environment vars or config.env.`"
         )
@@ -112,7 +112,7 @@ async def youtube_search(query,
     """ Do a YouTube search. """
     youtube = build('youtube',
                     'v3',
-                    developerKey=YOUTUBE_API_KEY,
+                    developerKey=pc.YOUTUBE_API_KEY,
                     cache_discovery=False)
     search_response = youtube.search().list(
         q=query,

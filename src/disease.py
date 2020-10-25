@@ -11,7 +11,7 @@ from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 import os
-from userbot.config.PlusConfig import HOMIES, VIRUS
+from userbot.config import PlusConfig as pc
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
@@ -31,13 +31,13 @@ async def infect(event):
 			if f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})" in read:
 				await event.edit(f"{replymsg.sender.first_name} was already infected by you or someone you merged patients with!")
 				return
-			if replymsg.sender.id in HOMIES:
-				await event.edit(f"Your homies have natural immunity against the {VIRUS}.")
+			if replymsg.sender.id in pc.HOMIES:
+				await event.edit(f"Your homies have natural immunity against the {pc.VIRUS}.")
 				return
 			f=open("patients.txt","a+", encoding="utf-8")
 			f.write(f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})\n")
 			f.close()
-			await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {VIRUS}!")
+			await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}!")
 			await event.delete()
 		else:
 			await event.edit("I don't know whom to infect!")
@@ -48,8 +48,8 @@ async def share(event):
 		await event.client.send_file(
 			event.chat_id,
 			"patients.txt",
-			caption=f"This is a list of patients infected with the {VIRUS}.\
-			\nReply with .infmerge to add the {VIRUS}'s patients to your own virus' patient list."
+			caption=f"This is a list of patients infected with the {pc.VIRUS}.\
+			\nReply with .infmerge to add the {pc.VIRUS}'s patients to your own virus' patient list."
         )
 		await event.delete()
 		
@@ -84,7 +84,7 @@ async def infmerge(event):
 							app.write(pat)
 							pats = pats + 1
 				if pats != 0:
-					await event.edit(f"The {VIRUS} just infected {pats} more patients from {replymsg.sender.first_name}'s list!")
+					await event.edit(f"The {pc.VIRUS} just infected {pats} more patients from {replymsg.sender.first_name}'s list!")
 				else:
 					await event.edit(f"Everyone who was infected by {replymsg.sender.first_name} were already in the list!")
 			else:
@@ -98,7 +98,7 @@ async def infected(event):
 		rf=open("patients.txt", "r", encoding="utf-8")
 		read=rf.read()
 		rf.close()
-		reply = f"List of people infected with the {VIRUS}:\n{read}"
+		reply = f"List of people infected with the {pc.VIRUS}:\n{read}"
 		await event.edit(reply[0:4090])
 
 MODULE_DESC.update({
