@@ -2,3 +2,4 @@
 modules/pipinstall.py
 src/pipinstall.py
 src/deptest.py
+src/.vs

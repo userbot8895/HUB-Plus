@@ -57,6 +57,7 @@ Once done, do `.pkg install <list of packages>`.
 |`.lol`|`memes_misc`|
 |`.lfy <query>`|`memes_misc`|
 |`.scam <action> <time>`|`memes_misc`|
+|`.s`|`corrections`|
 
 All meme commands require `memes_common` too.
 
