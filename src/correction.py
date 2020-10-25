@@ -17,7 +17,25 @@ DUM_LIST = {
 	"wen": "when",
 	"gib": "give",
 	"sar": "sir",
-	"nao": "now"
+	"nao": "now",
+    "gab": "gave",
+    "bess": "best",
+    "da": "the",
+    "naice": "nice",
+    "dis": "this",
+    "dat": "that",
+    "hab": "have",
+    "eet": "it",
+    "et": "it",
+    "der": "there",
+    "eva": "ever",
+    "hao": "how",
+    "pls": "please",
+    "peru": "pro",
+    "nub": "noob",
+    "pru": "pro",
+    "hemlo": "hello",
+    "laik": "like"
 }
 
 DELIMITERS = ("/", ":", "|", "_")
@@ -32,7 +50,6 @@ async def didyoumean(dum):
 		fixedtext = textx.text
 		for word in DUM_LIST:
 			fixedtext = fixedtext.replace(word, f"**{DUM_LIST[word]}**")
-		print(f"fix:\n{fixedtext}\norig:\n{textx}")
 		if fixedtext != textx:
 			await dum.edit(f"__Did you mean:__\n\n{fixedtext}")
 		else:
