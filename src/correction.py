@@ -20,10 +20,10 @@ DUM_LIST = {
 	"nao": "now",
     "gab": "gave",
     "bess": "best",
+    "dat": "that",
     "da": "the",
     "naice": "nice",
     "dis": "this",
-    "dat": "that",
     "hab": "have",
     "eet": "it",
     "et": "it",
@@ -35,7 +35,10 @@ DUM_LIST = {
     "nub": "noob",
     "pru": "pro",
     "hemlo": "hello",
-    "laik": "like"
+    "laik": "like",
+    "luv": "love",
+    "gud": "good",
+    "welcum": "welcome"
 }
 
 DELIMITERS = ("/", ":", "|", "_")
