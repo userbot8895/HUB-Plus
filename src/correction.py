@@ -38,7 +38,8 @@ DUM_LIST = {
     "laik": "like",
     "luv": "love",
     "gud": "good",
-    "welcum": "welcome"
+    "welcum": "welcome",
+    "plox": "please"
 }
 
 DELIMITERS = ("/", ":", "|", "_")
@@ -50,9 +51,12 @@ async def didyoumean(dum):
 		if not textx:
 			await dum.edit("Reply to a message to correct it!")
 			return
-		fixedtext = textx.text
-		for word in DUM_LIST:
-			fixedtext = fixedtext.replace(word, f"**{DUM_LIST[word]}**")
+		fixedtext = ""
+		for word in textx.text.split():
+			if word in DUM_LIST:
+				word = f"**{DUM_LIST[word]}**"
+			fixedtext = f"{fixedtext} {word}"
+		fixedtext = fixedtext.lstrip()
 		if fixedtext != textx:
 			await dum.edit(f"__Did you mean:__\n\n{fixedtext}")
 		else:
