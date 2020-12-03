@@ -65,11 +65,11 @@ async def _(event):
         
 MODULE_DESC.update({
     basename(__file__)[:-3]:
-    "Create a del.dog from text."})
+    "Upload text to del.dog."})
 
 MODULE_DICT.update({
     basename(__file__)[:-3]:
     ".dog <text>\
-    \nUsage: Create a del.dog from text."})
+    \nUsage: Upload text to del.dog."})
 
 MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Del.dog', version='1.0')})

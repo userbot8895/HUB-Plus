@@ -189,7 +189,7 @@ async def rem_locks(event):
 
 MODULE_DESC.update({
     basename(__file__)[:-3]:
-    "Prevent people from posting certain types of media in this chat."})
+    "Prevent people from posting certain types of media in a chat."})
 
 MODULE_DICT.update({
     basename(__file__)[:-3]:
