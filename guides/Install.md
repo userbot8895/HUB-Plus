@@ -56,8 +56,12 @@ Choose the modules you need from the table below:
 |`locks`|Prevent people from posting certain types of media in this chat.|
 |`deldog`|Create a del.dog from text.|
 |`scramble`|Scramble text.|
-
-For the ported extra commands from the old userbot, read [this](https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md) guide.
+|-----|-----|
+|**Ported modules**||
+|-----|-----|
+|`qrcode`|Create and read QR codes.|
+|`stickers`|Make your own sticker pack.|
+|Extra commands|Read [this](https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md) guide|
 
 In Telegram, run `.pkg install <the packages you picked, separated with spaces>`.
 

@@ -60,13 +60,3 @@ Once done, do `.pkg install <list of packages>`.
 |`.s`|`corrections`|
 
 All meme commands require `memes_common` too.
-
-These packages are also completely ported:
-
-|To get|You install|
-|-----|-----|
-|`.decode`|`qrcode`|
-|`.encode`|`qrcode`|
-|`.kang`|`stickers`|
-|`.getsticker`|`stickers`|
-|`.stkrinfo`|`stickers`|
