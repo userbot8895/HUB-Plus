@@ -3,7 +3,7 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING, MODULE_INFO
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
@@ -22,6 +22,9 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               UnavailableVideoError, XAttrMetadataError)
 from search_engine_parser import GoogleSearch
 from userbot.config import PlusConfig as pc
+
+from userbot.sysutils.configuration import getConfig
+LOGGING = getConfig("LOGGING")
 
 @tgclient.on(NewMessage(outgoing=True, pattern="^\.ud (.*)"))
 async def urban_dict(ud_e):

@@ -3,7 +3,7 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING, MODULE_INFO
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
@@ -13,6 +13,8 @@ import os
 
 import qrcode
 from bs4 import BeautifulSoup
+from userbot.sysutils.configuration import getConfig
+LOGGING = getConfig("LOGGING")
 
 @tgclient.on(NewMessage(pattern=r"^\.decode$", outgoing=True))
 async def parseqr(qr_e):  # decods qr or barcode

@@ -3,7 +3,7 @@
 # Licensed under the DBBPL
 # (C) 2020 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, LOGGING, MODULE_INFO
+from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
@@ -14,12 +14,15 @@ import random
 import PIL
 import urllib.request
 from os import remove
+import os
 
 from PIL import Image
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
 from telethon.tl.types import DocumentAttributeSticker
 from telethon.tl.types import InputStickerSetID
+from userbot.sysutils.configuration import getConfig
+LOGGING = getConfig("LOGGING")
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
@@ -98,8 +101,16 @@ async def kang(args):
                     # pack
                     emoji = splat[1]
 
-            packname = f"a{user.id}_by_{user.username}_{pack}"
-            packnick = f"@{user.username}'s kang pack Vol.{pack}"
+            isCustom = os.path.exists("pack")
+            if isCustom:
+                pac = open("pack", "r").read()
+                psp = pac.split("\n")
+                pack = 0
+                packname = psp[1]
+                packnick = psp[0]
+            else:
+                packname = f"a{user.id}_by_{user.username}_{pack}"
+                packnick = f"@{user.username}'s kang pack Vol.{pack}"
             cmd = '/newpack'
             file = io.BytesIO()
 
@@ -128,8 +139,10 @@ async def kang(args):
                         pack += 1
                         packname = f"a{user.id}_by_{user.username}_{pack}"
                         packnick = f"@{user.username}'s kang pack Vol.{pack}"
-                        await args.edit("`Switching to Pack " + str(pack) +
-                                        " due to insufficient space`")
+                        cusMsg = "S"
+                        if isCustom:
+                            cusMsg = "Custom pack is full, s"
+                        await args.edit(f"`{cusMsg}witching to pack {str(pack)} due to insufficient space`")
                         await conv.send_message(packname)
                         x = await conv.get_response()
                         if x.text == "Invalid pack selected.":
@@ -305,10 +318,6 @@ async def get_sticker(event):
     		sticker.close()
     	await event.delete()
     
-    	
-    	
-    
-    
 @tgclient.on(NewMessage(outgoing=True, pattern="^\.stkrinfo$"))
 async def get_pack_info(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
@@ -352,6 +361,48 @@ async def get_pack_info(event):
 
         await event.edit(OUTPUT)
 
+@tgclient.on(NewMessage(outgoing=True, pattern="^\.setkang"))
+async def get_pack_info(event):
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        if not event.is_reply:
+            await event.edit("`I can't fetch info from nothing, can I ?!`")
+            return
+
+        rep_msg = await event.get_reply_message()
+        if not rep_msg.document:
+            await event.edit("`Reply to a sticker to set a custom pack.`")
+            return
+
+        try:
+            stickerset_attr = rep_msg.document.attributes[1]
+            await event.edit(
+                "`Setting custom pack, please wait...`")
+        except BaseException:
+            await event.edit("`This is not a sticker. Reply to a sticker.`")
+            return
+
+        if not isinstance(stickerset_attr, DocumentAttributeSticker):
+            await event.edit("`This is not a sticker. Reply to a sticker.`")
+            return
+        
+        get_stickerset = await tgclient(
+            GetStickerSetRequest(
+                InputStickerSetID(
+                    id=stickerset_attr.stickerset.id,
+                    access_hash=stickerset_attr.stickerset.access_hash)))
+
+        if get_stickerset.set.archived:
+            await event.edit("`This pack is archived!`")
+            return
+
+        if len(get_stickerset.packs) == 120:
+            await event.edit("`This pack is full!`")
+            return
+
+        open("pack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
+
+        ur = f"[{get_stickerset.set.title}](t.me/addstickers/{get_stickerset.set.short_name})"
+        await event.edit(f"Successfully changed kang pack to {ur}. New kanged stickers will be added there.")
 
 MODULE_DESC.update({
     basename(__file__)[:-3]:
@@ -364,11 +415,13 @@ MODULE_DICT.update({
     \n\n`.kang [emoji('s)]`\
     \nUsage: Works just like .kang but uses the emoji('s) you picked.\
     \n\n`.kang [number]`\
-    \nUsage: Kang's the sticker/image to the specified pack but uses 🤔 as emoji.\
+    \nUsage: Kang's the sticker/image to the specified pack but uses 🤔 as emoji. Overrides the pack set with .setkang.\
     \n\n`.kang [emoji('s)] [number]`\
-    \nUsage: Kang's the sticker/image to the specified pack and uses the emoji('s) you picked.\
+    \nUsage: Kang's the sticker/image to the specified pack and uses the emoji('s) you picked. Overrides the pack set with .setkang.\
     \n\n`.stkrinfo`\
-    \nUsage: Gets info about the sticker pack."
+    \nUsage: Gets info about the sticker pack.\
+    \n\n`.setkang`\
+    \nUsage: Reply to a sticker to set its pack as the kang pack."
 })
 
 MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Stickers', version='1.0')})

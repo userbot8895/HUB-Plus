@@ -20,6 +20,7 @@ from telethon.tl.types import MessageEntityMentionName
 from cowpy import cow
 from pyfiglet import Figlet
 from .memes_common import *
+from .correction import DUM_LIST
 
 @tgclient.on(NewMessage(outgoing=True, pattern="^.vapor(?: |$)(.*)"))
 async def vapor(vpr):  # vapor
@@ -210,6 +211,30 @@ async def typewriter(typew):
             await asyncio.sleep(sleep_time)
             await typew.edit(old_text)
             await asyncio.sleep(sleep_time)
+
+@tgclient.on(NewMessage(outgoing=True, pattern="^.rs"))
+async def retard(dum):
+	if not dum.text[0].isalpha() and dum.text[0] in ("."):
+		textx = await dum.get_reply_message()
+		# reverse DUM_LIST
+		MUD_LIST = {}
+		for k in DUM_LIST:
+			if not DUM_LIST[k] in MUD_LIST:
+				MUD_LIST[DUM_LIST[k]] = k
+		print(MUD_LIST)
+		if not textx:
+			await dum.edit("`reply to mesage to turn eet to retard spik!`")
+			return
+		fixedtext = ""
+		for word in textx.text.split():
+			if word in MUD_LIST:
+				word = MUD_LIST[word]
+			fixedtext = f"{fixedtext} {word}"
+		fixedtext = fixedtext.lstrip()
+		if fixedtext != textx:
+			await dum.edit(fixedtext)
+		else:
+			await dum.edit("`dis message is in retard spik alredy!`")
 
 @tgclient.on(NewMessage(outgoing=True, pattern=r"^.shout(?: |$)([\s\S]*)"))
 async def shout(request):

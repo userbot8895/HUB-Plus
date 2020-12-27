@@ -4,3 +4,4 @@ src/pipinstall.py
 src/deptest.py
 src/.vs
 src/hash.ps1
+hbp_hashes.txt

@@ -43,7 +43,8 @@ DUM_LIST = {
     "meni": "many",
     "ppl": "people",
     "tat": "that",
-    "yu": "you"
+    "yu": "you",
+    "yems": "yes"
 }
 
 DELIMITERS = ("/", ":", "|", "_")
