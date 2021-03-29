@@ -65,7 +65,7 @@ async def Brr(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Brr"
         for j in range(15):
-            t = t[:-1] + "r"
+            t = t + "r"
             await e.edit(t)
             
 @tgclient.on(NewMessage(outgoing=True, pattern="^.x (.*)$"))
