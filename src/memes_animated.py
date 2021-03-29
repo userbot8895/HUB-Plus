@@ -59,6 +59,14 @@ async def Gay(e):
         for j in range(15):
             t = t[:-1] + "ay"
             await e.edit(t)
+
+@tgclient.on(NewMessage(outgoing=True, pattern="^.brr$"))
+async def Brr(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        t = "Brr"
+        for j in range(15):
+            t = t[:-1] + "r"
+            await e.edit(t)
             
 @tgclient.on(NewMessage(outgoing=True, pattern="^.x (.*)$"))
 async def Extend(e):
@@ -138,8 +146,10 @@ MODULE_DICT.update({
     \nUsage: Gaaaaay\
     \n\n.ree\
     \nUsage: Reeeeee\
+    \n\n.brr\
+    \nUsage: Brrrrrr\
     \n\n.x <text>\
-    \nUsage: Like .oof/.hmm but customizable.\
+    \nUsage: Like the above commands but customizable.\
     \n\n:/\
     \nUsage: Check yourself ;)\
     \n\n-_-\
