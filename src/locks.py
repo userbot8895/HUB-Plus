@@ -1,7 +1,7 @@
 # locks
 # HyperBot++
 # Licensed under the DBBPL
-# (C) 2020 githubcatw
+# (C) 2021 githubcatw
 
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights

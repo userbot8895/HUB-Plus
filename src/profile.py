@@ -1,7 +1,7 @@
 # deldog
 # HyperBot++
 # Licensed under the DBBPL
-# (C) 2020 githubcatw
+# (C) 2021 githubcatw
 
 import os
 

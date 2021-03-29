@@ -2,7 +2,7 @@
 # HyperBot++
 # Licensed under the DBBPL
 # Uses code from HyperUBot's package_manager, which is licensed under PEL
-# (C) 2020 githubcatw
+# (C) 2021 githubcatw
 
 from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO, OS
 from userbot.include.aux_funcs import module_info
