@@ -36,7 +36,7 @@ async def ping(event):
 
 - ~~There is no convenient `register` decorator. Instead, you manually import the bot's client and register a standard Telethon message handler. If you develop modules for UniBorg or regular Telethon apps this might be familiar.~~
 
-Starting from HyperUBot 3.0 there is a new `EventHandler` function that works like a `register` decorator:
+Starting from HyperUBot 3.0 there is a new `EventHandler` function that works like the `register` decorator:
 ```python
 from userbot.sysutils.event_handler import EventHandler
 
@@ -46,7 +46,7 @@ eh = EventHandler()
 async def ping(event):
   await event.edit("`Pong!`")
 ```
-This isn't used in HyperBot++ and the rest of this guide though.
+This is used in the stock modules and module-universe, but isn't used in HyperBot++ and the rest of this guide.
 
 - The namespace changed from `tg_userbot` to simply `userbot`.
 ## Basic module, with help
