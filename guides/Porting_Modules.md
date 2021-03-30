@@ -34,8 +34,20 @@ async def ping(event):
 
 **Differences:**
 
-- There is no convenient `register` decorator. Instead, you manually import the bot's client and register a standard Telethon message handler. If you develop modules for UniBorg or regular Telethon apps this might be familiar.
-*This also means HyperUBot is more capable than NunoBot.*
+- ~~There is no convenient `register` decorator. Instead, you manually import the bot's client and register a standard Telethon message handler. If you develop modules for UniBorg or regular Telethon apps this might be familiar.~~
+
+Starting from HyperUBot 3.0 there is a new `EventHandler` function that works like a `register` decorator:
+```python
+from userbot.sysutils.event_handler import EventHandler
+
+eh = EventHandler()
+
+@eh.on(pattern=r"^.test", outgoing=True)
+async def ping(event):
+  await event.edit("`Pong!`")
+```
+This isn't used in HyperBot++ and the rest of this guide though.
+
 - The namespace changed from `tg_userbot` to simply `userbot`.
 ## Basic module, with help
 <table>
