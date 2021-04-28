@@ -6,15 +6,18 @@
 import random
 import re
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 
-@tgclient.on(NewMessage(pattern=r"^.scramble(\s+[\S\s]+|$)", outgoing=True))
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
+
+@ehandler.on(command="scramble", hasArgs=True, outgoing=True)
 async def scramble_message(e):
     reply_message = await e.get_reply_message()
-    text = e.pattern_match.group(1) or reply_message.text
+    text = e.split(" ")[1] or reply_message.text
     words = re.split(r"\s", text)
     scrambled = map(scramble_word, words)
     text = ' '.join(scrambled)
@@ -32,13 +35,10 @@ def scramble_word(word):
 
     return first_letter + ''.join(middle_letters) + last_letter
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Scrambles text."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-        ".scramble <text>\
-    \nUsage: Scrambles text."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Scramble', version='1.0')})
+register_module_desc("Scramble text.")
+register_cmd_usage("scramble", "<text>", "Scramble text.")
+register_module_info(
+    name="Scramble",
+    authors="githubcatw, help from prototype74",
+    version=VERSION
+)

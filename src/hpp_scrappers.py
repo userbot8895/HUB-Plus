@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
@@ -22,15 +21,19 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               UnavailableVideoError, XAttrMetadataError)
 from search_engine_parser import GoogleSearch
 from userbot.config import PlusConfig as pc
-
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.configuration import getConfig
+
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
 LOGGING = getConfig("LOGGING")
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.ud (.*)"))
+@ehandler.on(command="ud", hasArgs=True, outgoing=True)
 async def urban_dict(ud_e):
     """ For .ud command, fetch content from Urban Dictionary. """
     await ud_e.edit("`Processing...`")
-    query = ud_e.pattern_match.group(1)
+    query = ud_e.text.split(" ")[1]
     urban_dict_helper = asyncurban.UrbanDictionary()
     try:
         urban_def = await urban_dict_helper.get_word(query)
@@ -65,11 +68,11 @@ async def urban_dict(ud_e):
     else:
         await ud_e.edit("No result found for **" + query + "**")
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.play (.*)"))
+@ehandler.on(command="play", hasArgs=True, outgoing=True)
 async def playstore(ps_e):
     """ For .play command, fetch content from Play Store. """
     await ps_e.edit("`Finding...`")
-    query = ps_e.pattern_match.group(1)
+    query = ps_e.text.split(" ")[1]
     try:
         res = app(query)
     except gpse.NotFoundError:
@@ -80,10 +83,10 @@ async def playstore(ps_e):
         return
     await ps_e.edit("**"+res["title"]+"**\n\nBy "+res["developer"]+"\n\nSummary: "+res['summary']+"\n\n[link]("+res["url"]+")")
     
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.yt (.*)"))
+@ehandler.on(command="yt", hasArgs=True, outgoing=True)
 async def yt_search(yts):
     """ For .yt command, do a YouTube search from Telegram. """
-    query = yts.pattern_match.group(1)
+    query = yts.text.split(" ")[1]
     result = ''
 
     if not pc.YOUTUBE_API_KEY:
@@ -142,11 +145,11 @@ async def youtube_search(query,
         nexttok = "KeyError, try again."
         return (nexttok, videos)
         
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.ytv (.*)"))
+@ehandler.on(command="ytv", hasArgs=True, outgoing=True)
 async def yt_video(ytv):
     """ For .play command, fetch content from Play Store. """
     await ytv.edit("`Finding...`")
-    query = ytv.pattern_match.group(1)
+    query = ytv.text.split(" ")[1]
     ydl = YoutubeDL({'outtmpl': '%(id)s%(ext)s'})
     with ydl:
         result = ydl.extract_info(
@@ -181,10 +184,10 @@ async def yt_video(ytv):
     await ytv.edit(ans_data)
     
     
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^\.google (.*)"))
+@ehandler.on(command="google", hasArgs=True, outgoing=True)
 async def gsearch(q_event):
     await q_event.edit("`Processing...`")
-    match = q_event.pattern_match.group(1)
+    match = q_event.text.split(" ")[1]
     page = findall(r"page=\d+", match)
     try:
         page = page[0]
@@ -208,21 +211,14 @@ async def gsearch(q_event):
                        msg,
                        link_preview=False)
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Extra commands for the scrappers (sic) module."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-        ".ud <text>\
-    \nUsage: Does a search on Urban Dictionary.\
-    \n\n.yt <text>\
-    \nUsage: Does a search on YouTube.\
-    \n\n.ytv <videoID>\
-    \nUsage: Shows YouTube video informations.\
-    \n\n.google <text>\
-    \nUsage: Does a search on Google.\
-    \n\n.play <packageID>\
-    \nUsage: Does a search on Play Store."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Scrapers (extensions)', version='1.0')})
+register_module_desc("Extra commands for the scrappers (sic) module.")
+register_cmd_usage("ud", "<text>", "Does a search on Urban Dictionary.")
+register_cmd_usage("yt", "<text>", "Does a search on YouTube.")
+register_cmd_usage("ytv", "<videoID>", "Shows YouTube video information.")
+register_cmd_usage("google", "<text>", "Does a search on Google.")
+register_cmd_usage("play", "<packageID>", "Does a search on Play Store.")
+register_module_info(
+    name="Scrapers (extension)",
+    authors="githubcatw, Haklerman, help from prototype74",
+    version=VERSION
+)

@@ -3,12 +3,17 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot import tgclient
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.inactive$"))
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
+
+@ehandler.on(command="inactive", hasArgs=False, outgoing=True)
 async def inactive(act):
     if not act.text[0].isalpha() and act.text[0] in ("."):
         chat = None
@@ -43,7 +48,7 @@ async def inactive(act):
             reply = "This group is pretty active."
         await act.edit(reply)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.pinact ([\s\S]*)$"))
+@ehandler.on(command="pinact", hasArgs=True, outgoing=True)
 async def forceactive(act):
     if not act.text[0].isalpha() and act.text[0] in ("."):
         chat = None
@@ -83,15 +88,11 @@ async def forceactive(act):
         await act.respond(reply)
         await act.delete()
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Extra commands for the chat module."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-        ".inactive\
-    \nUsage: Lists inactive people.\
-    \n\n.pinact\
-    \nUsage: Pings inactive people."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Chat (extension)', version='1.0')})
+register_module_desc("Extra commands for the chat module.")
+register_cmd_usage("inactive", "", "Lists inactive people.")
+register_cmd_usage("pinact", "", "Pings inactive people.")
+register_module_info(
+    name="Chat (extension)",
+    authors="githubcatw, Haklerman, help from prototype74",
+    version=VERSION
+)

@@ -21,10 +21,13 @@ from telethon.tl.functions.photos import (DeletePhotosRequest,
 
 from telethon.tl.types import InputPhoto, MessageMediaPhoto, User, Chat, Channel
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 from telethon.events import NewMessage
 from os.path import basename
+
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
 
 # ====================== CONSTANT ===============================
 INVALID_MEDIA = "```The extension of the media entity is invalid.```"
@@ -39,9 +42,7 @@ USERNAME_SUCCESS = "```Your username was succesfully changed.```"
 USERNAME_TAKEN = "```This username is already taken.```"
 # ===============================================================
 
-
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.name"))
+@ehandler.on(command="name", hasArgs=True, outgoing=True)
 async def update_name(name):
     """ For .name command, change your name in Telegram. """
     newname = name.text[6:]
@@ -57,8 +58,7 @@ async def update_name(name):
         UpdateProfileRequest(first_name=firstname, last_name=lastname))
     await name.edit(NAME_OK)
 
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.setpfp$"))
+@ehandler.on(command="setpfp", hasArgs=True, outgoing=True)
 async def set_profilepic(propic):
     """ For .profilepic command, change your profile picture in Telegram. """
     replymsg = await propic.get_reply_message()
@@ -85,27 +85,24 @@ async def set_profilepic(propic):
         except PhotoExtInvalidError:
             await propic.edit(INVALID_MEDIA)
 
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.setbio (.*)"))
+@ehandler.on(command="setbio", hasArgs=True, outgoing=True)
 async def set_biograph(setbio):
     """ For .setbio command, set a new bio for your profile in Telegram. """
-    newbio = setbio.pattern_match.group(1)
+    newbio = setbio.text.split(" ")[1]
     await setbio.client(UpdateProfileRequest(about=newbio))
     await setbio.edit(BIO_SUCCESS)
 
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.username (.*)"))
+@ehandler.on(command="username", hasArgs=True, outgoing=True)
 async def update_username(username):
     """ For .username command, set a new username in Telegram. """
-    newusername = username.pattern_match.group(1)
+    newusername = username.text.split(" ")[1]
     try:
         await username.client(UpdateUsernameRequest(newusername))
         await username.edit(USERNAME_SUCCESS)
     except UsernameOccupiedError:
         await username.edit(USERNAME_TAKEN)
 
-
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^\.delpfp"))
+@ehandler.on(command="delpfp", hasArgs=True, outgoing=True)
 async def remove_profilepic(delpfp):
     """ For .delpfp command, delete your current profile picture in Telegram. """
     group = delpfp.text[8:]
@@ -131,23 +128,13 @@ async def remove_profilepic(delpfp):
     await delpfp.edit(
         f"`Successfully deleted {len(input_photos)} profile picture(s).`")
 
-
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Edit your name, bio and profile picture."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".username <new_username>\
-\nUsage: Changes your Telegram username.\
-\n\n.name <firstname> or .name <firstname> <lastname>\
-\nUsage: Changes your Telegram name.(First and last name will get split by the first space)\
-\n\n.setpfp\
-\nUsage: Reply with .setpfp to an image to change your Telegram profie picture.\
-\n\n.setbio <new_bio>\
-\nUsage: Changes your Telegram bio.\
-\n\n.delpfp or .delpfp <number>/<all>\
-\nUsage: Deletes your Telegram profile picture(s)."
-})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Profile', version='1.0')})
+register_module_desc("Edit your name, bio and profile picture.")
+register_cmd_usage("name", "<firstname> or .name <firstname> <lastname>", "Changes your Telegram name.(First and last name will get split by the first space)")
+register_cmd_usage("setpfp", "", "Reply with .setpfp to an image to change your Telegram profile picture.")
+register_cmd_usage("setbio", "<new_bio>", "Changes your Telegram bio.")
+register_cmd_usage("delpfp", " or .delpfp <number>/<all>", "Deletes your Telegram profile picture(s).")
+register_module_info(
+    name="Profile",
+    authors="githubcatw, nunopenim, help from prototype74",
+    version=VERSION
+)

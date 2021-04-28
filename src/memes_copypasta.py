@@ -318,6 +318,14 @@ MODULE_DICT.update({
     \n\n.uno\
     \nUsage: Reverse card! Like .nou, for the unaware.\
     \n\n.fortnite\
-    \nUsage: Cringydance.exe."\
+    \nUsage: Cringydance.exe. Created by Watn3y."\
 })
 MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (copypasta)', version='1.0')})
+
+register_module_desc("\"Flash\" a ZIP file.")
+register_cmd_usage("flasher", "wow args", "usage")
+register_module_info(
+    name="Flasher",
+    authors="githubcatw, Watn3y, Haklerman, help from prototype74",
+    version=VERSION
+)

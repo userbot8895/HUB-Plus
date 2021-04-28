@@ -3,8 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -14,9 +12,15 @@ import os
 import qrcode
 from bs4 import BeautifulSoup
 from userbot.sysutils.configuration import getConfig
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
+
 LOGGING = getConfig("LOGGING")
 
-@tgclient.on(NewMessage(pattern=r"^\.decode$", outgoing=True))
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
+
+@ehandler.on(command="decode", hasArgs=False, outgoing=True)
 async def parseqr(qr_e):  # decods qr or barcode
     if not qr_e.text[0].isalpha() and qr_e.text[0] in ("."):
         downloaded_file_name = await qr_e.client.download_media(
@@ -39,12 +43,12 @@ async def parseqr(qr_e):  # decods qr or barcode
         await qr_e.edit("Decoded message: " + qr_contents)
 
 
-@tgclient.on(NewMessage(pattern=r"\.makeqr(?: |$)([\s\S]*)", outgoing=True))
+@ehandler.on(command="makeqr", hasArgs=True, outgoing=True)
 async def make_qr(makeqr):  # makes qr
     if not makeqr.text[0].isalpha() and makeqr.text[0] in ("."):
         if makeqr.fwd_from:
             return
-        input_str = makeqr.pattern_match.group(1)
+        input_str = makeqr.split(" ")[1]
         message = "SYNTAX: `.makeqr <long text to include>`"
         reply_msg_id = None
         if input_str:
@@ -72,16 +76,11 @@ async def make_qr(makeqr):  # makes qr
         os.remove("img_file.webp")
         await makeqr.delete()
 
-
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "you have a brain, right?"})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-        "`.decode <reply to barcode/qrcode>`\
-    \nUsage: Get the content from the replied QR Code/Bar Code.\
-    \n\n`.makeqr <content>`\
-    \nUsage: Make a QR Code from the given content."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='QR code', version='1.0')})
+register_module_desc("Make QR codes.")
+register_cmd_usage("decode", "", "Get the content from the replied QR Code/Bar Code.")
+register_cmd_usage("makeqr", "<content>", "Make a QR Code from the given content.")
+register_module_info(
+    name="QR code",
+    authors="githubcatw, nunopenim, help from prototype74",
+    version=VERSION
+)

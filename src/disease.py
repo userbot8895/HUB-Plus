@@ -6,17 +6,27 @@
 import time
 import random
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot import tgclient
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
+from os.path import join as pathjoin
 import os
 from userbot.config import PlusConfig as pc
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
+from userbot.config import TEMP_DL_DIR
+
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x"
+
+if not os.path.isdir("plus/"):
+    os.makedirs("plus/")
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.infect"))
+@ehandler.on(command="infect", hasArgs=True, outgoing=True)
 async def infect(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		replymsg = await event.get_reply_message()
@@ -34,7 +44,7 @@ async def infect(event):
 			if replymsg.sender.id in pc.HOMIES:
 				await event.edit(f"Your homies have natural immunity against the {pc.VIRUS}.")
 				return
-			f=open("patients.txt","a+", encoding="utf-8")
+			f=open(pathjoin("plus","patients.txt"),"a+", encoding="utf-8")
 			f.write(f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})\n")
 			f.close()
 			await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}!")
@@ -42,7 +52,7 @@ async def infect(event):
 		else:
 			await event.edit("I don't know whom to infect!")
 		
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.infshare"))
+@ehandler.on(command="infshare", hasArgs=False, outgoing=True)
 async def share(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		await event.client.send_file(
@@ -53,7 +63,7 @@ async def share(event):
         )
 		await event.delete()
 		
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.infmerge"))
+@ehandler.on(command="infmerge", hasArgs=True, outgoing=True)
 async def infmerge(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		replymsg = await event.get_reply_message()
@@ -63,7 +73,7 @@ async def infmerge(event):
 
 				downloaded_file_name = await bot.download_media(
 					replymsg,
-					"deldog_temp",
+					pathjoin(TEMP_DL_DIR, "patients.txt"),
 					progress_callback=progress
 				)
 				their_list = None
@@ -72,12 +82,12 @@ async def infmerge(event):
 				os.remove(downloaded_file_name)
 
 				await event.edit("`Reading list...`")
-				open('patients.txt', 'a').close()
-				with open ("patients.txt", "r", encoding="utf-8") as rf:
+				open(pathjoin("plus","patients.txt"), 'a').close()
+				with open(pathjoin("plus","patients.txt"), "r", encoding="utf-8") as rf:
 					ours=rf.read()
 				await event.edit("`Merging...`")
 				pats = 0;
-				with open ("patients.txt", "a", encoding="utf-8") as app:
+				with open(pathjoin("plus","patients.txt"), "a", encoding="utf-8") as app:
 					for pat in their_list:
 						await event.respond(pat)
 						if not pat in ours:
@@ -92,27 +102,22 @@ async def infmerge(event):
 		else:
 			await event.edit("I don't know whom to merge lists with!")
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.infstats"))
+@ehandler.on(command="infstats", hasArgs=False, outgoing=True)
 async def infected(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
-		rf=open("patients.txt", "r", encoding="utf-8")
+		rf=open(pathjoin("plus","patients.txt"), "r", encoding="utf-8")
 		read=rf.read()
 		rf.close()
 		reply = f"List of people infected with the {pc.VIRUS}:\n{read}"
 		await event.edit(reply[0:4090])
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Spread your own plague across Telegram!"})
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".infect\
-    \nUsage: Infect someone.\
-    \n\n.infstats\
-    \nUsage: Stats on the people you infected.\
-    \n\n.infmerge\
-    \nUsage: Merge a patient list with yours.\
-    \n\n.infshare\
-    \nUsage: Share your patient list."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Disease', version='1.0')})
+register_module_desc("Spread your own plague across Telegram!")
+register_cmd_usage("infect", "(replying to someone)", "Infect someone.")
+register_cmd_usage("infstats", "", "Stats on the people you infected.")
+register_cmd_usage("infmerge", "(replying to a patients.txt file)", "Merge a patient list with yours.")
+register_cmd_usage("infshare", "", "Share your patient list. Check out our list sharing group here: t.me/joinchat/V7NyfpJVUXSiMSeN")
+register_module_info(
+    name="Disease",
+    authors="githubcatw, help from prototype74",
+    version=VERSION
+)

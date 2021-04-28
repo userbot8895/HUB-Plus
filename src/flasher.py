@@ -6,11 +6,16 @@
 import time
 import random
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot import tgclient
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.include.aux_funcs import module_info
+from userbot.sysutils.event_handler import EventHandler
 from telethon.events import NewMessage
 
-@tgclient.on(NewMessage(pattern=r"^\.flash (.*)", outgoing=True))
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x"
+
+@ehandler.on(command="flash", hasArgs=True, outgoing=True)
 async def flash(event):
 	r = random.randint(1, 10000)
 	text = event.pattern_match.group(1)
@@ -24,6 +29,10 @@ async def flash(event):
 	elif r % 2 == 0:
 		await event.edit(f"`Flashing` {text}.zip `failed successfully!`")
  
-MODULE_DESC.update({"flasher": "Flash a ZIP file."})
-MODULE_DICT.update({"flasher": ".flash <file_name>\nUsage: Flash `file_name.zip`"})
-MODULE_INFO.update({"flasher": module_info(name='Flasher', version='1.0')})
+register_module_desc("\"Flash\" a ZIP file.")
+register_cmd_usage("flash", "<zip name>", "\"Flash\" a ZIP file.")
+register_module_info(
+    name="Flasher",
+    authors="githubcatw, Haklerman, help from prototype74",
+    version=VERSION
+)

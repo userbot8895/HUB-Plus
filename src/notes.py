@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 import os.path
@@ -11,11 +10,17 @@ from os import path
 import os
 import json
 from os.path import basename
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
+from os.path import join as pathjoin
 
-@tgclient.on(NewMessage(pattern=r"^\.save(?: |$)(\w+)(.*)", outgoing=True))
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
+
+@ehandler.on(command="note", hasArgs=True, outgoing=True)
 async def save(event):
-    name = event.pattern_match.group(1)
-    text = event.pattern_match.group(2).lstrip()
+    name = event.text.split(" ")[1]
+    text = event.text.split(" ")[2]
     textx = await event.get_reply_message()
     npath = "notes/" + name + ".txt"
     if not os.path.isdir("notes/"):
@@ -53,10 +58,13 @@ def parse_markdown(message, entities):
             goffset = goffset + 4
     return parsed
 
-@tgclient.on(NewMessage(pattern=r"^\.note (.*)", outgoing=True))
+@ehandler.on(command="note", hasArgs=True, outgoing=True)
 async def note(event):
-    name = event.pattern_match.group(1)
-    npath = "notes/" + name + ".txt"
+    notes = event.text.split(" ")
+    if len(notes) < 2:
+        await event.edit("Specify the note name.")
+        return
+    npath = "notes/" + notes[1] + ".txt"
     if not path.exists(npath):
         await event.edit(f"Note `{name}` doesn't exist.\n"+
                            f"Type `.save {name} <text> to create the note.")
@@ -64,10 +72,13 @@ async def note(event):
     f=open(npath,"r+")
     await event.edit(f.read())
 
-@tgclient.on(NewMessage(pattern=r"^\.n (.*)", outgoing=True))
+@ehandler.on(command="n", hasArgs=True, outgoing=True)
 async def note_short(event):
-    name = event.pattern_match.group(1)
-    npath = "notes/" + name + ".txt"
+    notes = event.text.split(" ")
+    if len(notes) < 2:
+        await event.edit("Specify the note name.")
+        return
+    npath = "notes/" + notes[1] + ".txt"
     if not path.exists(npath):
         await event.edit(f"Note `{name}` doesn't exist.\n"+
                            f"Type `.save {name} <text> to create the note.")
@@ -75,7 +86,7 @@ async def note_short(event):
     f=open(npath,"r+")
     await event.edit(f.read())
 
-@tgclient.on(NewMessage(pattern=r"^\.notes", outgoing=True))
+@ehandler.on(command="notes", hasArgs=True, outgoing=True)
 async def notes(mention):
     reply = "You have these notes:\n\n"
     allnotes = os.listdir("notes/")
@@ -84,15 +95,12 @@ async def notes(mention):
     else:
         for n in allnotes:
             reply = reply + f"- {n.split('.')[0]}\n"
-        reply = reply + "\nGet any of these notes by typing `.note <notename>`"
+        reply = reply + "\nGet any of these notes by typing `.note <notename>` or `.n <notename>`."
     await mention.edit(reply)
     
-@tgclient.on(NewMessage(pattern=r"^\.delnote (.*)", outgoing=True))
+@ehandler.on(command="delnote", hasArgs=False, outgoing=True)
 async def delnote(event):
-    name = event.pattern_match.group(1)
-    notes = [name]
-    if " " in name:
-        notes = name.split()
+    notes = event.text.split(" ")
     deleted = 0
     delnames = ""
     for n in notes:
@@ -104,19 +112,16 @@ async def delnote(event):
         os.remove(npath)
         deleted = deleted + 1
         delnames = delnames + n + ", "
-    await event.edit(f"Deleted note{'s:' if deleted > 1 else ''} `{delnames.rstrip(', ')}`.")
-    
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Save text and quickly send it later."})
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".note <notename>\
-    \nUsage: Send a note.\
-    \n\n.save <notename> <text>\
-    \nUsage: Save a note.\
-    \n\n.notes\
-    \nUsage: Get all of your notes.\
-    \n\n.delnote <notename>\
-    \nUsage: Delete a note."})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Notes', version='1.0')})
+    await event.edit(f"Deleted note{'s:' if deleted > 1 else ''} `{delnames if deleted > 1 else delnames.rstrip(', ')}`.")
+
+register_module_desc("Save text and quickly send it later.")
+register_cmd_usage("note", "<notename>", "Send a note.")
+register_cmd_usage("n", "<notename>", "Send a note.")
+register_cmd_usage("save", "<notename> <text>", "Save a note.")
+register_cmd_usage("notes", "", "Get all of your notes.")
+register_cmd_usage("delnote", "<notename>", "Delete a note.")
+register_module_info(
+    name="Notes",
+    authors="githubcatw, help from prototype74",
+    version=VERSION
+)

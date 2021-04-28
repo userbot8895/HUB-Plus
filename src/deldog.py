@@ -8,21 +8,25 @@ from datetime import datetime
 import os
 import requests
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot import tgclient
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
+from os.path import join as pathjoin
+from userbot.sysutils.event_handler import EventHandler
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.config import TEMP_DL_DIR
+
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x"
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.dog([\s\S]*)"))
+@ehandler.on(command="dog", hasArgs=True, outgoing=True)
 async def _(event):
-    tmp_dir = "deldog_temp"
     if event.fwd_from:
         return
-    if not os.path.isdir(tmp_dir):
-        os.makedirs(tmp_dir)
     start = datetime.now()
     input_str = event.pattern_match.group(1)
     message = "Syntax: `.dog <text>`"
@@ -34,7 +38,7 @@ async def _(event):
             await event.edit("`Downloading file...`")
             downloaded_file_name = await bot.download_media(
                 previous_message,
-                tmp_dir,
+                TEMP_DL_DIR,
                 progress_callback=progress
             )
             m_list = None
@@ -63,13 +67,10 @@ async def _(event):
     else:
         await event.edit("Pasted to {} in {} seconds.".format(url, ms))
         
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Upload text to del.dog."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".dog <text>\
-    \nUsage: Upload text to del.dog."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Del.dog', version='1.0')})
+register_module_desc("Upload text to Del.dog.")
+register_cmd_usage("dog", "<optional text>", "Upload text to Del.dog. If no text argument is provided uploads the message replied to.")
+register_module_info(
+    name="Del.dog",
+    authors="githubcatw, help from prototype74",
+    version=VERSION
+)

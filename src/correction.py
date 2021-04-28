@@ -3,12 +3,17 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
+from userbot import tgclient
 from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 import re
 from sre_constants import error as sre_err
 from os.path import basename
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
+
+ehandler = EventHandler()
+VERSION = "2021.4.WU5 for HUB 4.x" 
 
 DUM_LIST = {
 	"wut": "what",
@@ -49,7 +54,7 @@ DUM_LIST = {
 
 DELIMITERS = ("/", ":", "|", "_")
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.dum"))
+@ehandler.on(command="dum", hasArgs=False, outgoing=True)
 async def didyoumean(dum):
 	if not dum.text[0].isalpha() and dum.text[0] in ("."):
 		textx = await dum.get_reply_message()
@@ -147,15 +152,11 @@ async def sed(command):
             if text:
                 await command.edit(f"Did you mean? \n\n{text}")
 
-
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Correct people."})
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".s<delimiter><old word(s)><delimiter><new word(s)>\
-    \nUsage: Replaces a word or words using sed.\
-    \nDelimiters: `/, :, |, _`\
-    \n\n.dum\
-    \nUsage: An automated version of .s that replaces common chat slang."})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Corrections', version='1.0 (word update 5)')})
+register_module_desc("Correct people.")
+register_cmd_usage("s<delimiter><old word(s)><delimiter><new word(s)>", "Replaces a word or words using sed.\nDelimiters: `/, :, |, _`")
+register_cmd_usage("dum", "An automated version of .s that replaces common chat slang.")
+register_module_info(
+    name="Corrections",
+    authors="githubcatw, nunopenim, help from prototype74",
+    version=VERSION
+)

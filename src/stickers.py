@@ -3,8 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -24,6 +24,9 @@ from telethon.tl.types import InputStickerSetID
 from userbot.sysutils.configuration import getConfig
 LOGGING = getConfig("LOGGING")
 
+ehandler = EventHandler()
+VERSION = "2021.4 for HUB 4.x" 
+
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
     "Plagiarising hehe...",
@@ -37,8 +40,7 @@ KANGING_STR = [
     "Mr.Steal Your Sticker is stealing this sticker... ",
 ]
 
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.kang"))
+@ehandler.on(command="kang", hasArgs=True, outgoing=True)
 async def kang(args):
     if not args.text[0].isalpha() and args.text[0] in ("."):
         user = await tgclient.get_me()
@@ -283,7 +285,7 @@ async def resize_photo(photo):
     return image
     
     
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.getsticker$"))
+@ehandler.on(command="getsticker", hasArgs=False, outgoing=True)
 async def get_sticker(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
     	if not event.reply_to_msg_id:
@@ -318,7 +320,7 @@ async def get_sticker(event):
     		sticker.close()
     	await event.delete()
     
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.stkrinfo$"))
+@ehandler.on(command="stkrinfo", hasArgs=False, outgoing=True)
 async def get_pack_info(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if not event.is_reply:
@@ -361,7 +363,7 @@ async def get_pack_info(event):
 
         await event.edit(OUTPUT)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.setkang"))
+@ehandler.on(command="setkang", hasArgs=False, outgoing=True)
 async def get_pack_info(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if not event.is_reply:
@@ -404,24 +406,12 @@ async def get_pack_info(event):
         ur = f"[{get_stickerset.set.title}](t.me/addstickers/{get_stickerset.set.short_name})"
         await event.edit(f"Successfully changed kang pack to {ur}. New kanged stickers will be added there.")
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Make a sticker pack."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-        "`.kang`\
-    \nUsage: Reply .kang to a sticker or an image to kang it to your userbot pack.\
-    \n\n`.kang [emoji('s)]`\
-    \nUsage: Works just like .kang but uses the emoji('s) you picked.\
-    \n\n`.kang [number]`\
-    \nUsage: Kang's the sticker/image to the specified pack but uses 🤔 as emoji. Overrides the pack set with .setkang.\
-    \n\n`.kang [emoji('s)] [number]`\
-    \nUsage: Kang's the sticker/image to the specified pack and uses the emoji('s) you picked. Overrides the pack set with .setkang.\
-    \n\n`.stkrinfo`\
-    \nUsage: Gets info about the sticker pack.\
-    \n\n`.setkang`\
-    \nUsage: Reply to a sticker to set its pack as the kang pack."
-})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Stickers', version='1.0')})
+register_module_desc("Make a sticker pack.")
+register_cmd_usage("kang", "(emojis) (number)", "Reply .kang to a sticker or an image to kang it to your userbot pack.\nIf emojis isn't specified uses 🤔 as emoji. (number) sets the number of the pack, but overrides .setkang.")
+register_cmd_usage("stkrinfo", "", "Gets info about the replied sticker's pack.")
+register_cmd_usage("setkang", "", "Reply to a sticker to set its pack as the kang pack.")
+register_module_info(
+    name="Stickers",
+    authors="githubcatw, Haklerman, nunopenim, help from prototype74",
+    version=VERSION
+)
