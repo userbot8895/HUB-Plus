@@ -6,6 +6,7 @@ Use your browser's search function to find the commands you used in NunoBot++ on
 Once done, do `.pkg install <list of packages>`.
 > Example: `.pkg install hpp_scrappers memes_animated hpp_chat` 
 
+## Extensions
 |To get|You install|
 |-----|-----|
 |`.yt`|`hpp_scrappers`|
@@ -16,6 +17,10 @@ Once done, do `.pkg install <list of packages>`.
 |`.logoff`|`hpp_systools`|
 |`.inactive`|`hpp_chat`|
 |`.pinact`|`hpp_chat`|
+
+## Memes
+|To get|You install|
+|-----|-----|
 |`.oof`|`memes_animated`|
 |`.hmm`|`memes_animated`|
 |`.lool`|`memes_animated`|
