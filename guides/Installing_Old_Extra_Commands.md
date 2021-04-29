@@ -19,6 +19,8 @@ Once done, do `.pkg install <list of packages>`.
 |`.pinact`|`hpp_chat`|
 
 ## Memes
+All meme commands require `memes_common` too.
+
 |To get|You install|
 |-----|-----|
 |`.oof`|`memes_animated`|
@@ -62,5 +64,3 @@ Once done, do `.pkg install <list of packages>`.
 |`.lfy <query>`|`memes_misc`|
 |`.scam <action> <time>`|`memes_misc`|
 |`.s`|`corrections`|
-
-All meme commands require `memes_common` too.
