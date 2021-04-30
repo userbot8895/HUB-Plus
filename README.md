@@ -1,4 +1,4 @@
-# HyperBot++ ![Download counter](https://img.shields.io/github/downloads/userbot8895/HyperBot-Plus/latest/total?color=%23aaaaa)
+# HyperBot++ ![Download counter](https://img.shields.io/github/downloads/userbot8895/HyperBot-Plus/latest/total?color=%23aaaaa&label=downloads)
 HyperBot++ is an extension to nunopenim's HyperBot.
 
 HyperBot++ is licensed under the [DBBPL](https://github.com/githubcatw/HyperBot_Plus/blob/master/licenses/DBBPL.md).
