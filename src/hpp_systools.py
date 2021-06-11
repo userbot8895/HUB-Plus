@@ -3,12 +3,13 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
-from telethon.events import NewMessage
-from os.path import basename
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.logoff$"))
+ehandler = EventHandler()
+VERSION = "2021.6 for HUB 4.x"
+
+@ehandler.on(command="logoff", hasArgs=False, outgoing=True)
 async def logoff(event):  # bot shutdown
     if not event.text[0].isalpha() and event.text[0] in ("."):
         await event.edit("`Farewell!`")
@@ -16,13 +17,10 @@ async def logoff(event):  # bot shutdown
             await event.client.send_message(BOTLOG_CHATID, "logoff")
         await event.client.log_out()
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Extra commands for the systools module."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-        ".logoff\
-    \nUsage: Log off."})
-
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Systools (extension)', version='1.0')})
+register_module_desc("Extra commands for the systools module.")
+register_cmd_usage("logoff", "", "Log off.")
+register_module_info(
+    name="Systools (extension)",
+    authors="githubcatw, Haklerman",
+    version=VERSION
+)

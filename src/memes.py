@@ -4,9 +4,9 @@
 # Uses code from HyperUBot's package_manager, which is licensed under PEL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO, OS
-from userbot.include.aux_funcs import module_info
 import userbot.include.git_api as git
+from userbot.sysutils.event_handler import EventHandler
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from telethon.events import NewMessage
 from logging import getLogger
 import sys
@@ -31,7 +31,7 @@ else:
 def list_updater():
     global MODULE_LIST
     MODULE_LIST = []
-    assets = git.getAssets(git.getReleaseData(git.getData("userbot8895/HyperBot_Plus"), 0))
+    assets = git.getAssets(git.getReleaseData(git.getData("userbot8895/HUB-Plus"), 0))
     for asset in assets:
         assetName = git.getReleaseFileName(asset)
         assetURL = git.getReleaseFileURL(asset)
@@ -41,7 +41,10 @@ def list_updater():
     print(MODULE_LIST)
     return MODULE_LIST
 
-@tgclient.on(NewMessage(pattern=r"^\.memes", outgoing=True))
+ehandler = EventHandler()
+VERSION = "2021.6 for HUB 4.x" 
+
+@ehandler.on(command="memes", hasArgs=False, outgoing=True)
 async def flash(event):
     await event.edit("Fetching all memes modules...")
     list_updater()
@@ -65,8 +68,10 @@ async def flash(event):
     os.execle(sys.executable, *args, os.environ)
     await msg.client.disconnect()
 
-MODULE_DESC.update({"memes": "Memes! This module installs **every meme module in HyperBot++**, so you have all meme commands with one command."})
-MODULE_DICT.update({"memes": ".memes\nUsage: Install all meme modules.\
-\nIf you don't want all read the [Installing Extra Commands]\
-(https://github.com/githubcatw/HyperBot_Plus/blob/master/guides/Installing_Old_Extra_Commands.md) guide."})
-MODULE_INFO.update({"memes": module_info(name='Memes (installer)', version='1.0')})
+register_module_desc("Memes! This module installs **every meme module in HyperBot++**, so you have all meme commands with one command.")
+register_cmd_usage("memes", "", "Install all meme modules")
+register_module_info(
+    name="Memes - installer",
+    authors="githubcatw",
+    version=VERSION
+)

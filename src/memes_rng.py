@@ -3,8 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
+from userbot.sysutils.event_handler import EventHandler
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -21,7 +21,10 @@ from cowpy import cow
 from pyfiglet import Figlet
 from .memes_common import *
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.coinflip$"))
+ehandler = EventHandler()
+VERSION = "2021.6 for HUB 4.x"
+
+@ehandler.on(command="coinflip", hasArgs=False, outgoing=True)
 async def coin(event):  # coinflip
     if not event.text[0].isalpha() and event.text[0] in ("."):
         r = random.randint(1, 10000)
@@ -34,11 +37,13 @@ async def coin(event):  # coinflip
         else:
             await event.edit("`Mate, this is a beer bottle cap, give me a coin!`")
             
-@tgclient.on(NewMessage(pattern="^.punch(?: |$)(.*)", outgoing=True))
+@ehandler.on(command="punch", hasArgs=True, outgoing=True)
 async def who(event): #punch
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if event.fwd_from:
             return
+        if len(event.text.split(" ")) > 1:
+            await event.edit("`Too many arguments!`")
         replied_user = await get_user(event)
         caption = await punch(replied_user, event)
         message_id_to_reply = event.message.reply_to_msg_id
@@ -53,8 +58,12 @@ async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(previous_message.sender_id))
+    elif len(event.text.split(" ")) != 1:
+        # punch the sender as a form of punisjment
+        self_user = await event.client.get_me()
+        user = self_user.id
     else:
-        user = event.pattern_match.group(1)
+        user = event.text.split(" ")[1]
         if user.isnumeric():
             user = int(user)
         if not user:
@@ -89,11 +98,13 @@ async def punch(replied_user, event): #builds the punch msg itself
     return caption
 
 
-@tgclient.on(NewMessage(pattern="^.slap(?: |$)(.*)", outgoing=True))
+@ehandler.on(command="slap", hasArgs=True, outgoing=True)
 async def who(event):  # slap
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if event.fwd_from:
             return
+        if len(event.text.split(" ")) > 1:
+            await event.edit("`Too many arguments!`")
         replied_user = await get_user(event)
         caption = await slap(replied_user, event)
         message_id_to_reply = event.message.reply_to_msg_id
@@ -103,31 +114,6 @@ async def who(event):  # slap
             await event.edit(caption)
         except BaseException:
             await event.edit("`Can't slap this person, loading 12 gauge buckshot in my shotgun!!`")
-
-async def get_user(event):
-    if event.reply_to_msg_id:
-        previous_message = await event.get_reply_message()
-        replied_user = await event.client(GetFullUserRequest(previous_message.sender_id))
-    else:
-        user = event.pattern_match.group(1)
-        if user.isnumeric():
-            user = int(user)
-        if not user:
-            self_user = await event.client.get_me()
-            user = self_user.id
-        if event.message.entities is not None:
-            probable_user_mention_entity = event.message.entities[0]
-            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
-                user_id = probable_user_mention_entity.user_id
-                replied_user = await event.client(GetFullUserRequest(user_id))
-                return replied_user
-        try:
-            user_object = await event.client.get_entity(user)
-            replied_user = await event.client(GetFullUserRequest(user_object.id))
-        except (TypeError, ValueError):
-            await event.edit("`This dude doesn't even exist`")
-            return None
-    return replied_user
 
 async def slap(replied_user, event):  # builds the slap msg itself
     user_id = replied_user.user.id
@@ -146,12 +132,14 @@ async def slap(replied_user, event):  # builds the slap msg itself
     return caption
 
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.decide(?: |$)(.*)"))
+@ehandler.on(command="decide", hasArgs=True, outgoing=True)
 async def decide(event):  # yes/no
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if event.fwd_from:
             return
-        message = event.pattern_match.group(1)
+        message = None
+        if len(event.text.split(" ")) > 0:
+            message = event.text.split(" ")[1]
         message_id = None
         if event.reply_to_msg_id:
             message_id = event.reply_to_msg_id
@@ -166,46 +154,35 @@ async def decide(event):  # yes/no
         await event.client.send_message(event.chat_id, str(r["answer"]).upper(), reply_to=message_id, file=r["image"])
         await event.delete()
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.react$"))
+@ehandler.on(command="react", hasArgs=False, outgoing=True)
 async def react_meme(react):
     """ Make your userbot react to everything. """
     await react.edit(random.choice(FACEREACTS))
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.shg$"))
+@ehandler.on(command="shg", hasArgs=False, outgoing=True)
 async def shrugger(shg):
     r""" ¯\_(ツ)_/¯ """
     await shg.edit(random.choice(SHGS))
     
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.doubt$"))
+@ehandler.on(command="doubt", hasArgs=False, outgoing=True)
 async def doubt(shg):
     await shg.edit(random.choice(DOUBT))
     
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.cry$"))
+@ehandler.on(command="cry", hasArgs=False, outgoing=True)
 async def cry(e):
     """ y u du dis, i cry everytime !! """
     await e.edit(random.choice(CRI))
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Memes! This module contains stuff involving randomness."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    "\n\n.hi\
-    \nUsage: Greet everyone!\
-    \n\n.coinflip <heads/tails>\
-    \nUsage: Flip a coin!\
-    \n\n.punch\
-    \nUsage: Punch 'em!\
-    \n\n.slap\
-    \nUsage: reply to slap them with random objects!\
-    \n\n.decide [Optional: (yes, no, maybe)]\
-    \nUsage: Make a quick decision.\
-    \n\n.react\
-    \nUsage: Make your userbot react to everything.\
-    \n\n.shg\
-    \nUsage: Shrug at it !!\
-    \n\n.cry\
-    \nUsage: y u du dis, i cri."
-})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (RNG)', version='1.0')})
+register_module_desc("Memes! This module contains stuff involving randomness.")
+register_cmd_usage("coinflip", "<heads/tails>", "Flip a coin! Can be rigged.")
+register_cmd_usage("punch", "", "Punch 'em!")
+register_cmd_usage("slap", "", "Reply to slap them with random objects!")
+register_cmd_usage("decide", "[optional: yes, no, maybe]", "Make a quick decision.")
+register_cmd_usage("react", "", "Make your userbot react to everything.")
+register_cmd_usage("shg", "", "Shrug at it.")
+register_cmd_usage("cry", "", "y u du dis, i cri.")
+register_module_info(
+    name="Memes - RNG",
+    authors="githubcatw, @BottomTextBot, Haklerman",
+    version=VERSION
+)

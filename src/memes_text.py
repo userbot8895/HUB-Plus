@@ -3,8 +3,9 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
+from userbot import tgclient
+from userbot.sysutils.event_handler import EventHandler
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -20,16 +21,15 @@ from telethon.tl.types import MessageEntityMentionName
 from cowpy import cow
 from pyfiglet import Figlet
 from .memes_common import *
-from .correction import DUM_LIST
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.vapor(?: |$)(.*)"))
+@ehandler.on(command="vapor", hasArgs=True, outgoing=True)
 async def vapor(vpr):  # vapor
     if not vpr.text[0].isalpha() and vpr.text[0] in ("."):
         reply_text = list()
         textx = await vpr.get_reply_message()
-        message = vpr.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(vpr.text.split(" ")) > 1:
+            message = ' '.join(vpr.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -44,14 +44,14 @@ async def vapor(vpr):  # vapor
                 reply_text.append(charac)
         await vpr.edit("".join(reply_text))
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.str(?: |$)(.*)"))
+@ehandler.on(command="str", hasArgs=True, outgoing=True)
 async def stretch(stret):  # stretch
     if not stret.text[0].isalpha() and stret.text[0] in ("."):
         textx = await stret.get_reply_message()
         message = stret.text
-        message = stret.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(stret.text.split(" ")) > 1:
+            message = ' '.join(stret.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -61,14 +61,14 @@ async def stretch(stret):  # stretch
         reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵаеиоуюяыэё])", (r"\1" * count), message)
         await stret.edit(reply_text)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.zal(?: |$)(.*)"))
+@ehandler.on(command="zal", hasArgs=True, outgoing=True)
 async def zal(zgfy):  # chaotic
     if not zgfy.text[0].isalpha() and zgfy.text[0] in ("."):
         reply_text = list()
         textx = await zgfy.get_reply_message()
-        message = zgfy.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(zgfy.text.split(" ")) > 1:
+            message = ' '.join(zgfy.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -89,9 +89,13 @@ async def zal(zgfy):  # chaotic
             reply_text.append(charac)
         await zgfy.edit("".join(reply_text))
         
-@tgclient.on(NewMessage(outgoing=True, pattern="^.point (.*)$"))
+@ehandler.on(command="point", hasArgs=True, outgoing=True)
 async def Fingers(e):
-    text = e.pattern_match.group(1)
+    if len(e.text.split(" ")) > 1:
+        message = ' '.join(e.text.split(" ")[1:])
+    else:
+        await e.edit("Give some text!")
+        return
     await e.edit(f"👊🏿👇🏿👇🏿👇🏿👇🏿👇🏿{'👇🏿'*len(text)}👇🏿👇🏿👇🏿👇🏿👇🏿👊🏿\n"+
                  f"👉🏿👊🏾👇🏾👇🏾👇🏾👇🏾{'👇🏾'*len(text)}👇🏾👇🏾👇🏾👇🏾👊🏾👈🏿\n"+
                  f"👉🏿👉🏾👊🏽👇🏽👇🏽👇🏽{'👇🏽'*len(text)}👇🏽👇🏽👇🏽👊🏽👈🏾👈🏿\n"+
@@ -106,57 +110,75 @@ async def Fingers(e):
                  f"👉🏿👊🏾👆🏾👆🏾👆🏾👆🏾{'👆🏾'*len(text)}👆🏾👆🏾👆🏾👆🏾👊🏾👈🏿\n"+
                  f"👊🏿👆🏿👆🏿👆🏿👆🏿👆🏿{'👆🏿'*len(text)}👆🏿👆🏿👆🏿👆🏿👆🏿👊🏿\n")
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^\.(\w+)say (.*)"))
+@ehandler.on(command="cowsay", hasArgs=True, outgoing=True)
 async def univsaye(cowmsg):
     """ For .cowsay module, userbot wrapper for cow which says things. """
-    arg = cowmsg.pattern_match.group(1).lower()
-    text = cowmsg.pattern_match.group(2)
+    if len(e.text.split(" ")) < 2:
+        return
+
+    splits = e.text.split(" ")
+    arg = splits[1]
+    tch = splits
 
     if arg == "cow":
         arg = "default"
-    if arg not in cow.COWACTERS:
-        return
+    elif arg not in cow.COWACTERS:
+        arg = "default"
+    else:
+        tch = splits[1:]
     cheese = cow.get_cow(arg)
     cheese = cheese()
 
-    await cowmsg.edit(f"`{cheese.milk(text).replace('`', '´')}`")
+    await cowmsg.edit(f"`{cheese.milk(' '.join(tch)).replace('`', '´')}`")
     
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^\.(\w+)think (.*)"))
+@ehandler.on(command="cowthink", hasArgs=True, outgoing=True)
 async def think(cowmsg):
     """ For .cowthink module, userbot wrapper for cow which thinks of things. """
-    arg = cowmsg.pattern_match.group(1).lower()
-    text = cowmsg.pattern_match.group(2)
+    if len(e.text.split(" ")) < 2:
+        return
+
+    splits = e.text.split(" ")
+    arg = splits[1]
+    tch = splits
 
     if arg == "cow":
         arg = "default"
-    if arg not in cow.COWACTERS:
-        return
+    elif arg not in cow.COWACTERS:
+        arg = "default"
+    else:
+        tch = splits[1:]
     cheese = cow.get_cow(arg)
     cheese = cheese(thoughts=True)
 
-    await cowmsg.edit(f"`{cheese.milk(text).replace('`', '´')}`")
+    await cowmsg.edit(f"`{cheese.milk(' '.join(tch)).replace('`', '´')}`")
     
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^\.figlet(\w+) (.*)"))
+@ehandler.on(command="figlet", hasArgs=True, outgoing=True)
 async def figlet(figletmsg):
     """ For .figlet module. """
-    arg = figletmsg.pattern_match.group(1).lower()
-    text = figletmsg.pattern_match.group(2).lower()
-    if arg == "":
-        arg = "slant"
-    if arg not in Figlet.getFonts(Figlet()):
+    if len(e.text.split(" ")) < 2:
         return
+
+    splits = e.text.split(" ")
+    arg = splits[1]
+    tch = splits
+
+    if arg not in Figlet.getFonts(Figlet()):
+        arg = "slant"
+    else:
+        tch = splits[1:]
+
     f = Figlet(font=arg)
-    ft =  f.renderText(text)
+    ft =  f.renderText(' '.join(tch))
     await figletmsg.edit(f"`\n{ft}`")
     
-@tgclient.on(NewMessage(outgoing=True, pattern="^.mock(?: |$)(.*)"))
+@ehandler.on(command="mock", hasArgs=True, outgoing=True)
 async def spongemocktext(mock):
     if not mock.text[0].isalpha() and mock.text[0] in ("."):
         reply_text = list()
         textx = await mock.get_reply_message()
-        message = mock.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(mock.text.split(" ")) > 1:
+            message = ' '.join(mock.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -170,13 +192,13 @@ async def spongemocktext(mock):
                 reply_text.append(charac)
         await mock.edit("".join(reply_text))
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.clap(?: |$)(.*)"))
+@ehandler.on(command="clap", hasArgs=True, outgoing=True)
 async def claptext(memereview):  # clap
     if not memereview.text[0].isalpha() and memereview.text[0] in ("."):
         textx = await memereview.get_reply_message()
-        message = memereview.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(memereview.text.split(" ")) > 1:
+            message = ' '.join(memereview.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -187,13 +209,13 @@ async def claptext(memereview):  # clap
         reply_text += " 👏"
         await memereview.edit(reply_text)
 
-@tgclient.on(NewMessage(pattern=r".type(?: |$)(.*)", outgoing=True))
+@ehandler.on(command="type", hasArgs=True, outgoing=True)
 async def typewriter(typew):
     if not typew.text[0].isalpha() and typew.text[0] in ("."):
         textx = await typew.get_reply_message()
-        message = typew.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(typew.text.split(" ")) > 1:
+            message = ' '.join(typew.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -212,19 +234,29 @@ async def typewriter(typew):
             await typew.edit(old_text)
             await asyncio.sleep(sleep_time)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.rs"))
+@ehandler.on(command="rs", hasArgs=True, outgoing=True)
 async def retard(dum):
 	if not dum.text[0].isalpha() and dum.text[0] in ("."):
+        try:
+            from .correction import DUM_LIST
+        except:
+            await dum.edit("`u retar? pls geb correction modul!`")
+            return
 		textx = await dum.get_reply_message()
+        message = "vpr.pattern_match.group(1)"
+        if len(dum.text.split(" ")) > 1:
+            message = ' '.join(dum.text.split(" ")[1:])
+        elif textx:
+            message = textx.text
+        else:
+            await typew.edit("`gib text to turn eet to retard spik!`")
+            return
 		# reverse DUM_LIST
 		MUD_LIST = {}
 		for k in DUM_LIST:
 			if not DUM_LIST[k] in MUD_LIST:
 				MUD_LIST[DUM_LIST[k]] = k
 		print(MUD_LIST)
-		if not textx:
-			await dum.edit("`reply to mesage to turn eet to retard spik!`")
-			return
 		fixedtext = ""
 		for word in textx.text.split():
 			if word in MUD_LIST:
@@ -236,13 +268,13 @@ async def retard(dum):
 		else:
 			await dum.edit("`dis message is in retard spik alredy!`")
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.shout(?: |$)([\s\S]*)"))
+@ehandler.on(command="shout", hasArgs=True, outgoing=True)
 async def shout(request):
     if not request.text[0].isalpha() and request.text[0] in ("."):
         textx = await request.get_reply_message()
-        message = request.pattern_match.group(1)
-        if message:
-            pass
+        message = "vpr.pattern_match.group(1)"
+        if len(request.text.split(" ")) > 1:
+            message = ' '.join(request.text.split(" ")[1:])
         elif textx:
             message = textx.text
         else:
@@ -259,33 +291,19 @@ async def shout(request):
         msg = "```\n" + result + "```"
         await request.edit(msg)
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Memes! This module contains text-based stuff."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".vapor\
-    \nUsage: Vaporize everything!\
-    \n\n.str\
-    \nUsage: Stretch it.\
-    \n\n.zal\
-    \nUsage: Invoke the feeling of chaos.\
-    \n\n.point <text>\
-    \nUsage: Point at something with a nice emoji gradient.\
-    \n\n.cowsay\
-    \nUsage: Cow which says things.\
-    \n\n.cowthink\
-    \nUsage: Cow which thinks of things.\
-    \n\n.figlet\
-    \nUsage: Large text.\
-    \n\n.mock\
-    \nUsage: Do it and find the real fun.\
-    \n\n.clap\
-    \nUsage: Praise people!\
-    \n\n.shout <text>\
-    \nUsage: A little piece of fun wording! Give a loud shout out in the chatroom.\
-    \n\n.clap\
-    \nUsage: Praise people!"
-})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (text)', version='1.0')})
+register_module_desc("Memes! This module contains text-based stuff.")
+register_cmd_usage("vapor", "<text or reply>", "Vaporize everything!")
+register_cmd_usage("str", "<text or reply>", "Stretch it.")
+register_cmd_usage("zal", "<text or reply>", "Invoke the feeling of chaos.")
+register_cmd_usage("point", "<text>", "Point at something with a nice emoji gradient.")
+register_cmd_usage("cowsay", "<optional: character> <text>", "Cow which says things.")
+register_cmd_usage("cowthink", "<optional: character> <text>", "Cow which thinks of things.")
+register_cmd_usage("figlet", "<optional: font> <text>", "Large text.")
+register_cmd_usage("mock", "<text or reply>", "Do it and find the real fun.")
+register_cmd_usage("clap", "<text or reply>", "Praise people!")
+register_cmd_usage("shout", "<text or reply>", "A little piece of fun wording! Give a loud shout out in the chatroom.")
+register_module_info(
+    name="Memes - text",
+    authors="githubcatw, @BottomTextBot, Haklerman",
+    version=VERSION
+)

@@ -5,15 +5,17 @@
 
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
-from telethon.events import NewMessage
 from os.path import basename
 
-@tgclient.on(NewMessage(pattern=r"^\.lock ?(.*)", outgoing=True))
+ehandler = EventHandler()
+VERSION = "2021.6 for HUB 4.x"
+
+@ehandler.on(command="lock", hasArgs=True, outgoing=True)
 async def locks(event):
-    input_str = event.pattern_match.group(1).lower()
+    input_str = event.text.split(" ")[1]
     peer_id = event.chat_id
     msg = None
     media = None
@@ -99,9 +101,9 @@ async def locks(event):
         return
 
 
-@tgclient.on(NewMessage(pattern=r"^.unlock ?(.*)", outgoing=True))
+@ehandler.on(command="unlock", hasArgs=True, outgoing=True)
 async def rem_locks(event):
-    input_str = event.pattern_match.group(1).lower()
+    input_str = event.text.split(" ")[1]
     peer_id = event.chat_id
     msg = None
     media = None
@@ -200,3 +202,13 @@ MODULE_DICT.update({
 \n`all, msg, media, sticker, gif, game, inline, poll, invite, pin, info`"
 })
 MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Locks', version='1.0')})
+
+register_module_desc("Prevent people from posting certain types of media in a chat.")
+register_cmd_usage("lock", "<all or type(s)>", "Lock some common message types.")
+register_cmd_usage("unlock", "<all or type(s)>", "Unlock some common message types.\n\
+Available types: `all, msg, media, sticker, gif, game, inline, poll, invite, pin, info`")
+register_module_info(
+    name="Locks",
+    authors="githubcatw, Haklerman",
+    version=VERSION
+)

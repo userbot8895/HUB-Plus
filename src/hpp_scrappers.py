@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -27,6 +26,7 @@ from userbot.sysutils.configuration import getConfig
 
 ehandler = EventHandler()
 VERSION = "2021.4 for HUB 4.x" 
+VERSION = "2021.6 for HUB 4.x" 
 LOGGING = getConfig("LOGGING")
 
 @ehandler.on(command="ud", hasArgs=True, outgoing=True)

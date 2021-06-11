@@ -3,8 +3,8 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -20,7 +20,10 @@ from telethon.tl.types import MessageEntityMentionName
 from cowpy import cow
 from pyfiglet import Figlet
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.f (.*)"))
+ehandler = EventHandler()
+VERSION = "2021.6 for HUB 4.x" 
+
+@ehandler.on(command="f", hasArgs=True, outgoing=True)
 async def payf(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         paytext = event.pattern_match.group(1)
@@ -30,21 +33,21 @@ async def payf(event):
             paytext * 2, paytext * 2)
         await event.edit(pay)
 
-@tgclient.on(NewMessage(outgoing=True, pattern=r"^.lol (.*)"))
+@ehandler.on(command="lol", hasArgs=True, outgoing=True)
 async def payf(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
-        paytext = event.pattern_match.group(1)
+        paytext = event.text.split(" ")[1]
         pay = "```{}\n{}\n{}\n{}\n{}\n\n  {}\n {}\n{}\n {}\n  {}\n\n{}\n{}\n{}\n{}\n{}```".format(
             paytext, paytext, paytext, paytext, paytext * 4,
             paytext * 3, paytext + "    " + paytext, paytext + "      " + paytext, paytext + "    " + paytext, paytext * 3,
             paytext, paytext, paytext, paytext, paytext * 4)
         await event.edit(pay)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.lfy (.*)"))
+@ehandler.on(command="lfy", hasArgs=True, outgoing=True)
 async def let_me_google_that_for_you(lmgtfy_q):  # img.gtfy
     if not lmgtfy_q.text[0].isalpha() and lmgtfy_q.text[0] in ("."):
         textx = await lmgtfy_q.get_reply_message()
-        qry = lmgtfy_q.pattern_match.group(1)
+        qry = lmgtfy_q.text.split(" ")[1]
         if qry:
             query = str(qry)
         elif textx:
@@ -57,13 +60,13 @@ async def let_me_google_that_for_you(lmgtfy_q):  # img.gtfy
         await lmgtfy_q.edit(f"[{query}]({r.json()['shorturl']})")
 
 
-@tgclient.on(NewMessage(pattern=r".scam(?: |$)(.*)", outgoing=True))
+@ehandler.on(command="scam", hasArgs=True, outgoing=True)
 async def scam(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         options = [
             'typing', 'contact', 'game', 'location', 'voice', 'round', 'video',
             'photo', 'document', 'cancel']
-        input_str = event.pattern_match.group(1)
+        input_str = event.text
         args = input_str.split()
         if len(args) == 0:  # Let bot decide action and time
             scam_action = random.choice(options)
@@ -89,20 +92,14 @@ async def scam(event):
         except BaseException:
             return
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Memes! This module contains random commands."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".f <emoji/character>\
-    \nUsage: Pay Respects.\
-    \n\n.lol <emoji/character>\
-    \nUsage: Laugh out loud.\
-    \n\n.lfy <query>\
-    \nUsage: Let me Google that for you real quick!\
-    \n\n.scam <action> <time>\
-    \n(Available actions: `typing, contact, game, location, voice, round, video, photo, document, cancel`)\
-    \nUsage: Create fake chat actions, for fun. (Default action: `typing`)"
-})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (miscellaneous)', version='1.0')})
+register_module_desc("Memes! This module contains random commands.")
+register_cmd_usage("f", "<emoji/character>", "Pay respect.")
+register_cmd_usage("lol", "<emoji/character>", "Laugh out loud.")
+register_cmd_usage("lfy", "<query>", "Let me Google that for you real quick!")
+register_cmd_usage("say", "<what to say>", "Say something.")
+register_cmd_usage("scam", "<action> <time>", "Create fake chat actions, for fun.\nAvailable actions: `typing` (default)`, contact, game, location, voice, round, video, photo, document, cancel`")
+register_module_info(
+    name="Memes - random",
+    authors="githubcatw, @BottomTextBot, Watn3y, Haklerman",
+    version=VERSION
+)

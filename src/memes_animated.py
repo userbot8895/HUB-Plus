@@ -3,8 +3,9 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
+from userbot.sysutils.configuration import getConfig
 from telethon.events import NewMessage
 from os.path import basename
 
@@ -20,7 +21,10 @@ from telethon.tl.types import MessageEntityMentionName
 from cowpy import cow
 from pyfiglet import Figlet
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.oof$"))
+ehandler = EventHandler()
+VERSION = "2021.6 for HUB 4.x" 
+
+@ehandler.on(command="oof", hasArgs=False, outgoing=True)
 async def Oof(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Oof"
@@ -28,7 +32,7 @@ async def Oof(e):
             t = t[:-1] + "of"
             await e.edit(t)
             
-@tgclient.on(NewMessage(outgoing=True, pattern="^.hmm$"))
+@ehandler.on(command="hmm", hasArgs=False, outgoing=True)
 async def Hmm(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Hmm"
@@ -36,7 +40,7 @@ async def Hmm(e):
             t = t[:-1] + "mm"
             await e.edit(t)
             
-@tgclient.on(NewMessage(outgoing=True, pattern="^.ree$"))
+@ehandler.on(command="ree", hasArgs=False, outgoing=True)
 async def Ree(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Ree"
@@ -44,7 +48,7 @@ async def Ree(e):
             t = t[:-1] + "ee"
             await e.edit(t)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.lool$"))
+@ehandler.on(command="lool", hasArgs=False, outgoing=True)
 async def Lol(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "LOL"
@@ -52,7 +56,7 @@ async def Lol(e):
             t = t[:-1] + "OL"
             await e.edit(t)
             
-@tgclient.on(NewMessage(outgoing=True, pattern="^.gay$"))
+@ehandler.on(command="gay", hasArgs=False, outgoing=True)
 async def Gay(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Gay"
@@ -60,7 +64,7 @@ async def Gay(e):
             t = t[:-1] + "ay"
             await e.edit(t)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^.brr$"))
+@ehandler.on(command="brr", hasArgs=False, outgoing=True)
 async def Brr(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         t = "Brr"
@@ -68,11 +72,11 @@ async def Brr(e):
             t = t + "r"
             await e.edit(t)
             
-@tgclient.on(NewMessage(outgoing=True, pattern="^.x (.*)$"))
+@ehandler.on(command="x", hasArgs=True, outgoing=True)
 async def Extend(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
         # get the requested text
-        paytext = e.pattern_match.group(1)
+        paytext = e.text.split(" ")[1]
         # return if text is too short
         if len(paytext) < 3:
             await e.edit("`Too short!`")
@@ -92,48 +96,7 @@ async def Extend(e):
             # edit the message with the new text
             await e.edit(t)
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^:/$"))
-async def kek(keks):
-    """ Check yourself ;)"""
-    uio = ["/", "\\"]
-    for i in range(1, 15):
-        time.sleep(0.3)
-        await keks.edit(":" + uio[i % 2])
-        
-
-@tgclient.on(NewMessage(outgoing=True, pattern="^-_-$"))
-async def blink(wut):
-	uio = ["-", "o"]
-	for i in range(1, 15):
-		time.sleep(0.3)
-		await wut.edit(uio[i % 2] + "_" + uio[i % 2])
-		
-@tgclient.on(NewMessage(outgoing=True, pattern="^×_×$"))
-async def dead(ded):
-	uio = ["×", "+"]
-	for i in range(1, 15):
-		time.sleep(0.3)
-		await ded.edit(uio[i % 2] + "_" + uio[i % 2])
-        
-@tgclient.on(NewMessage(outgoing=True, pattern="^x_x$"))
-async def dead(ded):
-	uio = ["×", "+"]
-	for i in range(1, 15):
-		time.sleep(0.3)
-		await ded.edit(uio[i % 2] + "_" + uio[i % 2])
-		
-@tgclient.on(NewMessage(outgoing=True, pattern="^O.o$"))
-async def Oo(o):
-	uio1 = ["O", "o"]
-	uio2 = ["o", "O"]
-	for i in range(1, 15):
-		time.sleep(0.3)
-		await o.edit(uio1[i % 2] + "." + uio2[i % 2])
-
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Memes! This module contains various animations."})
-
+"""
 MODULE_DICT.update({
     basename(__file__)[:-3]:
     ".oof\
@@ -161,4 +124,18 @@ MODULE_DICT.update({
     \n\nO.o\
     \nUsage: o.O"
 })
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (animated)', version='1.0')})
+"""
+
+register_module_desc("Memes! This module contains various animations.")
+register_cmd_usage("oof", "", "Oooooof")
+register_cmd_usage("hmm", "", "Hmmmmmm")
+register_cmd_usage("lool", "", "LOOOOOOL")
+register_cmd_usage("gay", "", "Gaaaaay")
+register_cmd_usage("ree", "", "Reeeeee")
+register_cmd_usage("brr", "", "Brrrrrr")
+register_cmd_usage("x", "<text to extend, preferrably 3 characters>", "Like the above commands but customizable.")
+register_module_info(
+    name="Memes - animated",
+    authors="githubcatw, @BottomTextBot, Haklerman, help from prototype74",
+    version=VERSION
+)

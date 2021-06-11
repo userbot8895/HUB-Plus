@@ -4,7 +4,6 @@
 # (C) 2021 githubcatw
 
 from userbot import tgclient
-from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 import re
 from sre_constants import error as sre_err
@@ -153,8 +152,8 @@ async def sed(command):
                 await command.edit(f"Did you mean? \n\n{text}")
 
 register_module_desc("Correct people.")
-register_cmd_usage("s<delimiter><old word(s)><delimiter><new word(s)>", "Replaces a word or words using sed.\nDelimiters: `/, :, |, _`")
-register_cmd_usage("dum", "An automated version of .s that replaces common chat slang.")
+register_cmd_usage("s","<delimiter><old word(s)><delimiter><new word(s)>", "Replaces a word or words using sed. No space between .s and argument.\nDelimiters: `/, :, |, _`")
+register_cmd_usage("dum", "", "An automated version of .s that replaces common chat slang.")
 register_module_info(
     name="Corrections",
     authors="githubcatw, nunopenim, help from prototype74",

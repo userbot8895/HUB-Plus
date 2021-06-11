@@ -9,7 +9,6 @@ import os
 import requests
 
 from userbot import tgclient
-from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 from os.path import basename
 from os.path import join as pathjoin

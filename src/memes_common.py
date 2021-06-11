@@ -3,9 +3,7 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
-from telethon.events import NewMessage
+from userbot.sysutils.registration import register_module_desc, register_module_info
 from os.path import basename
 
 ZALG_LIST = [[
@@ -395,6 +393,45 @@ SLAP_TEMPLATES = [
     "ties {victim} to a chair and {throws} **{item}** at them. {emoji}"]
 
 ITEMS = (
+    "a Pixel 5",
+    "a Pixel 4 bezel",
+    "a Galaxy S20 FE",
+    "One UI 3",
+    "a Galaxy A02s",
+    "an iPhone",
+    "end of support",
+    "an incomplete API",
+    "an Exynos 990",
+    "a Xiaomi",
+    "a Huawei",
+    "a Vivo",
+    "the Death Star",
+    "a Redmi",
+    "a Redmi Note 10 Pro Max",
+    "a Redmi Note 8",
+    "RetardOS",
+    "PE for sunfish",
+    "bootloader unlock",
+    "a potion of retardation",
+    "SafetyNet failing",
+    "basic attestation",
+    "a Galaxy A02s",
+    "a brick",
+    "official TWRP",
+    "bootloops",
+    "an ETA request",
+    "a piece of wood",
+    "KG prenormal",
+    "Android 12 beta",
+    "Android 11 for Mi A3",
+    "a free 1000% legit no virus free download link",
+    "a permanently locked bootloader",
+    "HWC fix",
+    "a cracked APK",
+    "sudo",
+    "official pixel room",
+    "DeX port",
+    "a Nokia 3310",
     "a Samsung J5 2017",
     "a Samsung S10+",
     "an iPhone XS MAX",
@@ -402,7 +439,6 @@ ITEMS = (
     "a Note 10+",
     "knox 0x0",
     "OneUI 2.0",
-    "OneUI 69.0",
     "TwoUI 1.0",
     "Secure Folder",
     "Samsung Pay",
@@ -410,13 +446,14 @@ ITEMS = (
     "prenormal KG state",
     "a locked bootloader",
     "payment lock",
-    "stock rom",
+    "stock ROM",
     "good rom",
+    "best rom",
     "Good Lock apps",
     "Q port",
+    "R port",
     "Pie port",
     "8.1 port",
-    "Pie port",
     "Pie OTA",
     "Q OTA",
     "LineageOS 16",
@@ -428,7 +465,8 @@ ITEMS = (
     "a karnel",
     "official TWRP",
     "VOLTE",
-    "kanged rom",
+    "BOLTE",
+    "a kanged ROM",
     "an antikang",
     "audio fix",
     "hwcomposer fix",
@@ -438,14 +476,13 @@ ITEMS = (
     "unfiltered logs",
     "a keylogger",
     "120FPS",
-    "a download link",
     "168h uptime",
     "a paypal link",
     "treble support",
     "EVO-X gsi",
     "Q gsi",
     "Q beta",
-    "a Rom Control",
+    "a ROM Control",
     "a hamburger",
     "a cheeseburger",
     "a Big-Mac")
@@ -646,13 +683,9 @@ DOUBT = [
     "Really?",
 ]
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Memes! Common module, just contains data for the other memes_* modules."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    "You cannot use this module. This is just common data.\
-    \nPlease install any of the other memes modules too."
-})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Memes (common data)', version='1.0')})
+register_module_desc("Memes! Contains data for the other meme modules and can't be used.")
+register_module_info(
+    name="Memes - common data",
+    authors="githubcatw, @BottomTextBot, Haklerman",
+    version=VERSION
+)

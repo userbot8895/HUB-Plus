@@ -8,7 +8,6 @@ import random
 
 from userbot import tgclient
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
-from userbot.include.aux_funcs import module_info
 from userbot.sysutils.event_handler import EventHandler
 from telethon.events import NewMessage
 

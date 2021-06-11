@@ -14,6 +14,7 @@ import os
 IS_WINDOWS = True if system().lower().startswith("win") else False
 PY_EXEC = executable if not " " in executable else '"' + executable + '"'
 WIN_COLOR_ENABLED = False
+PIP_UTIL = False
 
 try:
     if IS_WINDOWS:
@@ -22,6 +23,11 @@ try:
         WIN_COLOR_ENABLED = True
 except:
     pass
+
+try:
+	from userbot.include import pip_utils as pu
+except:
+	pass
 
 class Colors:
     RED = "\033[91m"
@@ -41,12 +47,13 @@ except ImportError:
 	raise ImportError(setColorText("Your version of HyperUBot is too old for HyperBot++.", Colors.RED))
 
 LOGO = """
- _   _                       ____        _
-| | | |_   _ _ __   ___ _ __| __ )  ___ | |_  _     _
-| |_| | | | | '_ \\ / _ \\ '__|  _ \\ / _ \\| __|| |_ _| |_
-|  _  | |_| | |_) |  __/ |  | |_) | (_) | ||_   _|_   _|
-|_| |_|\\__, | .__/ \\___|_|  |____/ \\___/ \\__||_|   |_|
-       |___/|_|         setup
+ _   _ _   _ ____
+| | | | | | | __ )   _     _
+| |_| | | | |  _ \\ _| |_ _| |_
+|  _  | |_| | |_) |_   _|_   _|
+|_| |_|\\___/|____/  |_|   |_|
+
+           Setup
 """
 
 REQUIREMENTS = """
@@ -61,60 +68,80 @@ pillow
 qrcode
 """
 
-VERSION = "2021.4 for HUB 4.x"
-MIN_UB_VERSION = "4"
-LTS_UB_VERSION = "3"
+VERSION = "2021.5 for HUB 4.x beta"
+MIN_UB_VERSION = 4
+LTS_UB_VERSION = 3
 
 def init():
 	print(LOGO)
 	print(f"\nVersion {VERSION}\n========================")
 	checkVersion()
 	checkConfig()
+	print(setColorText("As HUB++ Setup is in beta it's advised to back up your userbot using the recovery.", Colors.RED))
+	print(setColorText("Data might be lost, and we won't be responsible. Please report any bugs to the @userbot8895 Telegram group.", Colors.RED))
+	print("Press Enter to continue.")
+	jdjdjdj = input()
 	print("========================")
-	print("Installing dependencies")
-	f = open("reqs.txt", "w")
-	f.write(REQUIREMENTS)
-	_install_requirements()
-	f.close()
-	os.remove("reqs.txt")
+	print("Installing dependencies...")
+	if int(UB_VERSION[0:1]) > 4:
+		installReqs()
+	elif int(UB_VERSION[0:1]) == 4:
+		if PIP_UTIL:
+			installReqs()
+		else:
+			installReqsHUB4()
+	else:
+		installReqsHUB4()
 	print("========================")
 	setupPlusConfig()
+	print("========================")
+	print(f"Setup complete. {setColorText('Enjoy HUB++!', Colors.YELLOW)}\n")
+	os.remove("setup.py")
 
-def _install_requirements():
+def installReqsHUB4():
+    f = open("reqs.txt", "w")
+    f.write(REQUIREMENTS)
     try:
         check_call(
             [PY_EXEC, "-m", "pip", "install", "-r", "reqs.txt"])
     except Exception as e:
         print(setColorText(
             f"Failed to install pip requirements: {e}", Colors.RED))
-    return
+        return
+    f.close()
+    os.remove("reqs.txt")
+
+def installReqs():
+   print("Using pip_utils.")
+   for dep in REQUIREMENTS.split():
+      pu.installPkg(dep)
 
 def setupPlusConfig():
-	print("Your module selection requires a PlusConfig, which we can set up here.")
+	print(f"Some modules require {setColorText('a PlusConfig', Colors.YELLOW)}, which we can set up here.")
 	config = "class PlusConfig(object):"
 	while True:
-		print(f"A YouTube API key is required for {setColorText("scrapers", Colors.YELLOW)}. If you don't know where to get one go to slickremix.com/get-api-key-for-youtube.")
-		inp = input("Enter your YouTube API key, or if you didn't select scrapers press 'S' to skip: ")
-		if inp.lower() == "s":
+		print(f"\nA YouTube API key is required for {setColorText('scrapers', Colors.YELLOW)}. If you don't know where to get one go to slickremix.com/get-api-key-for-youtube.")
+		inp = input("Enter your YouTube API key, or if you didn't select scrapers press Enter to skip: ")
+		if inp.lower() == "":
 			break
 		else:
 			config = f'{config}{"":4}YOUTUBE_API_KEY = "{inp}"\n'
 			break
 
 	while True:
-		print(f"If you have selected {setColorText("disease", Colors.YELLOW)}, you can spread a virus across Telegram. But who wants to be infected with an unnamed virus?")
-		inp = input("Enter the name of your virus here, or if you didn't select it press 'S' to skip: ")
-		if inp.lower() == "s":
+		print(f"\nIf you have selected {setColorText('disease', Colors.YELLOW)}, you can spread a virus across Telegram. But who wants to be infected with an unnamed virus?")
+		inp = input("Enter the name of your virus here, or if you didn't select it press Enter to skip: ")
+		if inp.lower() == "":
 			break
 		else:
 			config = f'{config}{"":4}VIRUS = "{inp}"\n'
 			break
 
 	homies = []
-	print("Also, you might want to give your best friends immunity.")
+	print("\nAlso, you might want to give your best friends immunity. Enter their IDs (check @userinfobot) here one by one and press 'S' at the end.")
 	while True:
-		inp = input("Enter their IDs here one by one and press 'S' at the end: ")
-		if inp.lower() == "s":
+		inp = input("ID (press Enter to finish): ")
+		if inp.lower() == "":
 			break
 		else:
 			homies.append(inp)
@@ -123,11 +150,11 @@ def setupPlusConfig():
 	if len(homies) > 0:
 		config = f'{config}{"":4}HOMIES = [{",".join(homies)}]"\n'
 
-	print("Setup will now update your config.py to include the PlusConfig.")
+	print("\nSetup will now update your config.py to include the PlusConfig.")
 	try:
 		dl_path = os.path.join(".", "downloads")  # default path
 		config_file = os.path.join(".", "userbot", "config.py")
-		with open(config_file, "w+") as cfg_file:
+		with open(config_file, "a") as cfg_file:
 			print(f"Writing configuration file in {config_file}")
 			cfg_file.write(config)
 			cfg_file.close()
@@ -137,16 +164,16 @@ def setupPlusConfig():
 		raise Exception(setColorText(f"Failed to write configuration file: {e}", Colors.RED))
 
 def checkVersion():
-	signVersion = UB_VERSION[0:len(MIN_UB_VERSION)]
-	signLtsVersion = UB_VERSION[0:len(LTS_UB_VERSION)]
-	if signVersion == MIN_UB_VERSION:
+	signVersion = int(UB_VERSION[0:1])
+	if signVersion >= MIN_UB_VERSION:
 		print("You have a supported version of HyperUBot.")
 		return True
-	elif signLtsVersion == LTS_UB_VERSION:
-		print("Your version of HyperUBot is unsupported by HyperBot++, but is supported by HyperBot++ LTS.")
+	elif signVersion == LTS_UB_VERSION:
+		print("Your version of HyperUBot is unsupported by HUB++, but is supported by HUB++ LTS.")
+		print(f"Check it out here: {setColorText('github.com/userbot8895/HBPlus-LTS', Colors.YELLOW)}")
 		return False
 	else:
-		print("\033[1;31;40mYour version of HyperUBot is unsupported by HyperBot++.\033[1;37;40m")
+		print("\033[1;31;40mYour version of HyperUBot is unsupported by HUB++.\033[1;37;40m")
 		return False
 
 def checkConfig():
