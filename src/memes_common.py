@@ -6,6 +6,8 @@
 from userbot.sysutils.registration import register_module_desc, register_module_info
 from os.path import basename
 
+VERSION = "2021.7"
+
 ZALG_LIST = [[
     "̖",
     " ̗",

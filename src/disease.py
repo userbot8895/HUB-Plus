@@ -1,5 +1,5 @@
 # disease
-# HyperBot++
+# HUB++
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
@@ -15,13 +15,15 @@ from userbot.config import PlusConfig as pc
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.configuration import getConfig
-from userbot.config import TEMP_DL_DIR
+from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.4 for HUB 4.x"
+VERSION = "2021.7"
+TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
+FILES = pathjoin(getConfig("USERDATA"),"plus")
 
-if not os.path.isdir("plus/"):
-    os.makedirs("plus/")
+if not os.path.isdir(FILES):
+    os.makedirs(FILES)
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
@@ -31,11 +33,14 @@ async def infect(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		replymsg = await event.get_reply_message()
 		if replymsg:
-			open('patients.txt', 'a').close()
+			open(pathjoin(FILES,"patients.txt"), 'a').close()
+			if not hasattr(replymsg.sender, 'first_name'):
+				await event.edit("You can only infect people.")
+				return
 			if replymsg.sender.id == event.sender.id:
 				await event.edit("Decided to end your life? I won't let you.")
 				return
-			rf=open("patients.txt", "r", encoding="utf-8")
+			rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
 			read=rf.read()
 			rf.close()
 			if f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})" in read:
@@ -44,7 +49,7 @@ async def infect(event):
 			if replymsg.sender.id in pc.HOMIES:
 				await event.edit(f"Your homies have natural immunity against the {pc.VIRUS}.")
 				return
-			f=open(pathjoin("plus","patients.txt"),"a+", encoding="utf-8")
+			f=open(pathjoin(FILES,"patients.txt"),"a+", encoding="utf-8")
 			f.write(f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})\n")
 			f.close()
 			await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}!")
@@ -57,7 +62,7 @@ async def share(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		await event.client.send_file(
 			event.chat_id,
-			"patients.txt",
+			pathjoin(FILES,"patients.txt"),
 			caption=f"This is a list of patients infected with the {pc.VIRUS}.\
 			\nReply with .infmerge to add the {pc.VIRUS}'s patients to your own virus' patient list."
         )
@@ -82,12 +87,12 @@ async def infmerge(event):
 				os.remove(downloaded_file_name)
 
 				await event.edit("`Reading list...`")
-				open(pathjoin("plus","patients.txt"), 'a').close()
-				with open(pathjoin("plus","patients.txt"), "r", encoding="utf-8") as rf:
+				open(pathjoin(FILES,"patients.txt"), 'a').close()
+				with open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8") as rf:
 					ours=rf.read()
 				await event.edit("`Merging...`")
 				pats = 0;
-				with open(pathjoin("plus","patients.txt"), "a", encoding="utf-8") as app:
+				with open(pathjoin(FILES,"patients.txt"), "a", encoding="utf-8") as app:
 					for pat in their_list:
 						await event.respond(pat)
 						if not pat in ours:
@@ -105,7 +110,7 @@ async def infmerge(event):
 @ehandler.on(command="infstats", hasArgs=False, outgoing=True)
 async def infected(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
-		rf=open(pathjoin("plus","patients.txt"), "r", encoding="utf-8")
+		rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
 		read=rf.read()
 		rf.close()
 		reply = f"List of people infected with the {pc.VIRUS}:\n{read}"

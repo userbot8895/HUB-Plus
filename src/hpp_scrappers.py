@@ -23,11 +23,15 @@ from userbot.config import PlusConfig as pc
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.configuration import getConfig
+import os
+from userbot import getConfig
 
+SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
 ehandler = EventHandler()
-VERSION = "2021.4 for HUB 4.x" 
-VERSION = "2021.6 for HUB 4.x" 
+VERSION = "2021.7 for HUB 4.x/5.x" 
 LOGGING = getConfig("LOGGING")
+
+__ytkey__ = ""
 
 @ehandler.on(command="ud", hasArgs=True, outgoing=True)
 async def urban_dict(ud_e):
@@ -89,9 +93,13 @@ async def yt_search(yts):
     query = yts.text.split(" ")[1]
     result = ''
 
-    if not pc.YOUTUBE_API_KEY:
+    if not pc.YOUTUBE_API_KEY and __ytkey__ == "":
+        if os.path.exists(SECURE_CONFIG):
+            await yts.edit("`Since your userbot rebooted you need to enter the password for your secure PlusConfig. Please check your terminal.`")
+            decrypt()
+            return
         await yts.edit(
-            "`Error: YouTube API key missing! Add it to environment vars or config.env.`"
+            "`Error: YouTube API key missing! Add it to secure_plus_config or config.py.`"
         )
         return
 
@@ -109,6 +117,61 @@ async def yt_search(yts):
     reply_text = f"**Search Query:**\n`{query}`\n\n**Results:**\n\n{result}"
 
     await yts.edit(reply_text)
+
+def decrypt():
+    _password = ""
+    _pwd_confm = False
+    _attempts = 0
+    while True:
+        try:
+            decryptFile(infile=SECURE_CONFIG,
+                        outfile=os.path.join(".", "userbot", "_temp.py"),
+                        passw=_password,
+                        bufferSize=(64 * 1024))
+            break
+        except ValueError as e:
+            if "wrong password" in str(e).lower() and \
+               _attempts < 5:
+                if not _pwd_confm:
+                    log.info("Password required for secure PlusConfig.")
+                else:
+                    log.warning("Invalid password. Try again...")
+                try:
+                    while True:
+                        _password = getpass("Please enter your password: ")
+                        if not _pwd_confm:
+                            _pwd_confm = True
+                        break
+                except KeyboardInterrupt:
+                    quit()
+                _attempts += 1
+            else:
+                log.error("Unable to read secure config")
+                quit(1)
+        except Exception:
+            log.error("Unable to read secure config")
+            quit(1)
+
+    try:
+        import userbot._temp as _s_cfg
+        __ytkey__ = _s_cfg.YOUTUBE_API_KEY
+    except Exception:
+        log.error("Unable to read secure config")
+        quit(1)
+    finally:
+        if path.exists(path.join(".", "userbot", "_temp.py")):
+            remove(path.join(".", "userbot", "_temp.py"))
+        if path.exists(path.join(".", "userbot", "__pycache__")) and \
+           path.isdir(path.join(".", "userbot", "__pycache__")):
+            for name in listdir(path.join(".", "userbot", "__pycache__")):
+                if name.startswith("_temp.cpython-") and \
+                   name.endswith(".pyc"):
+                    remove(path.join(".", "userbot", "__pycache__", name))
+                    break
+        del _password
+        del _pwd_confm
+        del _attempts
+    del _s_cfg
 
 async def youtube_search(query,
                          order="relevance",

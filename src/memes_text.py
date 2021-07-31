@@ -236,13 +236,13 @@ async def typewriter(typew):
 
 @ehandler.on(command="rs", hasArgs=True, outgoing=True)
 async def retard(dum):
-	if not dum.text[0].isalpha() and dum.text[0] in ("."):
+    if not dum.text[0].isalpha() and dum.text[0] in ("."):
         try:
             from .correction import DUM_LIST
         except:
             await dum.edit("`u retar? pls geb correction modul!`")
             return
-		textx = await dum.get_reply_message()
+        textx = await dum.get_reply_message()
         message = "vpr.pattern_match.group(1)"
         if len(dum.text.split(" ")) > 1:
             message = ' '.join(dum.text.split(" ")[1:])
@@ -251,22 +251,22 @@ async def retard(dum):
         else:
             await typew.edit("`gib text to turn eet to retard spik!`")
             return
-		# reverse DUM_LIST
-		MUD_LIST = {}
-		for k in DUM_LIST:
-			if not DUM_LIST[k] in MUD_LIST:
-				MUD_LIST[DUM_LIST[k]] = k
-		print(MUD_LIST)
-		fixedtext = ""
-		for word in textx.text.split():
-			if word in MUD_LIST:
-				word = MUD_LIST[word]
-			fixedtext = f"{fixedtext} {word}"
-		fixedtext = fixedtext.lstrip()
-		if fixedtext != textx:
-			await dum.edit(fixedtext)
-		else:
-			await dum.edit("`dis message is in retard spik alredy!`")
+        # reverse DUM_LIST
+        MUD_LIST = {}
+        for k in DUM_LIST:
+            if not DUM_LIST[k] in MUD_LIST:
+                MUD_LIST[DUM_LIST[k]] = k
+        print(MUD_LIST)
+        fixedtext = ""
+        for word in textx.text.split():
+            if word in MUD_LIST:
+                word = MUD_LIST[word]
+            fixedtext = f"{fixedtext} {word}"
+        fixedtext = fixedtext.lstrip()
+        if fixedtext != textx:
+            await dum.edit(fixedtext)
+        else:
+            await dum.edit("`dis message is in retard spik alredy!`")
 
 @ehandler.on(command="shout", hasArgs=True, outgoing=True)
 async def shout(request):

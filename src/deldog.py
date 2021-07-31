@@ -14,10 +14,11 @@ from os.path import basename
 from os.path import join as pathjoin
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
-from userbot.config import TEMP_DL_DIR
+from userbot import getConfig
 
 ehandler = EventHandler()
 VERSION = "2021.4 for HUB 4.x"
+TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))

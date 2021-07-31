@@ -13,16 +13,21 @@ from os.path import basename
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
 from os.path import join as pathjoin
+from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.4 for HUB 4.x" 
+VERSION = "2021.7 for HUB 4.x"
+FILES = pathjoin(getConfig("USERDATA"),"plus")
+
+if not os.path.isdir(FILES):
+    os.makedirs(FILES)
 
 @ehandler.on(command="note", hasArgs=True, outgoing=True)
 async def save(event):
     name = event.text.split(" ")[1]
     text = event.text.split(" ")[2]
     textx = await event.get_reply_message()
-    npath = "notes/" + name + ".txt"
+    npath = pathjoin(FILES,name + ".txt")
     if not os.path.isdir("notes/"):
         os.makedirs("notes/")
     if path.exists(npath):
@@ -64,7 +69,7 @@ async def note(event):
     if len(notes) < 2:
         await event.edit("Specify the note name.")
         return
-    npath = "notes/" + notes[1] + ".txt"
+    npath = pathjoin(FILES,notes[1] + ".txt")
     if not path.exists(npath):
         await event.edit(f"Note `{name}` doesn't exist.\n"+
                            f"Type `.save {name} <text> to create the note.")
@@ -78,7 +83,7 @@ async def note_short(event):
     if len(notes) < 2:
         await event.edit("Specify the note name.")
         return
-    npath = "notes/" + notes[1] + ".txt"
+    npath = pathjoin(FILES,notes[1] + ".txt")
     if not path.exists(npath):
         await event.edit(f"Note `{name}` doesn't exist.\n"+
                            f"Type `.save {name} <text> to create the note.")
@@ -89,7 +94,7 @@ async def note_short(event):
 @ehandler.on(command="notes", hasArgs=True, outgoing=True)
 async def notes(mention):
     reply = "You have these notes:\n\n"
-    allnotes = os.listdir("notes/")
+    allnotes = os.listdir(FILES)
     if not allnotes:
         reply = "You have no notes."
     else:
@@ -104,10 +109,9 @@ async def delnote(event):
     deleted = 0
     delnames = ""
     for n in notes:
-        npath = "notes/" + n + ".txt"
+        npath = pathjoin(FILES,n + ".txt")
         if not path.exists(npath):
-            await event.edit(f"Note `{n}` doesn't exist.\n"+
-                               f"Type `.save {n} <text> to create the note.")
+            await event.edit(f"Note `{n}` doesn't exist.")
             return
         os.remove(npath)
         deleted = deleted + 1

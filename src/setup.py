@@ -8,10 +8,14 @@
 
 from platform import system
 from subprocess import check_call
-from sys import executable
+from sys import executable, version_info
 import os
+import pyAesCrypt
+from userbot import getConfig
 
-IS_WINDOWS = True if system().lower().startswith("win") else False
+IS_WINDOWS = (True if system().lower() == "windows" or
+              os.name == "nt" or platform.startswith("win") else False)
+SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
 PY_EXEC = executable if not " " in executable else '"' + executable + '"'
 WIN_COLOR_ENABLED = False
 PIP_UTIL = False
@@ -66,9 +70,10 @@ pyfiglet
 beautifulsoup4==4.9.1
 pillow
 qrcode
+pyAesCrypt
 """
 
-VERSION = "2021.5 for HUB 4.x beta"
+VERSION = "2021.7 for HUB 4.x/5.x"
 MIN_UB_VERSION = 4
 LTS_UB_VERSION = 3
 
@@ -80,7 +85,7 @@ def init():
 	print(setColorText("As HUB++ Setup is in beta it's advised to back up your userbot using the recovery.", Colors.RED))
 	print(setColorText("Data might be lost, and we won't be responsible. Please report any bugs to the @userbot8895 Telegram group.", Colors.RED))
 	print("Press Enter to continue.")
-	jdjdjdj = input()
+	input()
 	print("========================")
 	print("Installing dependencies...")
 	if int(UB_VERSION[0:1]) > 4:
@@ -99,6 +104,7 @@ def init():
 	os.remove("setup.py")
 
 def installReqsHUB4():
+    print("Using pip commands.")
     f = open("reqs.txt", "w")
     f.write(REQUIREMENTS)
     try:
@@ -125,7 +131,16 @@ def setupPlusConfig():
 		if inp.lower() == "":
 			break
 		else:
-			config = f'{config}{"":4}YOUTUBE_API_KEY = "{inp}"\n'
+			while True:
+				print(f"\nOptionally you can secure the API key by storing it in {setColorText('a secure PlusConfig', Colors.YELLOW)}.")
+				print(f"This secure PlusConfig is unrelated to the userbot's secure config and stored separately.")
+				sinp = input("Do you want a secure PlusConfig? (y/n): ")
+				if sinp.lower() in ("y", "yes"):
+					encryptPlusConfig(inp)
+					break
+				elif sinp.lower() in ("n", "no"):
+					config = f'{config}{"":4}YOUTUBE_API_KEY = "{inp}"\n'
+					break
 			break
 
 	while True:
@@ -162,6 +177,71 @@ def setupPlusConfig():
 	except Exception as e:
 		print(setColorText(f"Failed to write configuration file: {e}", Colors.RED))
 		raise Exception(setColorText(f"Failed to write configuration file: {e}", Colors.RED))
+
+# based on https://github.com/nunopenim/HyperUBot/blob/master/update_secure_cfg.py#L94
+
+def encryptPlusConfig(key):
+    print("You can use a password for your secure config to increase the security of your sensitive data. This is optional, but extra protection doesn't hurt.")
+    print(setColorText("If you forgot your password, you have to re-run Setup and create a new secure config!", Colors.RED))
+    print()
+
+    set_pwd = False
+
+    while True:
+        inp = input("Set password? (y/n): ")
+        if inp.lower() in ("y", "yes"):
+            set_pwd = True
+            break
+        elif inp.lower() in ("n", "no"):
+            break
+        else:
+            print(setColorText("Invalid input. Try again...", Colors.YELLOW))
+
+    password = ""
+    if set_pwd:
+        print()
+        from getpass import getpass
+        print("Your password must have at least a length of 4 characters. Maximum length is 1024 characters")
+        while True:
+            password = getpass("Your password: ")
+            if len(password) >= 4 and len(password) <= 1024:
+                break
+            elif len(password) < 4:
+                print(setColorText("Password too short.", Colors.YELLOW))
+            elif len(password) > 1024:
+                print(setColorText("Password too long.", Colors.YELLOW))
+            else:
+                print(setColorText("Invalid input. Try again.", Colors.YELLOW))
+        while True:
+            retype_pwd = getpass("Retype your password: ")
+            if password == retype_pwd:
+                break
+            else:
+                print(setColorText("Invalid input. Try again.", Colors.YELLOW))
+
+    print()
+    try:
+        print("Securing config...")
+        if os.path.exists(SECURE_CONFIG):
+            os.remove(SECURE_CONFIG)
+        if os.path.exists("_temp.py"):
+            os.remove("_temp.py")
+        secure_configs = (f'YT_API_KEY = "{key}"')
+        with open("_temp.py", "w") as cfg_file:
+            cfg_file.write(secure_configs)
+        cfg_file.close()
+        pyAesCrypt.encryptFile(infile="_temp.py",
+                               outfile=SECURE_CONFIG,
+                               passw=password,
+                               bufferSize=(64 * 1024))
+        os.remove("_temp.py")
+        if os.path.exists(SECURE_CONFIG):
+            print(setColorText("Config secured! Continue setting up.", Colors.GREEN))
+        else:
+            print(setColorText("Failed to secure configs", Colors.RED))
+    except Exception as e:
+        print(setColorText(f"Failed to secure configs: {e}", Colors.RED))
+    return
 
 def checkVersion():
 	signVersion = int(UB_VERSION[0:1])
