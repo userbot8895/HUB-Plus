@@ -16,7 +16,7 @@ from os.path import join as pathjoin
 from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.7 for HUB 4.x"
+VERSION = "2021.7"
 FILES = pathjoin(getConfig("USERDATA"),"plus")
 
 if not os.path.isdir(FILES):

@@ -10,7 +10,7 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot.sysutils.event_handler import EventHandler
 
 ehandler = EventHandler()
-VERSION = "2021.4 for HUB 4.x" 
+VERSION = "2021.7" 
 
 @ehandler.on(command="inactive", hasArgs=False, outgoing=True)
 async def inactive(act):

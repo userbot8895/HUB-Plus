@@ -26,7 +26,7 @@ from userbot.sysutils.configuration import getConfig
 LOGGING = getConfig("LOGGING")
 
 ehandler = EventHandler()
-VERSION = "2021.4 for HUB 4.x" 
+VERSION = "2021.7" 
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",
@@ -138,7 +138,7 @@ async def kang(args):
                     await tgclient.send_read_acknowledge(conv.chat_id)
                     await conv.send_message(packname)
                     x = await conv.get_response()
-                    while "120" in x.text:
+                    while "12021.7" in x.text:
                         pack += 1
                         packname = f"a{user.id}_by_{user.username}_{pack}"
                         packnick = f"@{user.username}'s kang pack Vol.{pack}"

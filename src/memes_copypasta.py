@@ -21,7 +21,7 @@ from cowpy import cow
 from pyfiglet import Figlet
 
 ehandler = EventHandler()
-VERSION = "2021.6 for HUB 4.x" 
+VERSION = "2021.7" 
 
 @ehandler.on(command="bt", hasArgs=False, outgoing=True)
 async def bluetext(bt_e):

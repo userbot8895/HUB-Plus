@@ -22,7 +22,7 @@ from pyfiglet import Figlet
 from .memes_common import *
 
 ehandler = EventHandler()
-VERSION = "2021.6 for HUB 4.x"
+VERSION = "2021.7"
 
 @ehandler.on(command="coinflip", hasArgs=False, outgoing=True)
 async def coin(event):  # coinflip

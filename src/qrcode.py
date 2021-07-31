@@ -18,7 +18,7 @@ from userbot.sysutils.event_handler import EventHandler
 LOGGING = getConfig("LOGGING")
 
 ehandler = EventHandler()
-VERSION = "2021.6 for HUB 4.x" 
+VERSION = "2021.7" 
 
 @ehandler.on(command="decode", hasArgs=False, outgoing=True)
 async def parseqr(qr_e):  # decods qr or barcode

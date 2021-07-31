@@ -73,7 +73,7 @@ qrcode
 pyAesCrypt
 """
 
-VERSION = "2021.7 for HUB 4.x/5.x"
+VERSION = "2021.7"
 MIN_UB_VERSION = 4
 LTS_UB_VERSION = 3
 
