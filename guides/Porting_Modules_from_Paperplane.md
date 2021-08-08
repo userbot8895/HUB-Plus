@@ -37,6 +37,7 @@ async def ping(event):
 **Differences:**
 
 - The namespace changed from `tg_userbot` to simply `userbot`.
+- You need to create an event handler to register commands.
 ## Basic module, with help
 <table>
 <tr>
