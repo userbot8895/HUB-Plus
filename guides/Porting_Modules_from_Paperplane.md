@@ -21,9 +21,11 @@ async def ping(event):
 
 ```python
 from userbot import tgclient
-from telethon.events import NewMessage
+from userbot.sysutils.event_handler import EventHandler
+  
+eh = EventHandler()
 
-@tgclient.on(NewMessage(pattern=r"^.ping", outgoing=True))
+@eh.on(command="ping", hasArgs=True, outgoing=True)
 async def ping(event):
   await event.edit("`Pong!`")
 ```
@@ -33,20 +35,6 @@ async def ping(event):
 </table>
 
 **Differences:**
-
-- ~~There is no convenient `register` decorator. Instead, you manually import the bot's client and register a standard Telethon message handler. If you develop modules for UniBorg or regular Telethon apps this might be familiar.~~
-
-Starting from HyperUBot 3.0 there is a new `EventHandler` function that works like the `register` decorator:
-```python
-from userbot.sysutils.event_handler import EventHandler
-
-eh = EventHandler()
-
-@eh.on(pattern=r"^.test", outgoing=True)
-async def ping(event):
-  await event.edit("`Pong!`")
-```
-This is used in the stock modules and module-universe, but isn't used in HyperBot++ and the rest of this guide.
 
 - The namespace changed from `tg_userbot` to simply `userbot`.
 ## Basic module, with help
@@ -72,15 +60,22 @@ CMD_HELP.update({"port_demo": ".ping\nUsage: Pong!"})
 <td> 
 
 ```python
-from userbot import tgclient, MODULE_DESC, MODULE_DICT
-from telethon.events import NewMessage
+from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
+from userbot.sysutils.event_handler import EventHandler
 
-@tgclient.on(NewMessage(pattern=r"^.ping", outgoing=True))
+eh = EventHandler()
+
+@eh.on(command="ping", hasArgs=True, outgoing=True)
 async def ping(event):
   await event.edit("`Pong!`")
 
-MODULE_DESC.update({"port_demo": "A demonstration module."})
-MODULE_DICT.update({"port_demo": ".ping\nUsage: Pong!"})
+register_module_desc("A demonstration module.")
+register_cmd_usage("ping", "", "Pong!")
+register_module_info(
+    name="Demo module",
+    authors="You",
+    version="1.0"
+)
 ```
 
 </td>
@@ -90,20 +85,5 @@ MODULE_DICT.update({"port_demo": ".ping\nUsage: Pong!"})
 **Differences:**
 
 - There is a new description field.
-- Instead of updating `CMD_HELP`, you update `MODULE_DICT`.
-
-HyperUBot 2.0 introduces a new `MODULE_INFO` field, which allows you to specify a module name and version:
-
-```python
-from userbot import tgclient, MODULE_DESC, MODULE_DICT, MODULE_INFO
-from userbot.include.aux_funcs import module_info
-from telethon.events import NewMessage
-
-@tgclient.on(NewMessage(pattern=r"^.ping", outgoing=True))
-async def ping(event):
-  await event.edit("`Pong!`")
-
-MODULE_DESC.update({"port_demo": "A demonstration module."})
-MODULE_DICT.update({"port_demo": ".ping\nUsage: Pong!"})
-MODULE_INFO.update({"port_demo": module_info(name='Demonstration module', version='1.0')})
-```
+- HyperUBot 4.0 removed the MODULE_* dicts. Instead use `register_cmd_usage`, `register_module_desc` and `register_module_info` from `userbot.sysutils.registration`.
+- If the command has arguments, put them in the quotes after the command's name. Example: `register_cmd_usage("ping", "<username>", "Pong!")`
