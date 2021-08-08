@@ -1,4 +1,4 @@
-# How to port modules from HyperUBot 3.0 to 4.0
+# How to update modules from HyperUBot 3.0 to 4.0
 
 I had to split this guide because there were too much changes. The Paperplane version can be found [here](https://github.com/userbot8895/HyperBot_Plus/blob/master/guides/Porting_Modules_from_Nunobot.md).
 
