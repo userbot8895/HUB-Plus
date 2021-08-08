@@ -1,4 +1,4 @@
-# How to port modules from NunoBot/Paperplane to HyperUBot
+# How to port modules from Paperplane (and userbots based on it) to HyperUBot
 This guide has multiple chapters with example modules.
 ## Basic module
 <table>
