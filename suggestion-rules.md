@@ -6,10 +6,10 @@ Forks aren't required to use these rules. You can reuse HUB++ modules in your mo
 
 ## These aren't allowed in HUB++:
 
-- Kanging entire sticker packs. That's stealing.
-- Mute features that bypass Telegram's restrictions. If you can mute an admin with the feature, it's not coming.
 - Racist and sexist stuff.
 - NSFW (or suggestive) stuff, like the finger and OK sign animation used in almost every Paperplane fork.
+- Kanging entire sticker packs. That's stealing.
+- Mute features that bypass Telegram's restrictions. If you can mute an admin with the feature, it's not coming.
 - More memes. I might occasionally accept meme commands if they aren't garbage.
 - Any kinds of emoji animations.
 - Fake "hacking" animations.
