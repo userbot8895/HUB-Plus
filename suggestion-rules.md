@@ -13,6 +13,6 @@ Forks aren't required to use these rules. You can reuse HUB++ modules in your mo
 - More memes. I might occasionally accept meme commands if they aren't garbage.
 - Any kinds of emoji animations.
 - Fake "hacking" animations.
-- Malware. Commands that let the user run code (like .exec) are not considered malware.
+- Malware. Commands that let the user run code that they supply (like .exec) are not considered malware.
 - Commands with non-English text. Translate the text, then submit.
 - Anything to do with piracy, including torrent commands, paid streaming service content downloaders etc.
