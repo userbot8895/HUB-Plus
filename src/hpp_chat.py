@@ -12,7 +12,7 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChannelBannedRights
 
 ehandler = EventHandler()
-VERSION = "2021.7" 
+VERSION = "2021.8 beta 1" 
 
 @ehandler.on(command="inactive", hasArgs=False, outgoing=True)
 async def inactive(act):

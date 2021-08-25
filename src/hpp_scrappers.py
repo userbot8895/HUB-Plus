@@ -28,7 +28,7 @@ from userbot import getConfig
 
 SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
 ehandler = EventHandler()
-VERSION = "2021.7" 
+VERSION = "2021.8 beta 1" 
 LOGGING = getConfig("LOGGING")
 
 __ytkey__ = ""

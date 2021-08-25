@@ -27,7 +27,7 @@ from telethon.events import NewMessage
 from os.path import basename
 
 ehandler = EventHandler()
-VERSION = "2021.7" 
+VERSION = "2021.8 beta 1" 
 
 # ====================== CONSTANT ===============================
 INVALID_MEDIA = "```The extension of the media entity is invalid.```"

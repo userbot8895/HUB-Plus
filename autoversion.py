@@ -4,7 +4,7 @@
 # (c) 2021 githubcatw
 
 # =====================
-LATEST_VER = "2021.7"
+LATEST_VER = "2021.8 beta 1"
 # =====================
 VER_REGEX = '20\d+\.\d( for HUB [0-9]+\.x)?(?=\")'
 SOURCE = "src/"

@@ -22,7 +22,7 @@ from cowpy import cow
 from pyfiglet import Figlet
 
 ehandler = EventHandler()
-VERSION = "2021.7" 
+VERSION = "2021.8 beta 1" 
 
 @ehandler.on(command="oof", hasArgs=False, outgoing=True)
 async def Oof(e):

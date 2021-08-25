@@ -21,7 +21,7 @@ from cowpy import cow
 from pyfiglet import Figlet
 
 ehandler = EventHandler()
-VERSION = "2021.7" 
+VERSION = "2021.8 beta 1" 
 
 @ehandler.on(command="f", hasArgs=True, outgoing=True)
 async def payf(event):

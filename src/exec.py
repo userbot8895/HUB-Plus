@@ -13,7 +13,7 @@ from telethon.events import NewMessage
 import subprocess as sub
 
 ehandler = EventHandler()
-VERSION = "2021.7"
+VERSION = "2021.8 beta 1"
 
 @ehandler.on(command="exec", hasArgs=True, outgoing=True)
 async def doexec(event):

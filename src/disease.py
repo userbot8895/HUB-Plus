@@ -18,7 +18,7 @@ from userbot.sysutils.configuration import getConfig
 from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.7"
+VERSION = "2021.8 beta 1"
 TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
 FILES = pathjoin(getConfig("USERDATA"),"plus")
 

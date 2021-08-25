@@ -15,7 +15,7 @@ from os.path import join as pathjoin
 from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.7"
+VERSION = "2021.8 beta 1"
 FILES = pathjoin(getConfig("USERDATA"),"plus")
 
 if not os.path.isdir(FILES):

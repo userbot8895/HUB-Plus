@@ -12,7 +12,7 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot.sysutils.event_handler import EventHandler
 
 ehandler = EventHandler()
-VERSION = "2021.7" 
+VERSION = "2021.8 beta 1" 
 
 @ehandler.on(command="scramble", hasArgs=True, outgoing=True)
 async def scramble_message(e):
