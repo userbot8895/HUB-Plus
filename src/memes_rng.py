@@ -24,19 +24,6 @@ from .memes_common import *
 ehandler = EventHandler()
 VERSION = "2021.7"
 
-@ehandler.on(command="coinflip", hasArgs=False, outgoing=True)
-async def coin(event):  # coinflip
-    if not event.text[0].isalpha() and event.text[0] in ("."):
-        r = random.randint(1, 10000)
-        await event.edit("`Throwing the coin...`")
-        time.sleep(3)
-        if r % 2 == 1:
-            await event.edit("`The coin landed on: Heads`")
-        elif r % 2 == 0:
-            await event.edit("`The coin landed on: Tails`")
-        else:
-            await event.edit("`Mate, this is a beer bottle cap, give me a coin!`")
-            
 @ehandler.on(command="punch", hasArgs=True, outgoing=True)
 async def who(event): #punch
     if not event.text[0].isalpha() and event.text[0] in ("."):

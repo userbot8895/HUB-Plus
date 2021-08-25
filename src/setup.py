@@ -1,7 +1,7 @@
 # setup
 # HyperBot++
 # Licensed under the DBBPL
-# Uses code from the HyperUBot Setup Assistant, licensed under the PEL (Penim Enterprises License)
+# Uses code from HyperUBot and modules-universe, licensed under the PEL (Penim Enterprises License)
 # (C) 2021 nunopenim
 # (C) 2021 prototype74
 # (C) 2021 githubcatw
@@ -47,8 +47,8 @@ def setColorText(text: str, color: Colors) -> str:
 
 try:
 	from userbot.version import VERSION as UB_VERSION
-except ImportError:
-	raise ImportError(setColorText("Your version of HyperUBot is too old for HyperBot++.", Colors.RED))
+except:
+	from userbot import VERSION as UB_VERSION
 
 LOGO = """
  _   _ _   _ ____
@@ -74,8 +74,20 @@ pyAesCrypt
 """
 
 VERSION = "2021.7"
-MIN_UB_VERSION = 4
-LTS_UB_VERSION = 3
+MIN_UB_VERSION = "4.0.0"
+LTS_UB_VERSION = "4.0.0"
+OLD_UB_VERSION = "3.0.0"
+
+#temp solution
+def isSupportedVersion(version: str) -> bool:
+    try:
+        bot_ver = tuple(map(int, hubot_version.split(".")))
+        req_ver = tuple(map(int, version.split(".")))
+        if bot_ver >= req_ver:
+            return True
+    except:
+        pass
+    return False
 
 def init():
 	print(LOGO)
@@ -101,7 +113,7 @@ def init():
 	setupPlusConfig()
 	print("========================")
 	print(f"Setup complete. {setColorText('Enjoy HUB++!', Colors.YELLOW)}\n")
-	os.remove("setup.py")
+	os.remove(__file__)
 
 def installReqsHUB4():
     print("Using pip commands.")
@@ -244,22 +256,28 @@ def encryptPlusConfig(key):
     return
 
 def checkVersion():
-	signVersion = int(UB_VERSION[0:1])
-	if signVersion >= MIN_UB_VERSION:
+	if isSupportedVersion(MIN_UB_VERSION):
 		print("You have a supported version of HyperUBot.")
 		return True
-	elif signVersion == LTS_UB_VERSION:
+	elif isSupportedVersion(LTS_UB_VERSION):
 		print("Your version of HyperUBot is unsupported by HUB++, but is supported by HUB++ LTS.")
 		print(f"Check it out here: {setColorText('github.com/userbot8895/HBPlus-LTS', Colors.YELLOW)}")
 		return False
+	elif isSupportedVersion(OLD_UB_VERSION):
+		print(f"Your version of HyperUBot is unsupported by HUB++, but is supported by {setColorText('the previous version', Colors.YELLOW)} of HUB++ LTS.")
+		print(f"Check it out here: {setColorText('github.com/userbot8895/HBPlus-LTS/tree/old', Colors.YELLOW)}")
+		return False
 	else:
-		print("\033[1;31;40mYour version of HyperUBot is unsupported by HUB++.\033[1;37;40m")
+		print(setColorText('Your version of HyperUBot is unsupported by HUB++.', Colors.RED))
 		return False
 
 def checkConfig():
 	if os.path.exists(os.path.join("..", "config.env")):
-		print("\033[1;31;40mOnly config.py is supported. Please re-run HyperUBot setup.\033[1;37;40m")
+		print(setColorText('Only config.py is supported. Please re-run HyperUBot setup.', Colors.RED))
 		return False
+	elif not os.path.exists(os.path.join("..", "config.py")):
+		open(os.path.join("..", "config.py"),"w+")
+		print(f"Looks like you don't have a config.py. Setup {setColorText('created one', Colors.YELLOW)} for you.")
 	return True
 
 init()

@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot.include.aux_funcs import module_info
 from telethon.events import NewMessage
 import os.path
 from os import path

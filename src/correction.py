@@ -15,13 +15,15 @@ ehandler = EventHandler()
 VERSION = "2021.7" 
 
 DUM_LIST = {
-	"wut": "what",
-	"wat": "what",
-	"sed": "sad",
-	"wen": "when",
-	"gib": "give",
-	"sar": "sir",
-	"nao": "now",
+    "wut": "what",
+    "wat": "what",
+    "sed": "sad",
+    "wen": "when",
+    "gib": "give",
+    "sur": "sir",
+    "sar": "sir",
+    "nao": "now",
+    "bes": "best",
     "gab": "gave",
     "bess": "best",
     "dat": "that",
@@ -43,12 +45,13 @@ DUM_LIST = {
     "luv": "love",
     "gud": "good",
     "welcum": "welcome",
+    "whalecum": "welcome",
     "plox": "please",
     "meni": "many",
     "ppl": "people",
     "tat": "that",
     "yu": "you",
-    "yems": "yes"
+    "yems": "yes",
 }
 
 DELIMITERS = ("/", ":", "|", "_")

@@ -8,6 +8,8 @@ from telethon.events import NewMessage
 from os.path import basename
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import ChannelBannedRights
 
 ehandler = EventHandler()
 VERSION = "2021.7" 
@@ -87,9 +89,39 @@ async def forceactive(act):
         await act.respond(reply)
         await act.delete()
 
+@ehandler.on(command="dinact", hasArgs=False, outgoing=True)
+async def delinactive(act):
+    if not act.text[0].isalpha() and act.text[0] in ("."):
+        chat = None
+        if not hasattr(act.message.to_id, "channel_id"):
+            await act.edit("`Nope, it works with channels and groups only.`")
+            return
+        try:
+            chat = await act.client.get_entity(act.chat_id)
+        except Exception as e:
+            print("Exception:", e)
+            await act.edit("`Failed to get chat`")
+            return
+        chat_id = chat.id
+        chat_name = chat.title
+        dels = 0
+        async for user in act.client.iter_participants(chat_id):
+            if str(user.status) == "UserStatusOffline()" or str(user.status) == "UserStatusLastMonth()":
+                dels = dels + 1
+                tgclient(EditBannedRequest(chat, user, ChannelBannedRights(
+                    until_date=None,
+                    view_messages=True
+                )))
+        if dels == 0:
+            reply = "This group is pretty active."
+        else:
+            reply = f"Kicked {dels} users."
+        await act.edit(reply)
+
 register_module_desc("Extra commands for the chat module.")
 register_cmd_usage("inactive", "", "Lists inactive people.")
 register_cmd_usage("pinact", "", "Pings inactive people.")
+register_cmd_usage("dinact", "", "Kicks inactive people.")
 register_module_info(
     name="Chat (extension)",
     authors="githubcatw, Haklerman, help from prototype74",

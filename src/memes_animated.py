@@ -75,6 +75,9 @@ async def Brr(e):
 @ehandler.on(command="x", hasArgs=True, outgoing=True)
 async def Extend(e):
     if not e.text[0].isalpha() and e.text[0] in ("."):
+        if not " " in e.text:
+            await e.edit("`What should I extend?`")
+            return
         # get the requested text
         paytext = e.text.split(" ")[1]
         # return if text is too short
@@ -95,36 +98,6 @@ async def Extend(e):
             t = t[:-1] + tm + te
             # edit the message with the new text
             await e.edit(t)
-
-"""
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".oof\
-    \nUsage: Ooooof\
-    \n\n.hmm\
-    \nUsage: Hmmmmmm\
-    \n\n.lool\
-    \nUsage: Loooool\
-    \n\n.gay\
-    \nUsage: Gaaaaay\
-    \n\n.ree\
-    \nUsage: Reeeeee\
-    \n\n.brr\
-    \nUsage: Brrrrrr\
-    \n\n.x <text>\
-    \nUsage: Like the above commands but customizable.\
-    \n\n:/\
-    \nUsage: Check yourself ;)\
-    \n\n-_-\
-    \nUsage: wut?\
-    \n\n×_×\
-    \nUsage: ded\
-    \n\nx_x\
-    \nUsage: same as ×_×\
-    \n\nO.o\
-    \nUsage: o.O"
-})
-"""
 
 register_module_desc("Memes! This module contains various animations.")
 register_cmd_usage("oof", "", "Oooooof")

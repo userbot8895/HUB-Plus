@@ -26,6 +26,9 @@ VERSION = "2021.7"
 @ehandler.on(command="f", hasArgs=True, outgoing=True)
 async def payf(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
+        if not " " in event.text:
+            await e.edit("`Give something to make an F out of.`")
+            return
         paytext = event.pattern_match.group(1)
         pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
             paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
@@ -36,6 +39,9 @@ async def payf(event):
 @ehandler.on(command="lol", hasArgs=True, outgoing=True)
 async def payf(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
+        if not " " in event.text:
+            await e.edit("`Give something to make a LOL out of.`")
+            return
         paytext = event.text.split(" ")[1]
         pay = "```{}\n{}\n{}\n{}\n{}\n\n  {}\n {}\n{}\n {}\n  {}\n\n{}\n{}\n{}\n{}\n{}```".format(
             paytext, paytext, paytext, paytext, paytext * 4,
@@ -91,6 +97,16 @@ async def scam(event):
                     await asyncio.sleep(scam_time)
         except BaseException:
             return
+
+@ehandler.on(command="kill", hasArgs=True, outgoing=True)
+async def scam(event):
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        await event.edit("`Downloading resource 1/2`")
+        r = requests.get("https://github.com/userbot8895/rsrc/blob/main/ded.png", allow_redirects=True)
+        open('ded.png', 'wb').write(r.content)
+        await event.edit("`Downloading resource 2/2`")
+        r = requests.get("https://github.com/userbot8895/rsrc/blob/main/mc.ttf", allow_redirects=True)
+        open('mc.ttf', 'wb').write(r.content)
 
 register_module_desc("Memes! This module contains random commands.")
 register_cmd_usage("f", "<emoji/character>", "Pay respect.")

@@ -22,6 +22,9 @@ from cowpy import cow
 from pyfiglet import Figlet
 from .memes_common import *
 
+ehandler = EventHandler()
+VERSION = "2021.7"
+
 @ehandler.on(command="vapor", hasArgs=True, outgoing=True)
 async def vapor(vpr):  # vapor
     if not vpr.text[0].isalpha() and vpr.text[0] in ("."):
