@@ -189,20 +189,6 @@ async def rem_locks(event):
         return
 
 
-MODULE_DESC.update({
-    basename(__file__)[:-3]:
-    "Prevent people from posting certain types of media in a chat."})
-
-MODULE_DICT.update({
-    basename(__file__)[:-3]:
-    ".lock <all (or) type(s)> or .unlock <all (or) type(s)>\
-\nUsage: Allows you to lock/unlock some common message types in the chat.\
-[NOTE: Requires proper admin rights in the chat!]\
-\n\nAvailable message types to lock/unlock are: \
-\n`all, msg, media, sticker, gif, game, inline, poll, invite, pin, info`"
-})
-MODULE_INFO.update({basename(__file__)[:-3]: module_info(name='Locks', version='1.0')})
-
 register_module_desc("Prevent people from posting certain types of media in a chat.")
 register_cmd_usage("lock", "<all or type(s)>", "Lock some common message types.")
 register_cmd_usage("unlock", "<all or type(s)>", "Unlock some common message types.\n\

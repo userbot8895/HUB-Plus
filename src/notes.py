@@ -16,12 +16,16 @@ from userbot import getConfig
 
 ehandler = EventHandler()
 VERSION = "2021.8 beta 1"
+
+if getConfig("USERDATA") == None:
+    raise Exception("notes requires a user data folder. Please set USERDATA in your config.")
+
 FILES = pathjoin(getConfig("USERDATA"),"plus")
 
 if not os.path.isdir(FILES):
     os.makedirs(FILES)
 
-@ehandler.on(command="note", hasArgs=True, outgoing=True)
+@ehandler.on(command="save", hasArgs=True, outgoing=True)
 async def save(event):
     name = event.text.split(" ")[1]
     text = event.text.split(" ")[2]

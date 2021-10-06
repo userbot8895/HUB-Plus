@@ -20,6 +20,10 @@ from userbot import getConfig
 ehandler = EventHandler()
 VERSION = "2021.8 beta 1"
 TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
+
+if getConfig("USERDATA") == None:
+    raise Exception("disease requires a user data folder. Please set USERDATA in your config.")
+
 FILES = pathjoin(getConfig("USERDATA"),"plus")
 
 if not os.path.isdir(FILES):

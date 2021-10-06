@@ -26,7 +26,9 @@ from userbot.sysutils.configuration import getConfig
 import os
 from userbot import getConfig
 
-SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
+SECURE_CONFIG = None
+if getConfig("USERDATA") != None:
+    SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
 ehandler = EventHandler()
 VERSION = "2021.8 beta 1" 
 LOGGING = getConfig("LOGGING")
@@ -122,6 +124,7 @@ def decrypt():
     _password = ""
     _pwd_confm = False
     _attempts = 0
+    global __ytkey__
     while True:
         try:
             decryptFile(infile=SECURE_CONFIG,

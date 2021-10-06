@@ -161,7 +161,6 @@ async def cry(e):
     await e.edit(random.choice(CRI))
 
 register_module_desc("Memes! This module contains stuff involving randomness.")
-register_cmd_usage("coinflip", "<heads/tails>", "Flip a coin! Can be rigged.")
 register_cmd_usage("punch", "", "Punch 'em!")
 register_cmd_usage("slap", "", "Reply to slap them with random objects!")
 register_cmd_usage("decide", "[optional: yes, no, maybe]", "Make a quick decision.")

@@ -15,7 +15,10 @@ from userbot import getConfig
 
 IS_WINDOWS = (True if system().lower() == "windows" or
               os.name == "nt" or platform.startswith("win") else False)
-SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
+
+if getConfig("USERDATA") != None:
+    SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
+
 PY_EXEC = executable if not " " in executable else '"' + executable + '"'
 WIN_COLOR_ENABLED = False
 PIP_UTIL = False
@@ -144,6 +147,8 @@ def setupPlusConfig():
 			break
 		else:
 			while True:
+				if getConfig("USERDATA") == None:
+					break
 				print(f"\nOptionally you can secure the API key by storing it in {setColorText('a secure PlusConfig', Colors.YELLOW)}.")
 				print(f"This secure PlusConfig is unrelated to the userbot's secure config and stored separately.")
 				sinp = input("Do you want a secure PlusConfig? (y/n): ")

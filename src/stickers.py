@@ -138,7 +138,7 @@ async def kang(args):
                     await tgclient.send_read_acknowledge(conv.chat_id)
                     await conv.send_message(packname)
                     x = await conv.get_response()
-                    while "12021.8 beta 1" in x.text:
+                    while "120" in x.text:
                         pack += 1
                         packname = f"a{user.id}_by_{user.username}_{pack}"
                         packnick = f"@{user.username}'s kang pack Vol.{pack}"
