@@ -3,7 +3,7 @@ This guide has multiple chapters with example modules.
 ## Basic module
 <table>
 <tr>
-<td> NunoBot </td> <td> HyperUBot </td>
+<td> Paperplane </td> <td> HyperUBot </td>
 </tr>
 <tr>
 <td>
@@ -41,7 +41,7 @@ async def ping(event):
 ## Basic module, with help
 <table>
 <tr>
-<td> NunoBot </td> <td> HyperUBot </td>
+<td> Paperplane </td> <td> HyperUBot </td>
 </tr>
 <tr>
 <td>
@@ -86,5 +86,4 @@ register_module_info(
 **Differences:**
 
 - There is a new description field.
-- HyperUBot 4.0 removed the MODULE_* dicts. Instead use `register_cmd_usage`, `register_module_desc` and `register_module_info` from `userbot.sysutils.registration`.
 - If the command has arguments, put them in the quotes after the command's name. Example: `register_cmd_usage("ping", "<username>", "Pong!")`
