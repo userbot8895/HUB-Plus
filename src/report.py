@@ -13,7 +13,7 @@ from telethon.events import NewMessage
 from telethon.tl.types import ChannelParticipantsAdmins
 
 ehandler = EventHandler()
-VERSION = "2021.8 beta 1"
+VERSION = "2021.8"
 
 @ehandler.on(command="report", hasArgs=False, outgoing=True)
 async def flash(event):

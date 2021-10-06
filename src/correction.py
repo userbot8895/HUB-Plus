@@ -12,7 +12,7 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot.sysutils.event_handler import EventHandler
 
 ehandler = EventHandler()
-VERSION = "2021.8 beta 1" 
+VERSION = "2021.8" 
 
 DUM_LIST = {
     "wut": "what",

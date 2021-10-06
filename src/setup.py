@@ -76,7 +76,7 @@ qrcode
 pyAesCrypt
 """
 
-VERSION = "2021.8 beta 1"
+VERSION = "2021.8"
 MIN_UB_VERSION = "4.0.0"
 LTS_UB_VERSION = "4.0.0"
 OLD_UB_VERSION = "3.0.0"

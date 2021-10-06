@@ -15,7 +15,7 @@ from os.path import join as pathjoin
 from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.8 beta 1"
+VERSION = "2021.8"
 
 if getConfig("USERDATA") == None:
     raise Exception("notes requires a user data folder. Please set USERDATA in your config.")

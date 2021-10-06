@@ -12,7 +12,7 @@ from userbot.sysutils.event_handler import EventHandler
 from telethon.events import NewMessage
 
 ehandler = EventHandler()
-VERSION = "2021.8 beta 1"
+VERSION = "2021.8"
 
 @ehandler.on(command="flash", hasArgs=True, outgoing=True)
 async def flash(event):

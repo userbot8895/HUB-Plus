@@ -30,7 +30,7 @@ SECURE_CONFIG = None
 if getConfig("USERDATA") != None:
     SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
 ehandler = EventHandler()
-VERSION = "2021.8 beta 1" 
+VERSION = "2021.8" 
 LOGGING = getConfig("LOGGING")
 
 __ytkey__ = ""

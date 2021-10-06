@@ -17,7 +17,7 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot import getConfig
 
 ehandler = EventHandler()
-VERSION = "2021.8 beta 1"
+VERSION = "2021.8"
 TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
 
 def progress(current, total):

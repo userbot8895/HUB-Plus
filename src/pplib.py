@@ -3,4 +3,4 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-VERSION = "2021.8 beta 1" 
+VERSION = "2021.8" 

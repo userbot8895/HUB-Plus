@@ -4,9 +4,9 @@
 # (c) 2021 githubcatw
 
 # =====================
-LATEST_VER = "2021.8 beta 1"
+LATEST_VER = "2021.8"
 # =====================
-VER_REGEX = '20\d+\.\d( for HUB [0-9]+\.x)?(?=\")'
+VER_REGEX = '20\d+\.\d( for HUB [0-9]+\.x)?( beta [0-9]+)?(?=\")'
 SOURCE = "src/"
 # =====================
 import re
