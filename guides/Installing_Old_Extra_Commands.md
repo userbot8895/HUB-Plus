@@ -28,12 +28,6 @@ All meme commands require `memes_common` too.
 |`.lool`|`memes_animated`|
 |`.gay`|`memes_animated`|
 |`.ree`|`memes_animated`|
-|`.x`|`memes_animated`|
-|`:/`|`memes_animated`|
-|`-_-`|`memes_animated`|
-|`×_×`|`memes_animated`|
-|`x_x`|`memes_animated`|
-|`O.o`|`memes_animated`|
 |`.hi`|`text_replies` (from modules_universe)|
 |`.insult`|`text_replies` (from modules_universe)|
 |`.coinflip`|`memes_rng`|
@@ -61,6 +55,7 @@ All meme commands require `memes_common` too.
 |`.uno`|`memes_copypasta`|
 |`.f`|`memes_misc`|
 |`.lol`|`memes_misc`|
-|`.lfy <query>`|`memes_misc`|
-|`.scam <action> <time>`|`memes_misc`|
+|`.lfy`|`memes_misc`|
+|`.scam`|`memes_misc`|
+|`.kill`|`memes_misc`|
 |`.s`|`corrections`|
