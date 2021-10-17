@@ -18,10 +18,9 @@ log = getLogger(__name__)
 
 MODULE_LIST = []
 
-# TODO var is deprecated
-from userbot import OS
+from userbot.sysutils.sys_funcs import isWindows
 
-if OS and OS.startswith("win"):
+if isWindows():
     USER_MODULES_DIR = ".\\userbot\\modules_user\\"
 else:
     USER_MODULES_DIR = "./userbot/modules_user/"

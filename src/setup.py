@@ -12,9 +12,7 @@ from sys import executable, version_info
 import os
 import pyAesCrypt
 from userbot import getConfig
-
-IS_WINDOWS = (True if system().lower() == "windows" or
-              os.name == "nt" or platform.startswith("win") else False)
+from userbot.sysutils.sys_funcs import isWindows
 
 if getConfig("USERDATA") != None:
     SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
@@ -24,7 +22,7 @@ WIN_COLOR_ENABLED = False
 PIP_UTIL = False
 
 try:
-    if IS_WINDOWS:
+    if isWindows():
         import colorama
         colorama.init()
         WIN_COLOR_ENABLED = True
@@ -44,7 +42,7 @@ class Colors:
     END = "\033[0m"
 
 def setColorText(text: str, color: Colors) -> str:
-    if IS_WINDOWS and not WIN_COLOR_ENABLED:
+    if isWindows() and not WIN_COLOR_ENABLED:
         return text  # don't use ANSI codes
     return color + text + Colors.END
 
