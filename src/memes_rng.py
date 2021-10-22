@@ -125,7 +125,7 @@ async def decide(event):  # yes/no
         if event.fwd_from:
             return
         message = None
-        if len(event.text.split(" ")) > 0:
+        if len(event.text.split(" ")) > 1:
             message = event.text.split(" ")[1]
         message_id = None
         if event.reply_to_msg_id:
