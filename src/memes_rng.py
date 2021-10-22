@@ -45,8 +45,8 @@ async def get_user(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         replied_user = await event.client(GetFullUserRequest(previous_message.sender_id))
-    elif len(event.text.split(" ")) != 1:
-        # punch the sender as a form of punisjment
+    elif len(event.text.split(" ")) != 2:
+        # punch the sender as a form of punishment
         self_user = await event.client.get_me()
         user = self_user.id
     else:
