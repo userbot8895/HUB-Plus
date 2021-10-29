@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from telethon.events import NewMessage
 from os.path import basename
 
 import asyncio

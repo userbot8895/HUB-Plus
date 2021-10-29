@@ -5,9 +5,7 @@
 
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
-from telethon.events import NewMessage
 from os.path import basename
-from userbot import tgclient
 
 import io
 import math
@@ -44,7 +42,7 @@ KANGING_STR = [
 @ehandler.on(command="kang", hasArgs=True, outgoing=True)
 async def kang(args):
     if not args.text[0].isalpha() and args.text[0] in ("."):
-        user = await tgclient.get_me()
+        user = await args.client.get_me()
         if not user.username:
             user.username = user.first_name
         message = await args.get_reply_message()
@@ -57,18 +55,18 @@ async def kang(args):
             if isinstance(message.media, MessageMediaPhoto):
                 await args.edit(f"`{random.choice(KANGING_STR)}`")
                 photo = io.BytesIO()
-                photo = await tgclient.download_media(message.photo, photo)
+                photo = await args.client.download_media(message.photo, photo)
             elif "image" in message.media.document.mime_type.split('/'):
                 await args.edit(f"`{random.choice(KANGING_STR)}`")
                 photo = io.BytesIO()
-                await tgclient.download_file(message.media.document, photo)
+                await args.client.download_file(message.media.document, photo)
                 if (DocumentAttributeFilename(file_name='sticker.webp') in
                         message.media.document.attributes):
                     emoji = message.media.document.attributes[1].alt
                     emojibypass = True
             elif "tgsticker" in message.media.document.mime_type:
                 await args.edit(f"`{random.choice(KANGING_STR)}`")
-                await tgclient.download_file(message.media.document,
+                await args.client.download_file(message.media.document,
                                         'AnimatedSticker.tgs')
 
                 attributes = message.media.document.attributes
@@ -131,11 +129,11 @@ async def kang(args):
             htmlstr = response.read().decode("utf8").split('\n')
 
             if "  A <strong>Telegram</strong> user has created the <strong>Sticker&nbsp;Set</strong>." not in htmlstr:
-                async with tgclient.conversation('Stickers') as conv:
+                async with args.client.conversation('Stickers') as conv:
                     await conv.send_message('/addsticker')
                     await conv.get_response()
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.send_message(packname)
                     x = await conv.get_response()
                     while "120" in x.text:
@@ -152,11 +150,11 @@ async def kang(args):
                             await conv.send_message(cmd)
                             await conv.get_response()
                             # Ensure user doesn't get spamming notifications
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             await conv.send_message(packnick)
                             await conv.get_response()
                             # Ensure user doesn't get spamming notifications
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             if is_anim:
                                 await conv.send_file('AnimatedSticker.tgs')
                                 remove('AnimatedSticker.tgs')
@@ -166,7 +164,7 @@ async def kang(args):
                             await conv.get_response()
                             await conv.send_message(emoji)
                             # Ensure user doesn't get spamming notifications
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             await conv.get_response()
                             await conv.send_message("/publish")
                             if is_anim:
@@ -174,17 +172,17 @@ async def kang(args):
                                 await conv.send_message(f"<{packnick}>")
                             # Ensure user doesn't get spamming notifications
                             await conv.get_response()
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             await conv.send_message("/skip")
                             # Ensure user doesn't get spamming notifications
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             await conv.get_response()
                             await conv.send_message(packname)
                             # Ensure user doesn't get spamming notifications
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             await conv.get_response()
                             # Ensure user doesn't get spamming notifications
-                            await tgclient.send_read_acknowledge(conv.chat_id)
+                            await args.client.send_read_acknowledge(conv.chat_id)
                             await args.edit(
                                 f"`Sticker added in a Different Pack !\
                                 \nThis Pack is Newly created!\
@@ -205,23 +203,23 @@ async def kang(args):
                         return
                     await conv.send_message(emoji)
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.get_response()
                     await conv.send_message('/done')
                     await conv.get_response()
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
             else:
                 await args.edit("`Brewing a new Pack...`")
-                async with tgclient.conversation('Stickers') as conv:
+                async with args.client.conversation('Stickers') as conv:
                     await conv.send_message(cmd)
                     await conv.get_response()
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.send_message(packnick)
                     await conv.get_response()
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     if is_anim:
                         await conv.send_file('AnimatedSticker.tgs')
                         remove('AnimatedSticker.tgs')
@@ -236,7 +234,7 @@ async def kang(args):
                         return
                     await conv.send_message(emoji)
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.get_response()
                     await conv.send_message("/publish")
                     if is_anim:
@@ -244,17 +242,17 @@ async def kang(args):
                         await conv.send_message(f"<{packnick}>")
                     # Ensure user doesn't get spamming notifications
                     await conv.get_response()
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.send_message("/skip")
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.get_response()
                     await conv.send_message(packname)
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
                     await conv.get_response()
                     # Ensure user doesn't get spamming notifications
-                    await tgclient.send_read_acknowledge(conv.chat_id)
+                    await args.client.send_read_acknowledge(conv.chat_id)
 
             await args.edit(
                 f"`Sticker kanged successfully!`\
@@ -345,7 +343,7 @@ async def get_pack_info(event):
             await event.edit("`This is not a sticker. Reply to a sticker.`")
             return
 
-        get_stickerset = await tgclient(
+        get_stickerset = await args.client(
             GetStickerSetRequest(
                 InputStickerSetID(
                     id=stickerset_attr.stickerset.id,
@@ -388,7 +386,7 @@ async def get_pack_info(event):
             await event.edit("`This is not a sticker. Reply to a sticker.`")
             return
         
-        get_stickerset = await tgclient(
+        get_stickerset = await args.client(
             GetStickerSetRequest(
                 InputStickerSetID(
                     id=stickerset_attr.stickerset.id,

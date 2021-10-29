@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from telethon.events import NewMessage
 from os.path import basename
 
 from requests import get
@@ -128,7 +127,7 @@ def decrypt():
     while True:
         try:
             decryptFile(infile=SECURE_CONFIG,
-                        outfile=os.path.join(".", "userbot", "_temp.py"),
+                        outfile=os.path.join(".", "userbot", "_hpptemp.py"),
                         passw=_password,
                         bufferSize=(64 * 1024))
             break
@@ -156,18 +155,18 @@ def decrypt():
             quit(1)
 
     try:
-        import userbot._temp as _s_cfg
+        import userbot._hpptemp as _s_cfg
         __ytkey__ = _s_cfg.YOUTUBE_API_KEY
     except Exception:
         log.error("Unable to read secure config")
         quit(1)
     finally:
-        if path.exists(path.join(".", "userbot", "_temp.py")):
-            remove(path.join(".", "userbot", "_temp.py"))
+        if path.exists(path.join(".", "userbot", "_hpptemp.py")):
+            remove(path.join(".", "userbot", "_hpptemp.py"))
         if path.exists(path.join(".", "userbot", "__pycache__")) and \
            path.isdir(path.join(".", "userbot", "__pycache__")):
             for name in listdir(path.join(".", "userbot", "__pycache__")):
-                if name.startswith("_temp.cpython-") and \
+                if name.startswith("_hpptemp.cpython-") and \
                    name.endswith(".pyc"):
                     remove(path.join(".", "userbot", "__pycache__", name))
                     break

@@ -13,8 +13,6 @@ VERSION = "2021.8"
 async def logoff(event):  # bot shutdown
     if not event.text[0].isalpha() and event.text[0] in ("."):
         await event.edit("`Farewell!`")
-        if BOTLOG:
-            await event.client.send_message(BOTLOG_CHATID, "logoff")
         await event.client.log_out()
 
 register_module_desc("Extra commands for the systools module.")

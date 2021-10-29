@@ -6,8 +6,6 @@
 import time
 import random
 
-from userbot import tgclient
-from telethon.events import NewMessage
 from os.path import basename
 from os.path import join as pathjoin
 import os
@@ -80,7 +78,7 @@ async def infmerge(event):
 			if replymsg.media:
 				await event.edit("`Downloading file...`")
 
-				downloaded_file_name = await bot.download_media(
+				downloaded_file_name = await event.client.download_media(
 					replymsg,
 					pathjoin(TEMP_DL_DIR, "patients.txt"),
 					progress_callback=progress

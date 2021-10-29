@@ -4,13 +4,20 @@
 # (C) 2021 githubcatw
 
 from userbot import getConfig
+from os import remove
 from os.path import isdir
 from os.path import join as pathjoin
 from os.path import exists as isfile
+from userbot.sysutils.sys_funcs import isWindows
 import shutil
 
 userData = getConfig("USERDATA")
 tempDl = getConfig("TEMP_DL_DIR")
+
+if isWindows():
+    USER_MODULES_DIR = ".\\userbot\\modules_user\\"
+else:
+    USER_MODULES_DIR = "./userbot/modules_user/"
 
 def migrate():
   if not userData:
@@ -69,3 +76,5 @@ print("migrate_plusdata: HUB++ data folder migrater")
 print("(c) 2021 githubcatw, Haklerman")
 print("Licensed under the DBBPL")
 migrate()
+print("Removing module...")
+remove(USER_MODULES_DIR + "migrate_plusdata.py")

@@ -5,10 +5,8 @@
 
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
-from telethon.events import NewMessage
 from os.path import basename, isfile
 from os.path import join as pathjoin
-from userbot import tgclient, getConfig
 
 import asyncio
 import random

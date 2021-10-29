@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from telethon.events import NewMessage
 import os.path
 from os import path
 import os

@@ -6,7 +6,6 @@
 import random
 import re
 
-from telethon.events import NewMessage
 from os.path import basename
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler

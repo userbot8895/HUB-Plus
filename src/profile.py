@@ -23,7 +23,6 @@ from telethon.tl.types import InputPhoto, MessageMediaPhoto, User, Chat, Channel
 
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
-from telethon.events import NewMessage
 from os.path import basename
 
 ehandler = EventHandler()

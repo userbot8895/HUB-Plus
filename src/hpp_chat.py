@@ -3,8 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient
-from telethon.events import NewMessage
 from os.path import basename
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
@@ -53,7 +51,6 @@ async def inactive(act):
 async def forceactive(act):
     if not act.text[0].isalpha() and act.text[0] in ("."):
         chat = None
-        message = act.pattern_match.group(1)
         if not hasattr(act.message.to_id, "channel_id"):
             await act.edit("`Nope, it works with channels and groups only.`")
             return
@@ -82,7 +79,7 @@ async def forceactive(act):
                 else:
                     reply = reply
         if reply is init_reply:
-            reply = "This group is pretty active"
+            reply = "`This group is pretty active`"
         else:
             reply = reply.rstrip(", ")+" "
             reply = reply+message

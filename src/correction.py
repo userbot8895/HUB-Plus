@@ -3,7 +3,6 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient
 from telethon.events import NewMessage
 import re
 from sre_constants import error as sre_err
@@ -117,7 +116,7 @@ async def separate_sed(sed_string):
     return None
 
 
-@tgclient.on(NewMessage(outgoing=True, pattern="^\.s"))
+@ehandler.on_pattern(outgoing=True, events=NewMessage, pattern="^\.s", name="s")
 async def sed(command):
     if not command.text[0].isalpha() and command.text[0] in ("."):
         sed_result = await separate_sed(command.text)

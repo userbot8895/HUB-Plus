@@ -8,7 +8,6 @@ from datetime import datetime
 import os
 import requests
 
-from userbot import tgclient
 from telethon.events import NewMessage
 from os.path import basename
 from os.path import join as pathjoin
@@ -36,7 +35,7 @@ async def _(event):
         previous_message = await event.get_reply_message()
         if previous_message.media:
             await event.edit("`Downloading file...`")
-            downloaded_file_name = await bot.download_media(
+            downloaded_file_name = await event.client.download_media(
                 previous_message,
                 TEMP_DL_DIR,
                 progress_callback=progress

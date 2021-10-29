@@ -3,20 +3,13 @@
 # Licensed under the DBBPL
 # (C) 2021 githubcatw
 
-from userbot import tgclient
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
-from telethon.events import NewMessage
 from os.path import basename
 
 import asyncio
 import random
 import re
-import time
-
-import requests
-from telethon.tl.functions.users import GetFullUserRequest
-from telethon.tl.types import MessageEntityMentionName
 
 from cowpy import cow
 from pyfiglet import Figlet

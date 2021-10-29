@@ -3,13 +3,8 @@
 # Licensed under the DBBPL
 # Originally from github.com/Javes786/javes-2.0/blob/main/userbot/modules/call_admin.py, ported to HyperUBot by githubcatw
 
-import time
-import random
-
-from userbot import tgclient
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
-from telethon.events import NewMessage
 from telethon.tl.types import ChannelParticipantsAdmins
 
 ehandler = EventHandler()

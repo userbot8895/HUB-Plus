@@ -7,7 +7,6 @@
 import userbot.include.git_api as git
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
-from telethon.events import NewMessage
 from logging import getLogger
 import sys
 import requests
@@ -68,7 +67,6 @@ async def flash(event):
     os.remove(USER_MODULES_DIR + "memes.py")
     args = [EXECUTABLE, "-m", "userbot"]
     os.execle(sys.executable, *args, os.environ)
-    await msg.client.disconnect()
 
 register_module_desc("Memes! This module installs **every meme module in HyperBot++**, so you have all meme commands with one command.")
 register_cmd_usage("memes", "", "Install all meme modules")
