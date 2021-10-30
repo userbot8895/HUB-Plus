@@ -116,7 +116,7 @@ async def separate_sed(sed_string):
     return None
 
 
-@ehandler.on_pattern(outgoing=True, events=NewMessage, pattern="^\.s", name="s")
+@ehandler.on_Pattern(outgoing=True, events=NewMessage, pattern="^\.s", name="s")
 async def sed(command):
     if not command.text[0].isalpha() and command.text[0] in ("."):
         sed_result = await separate_sed(command.text)
