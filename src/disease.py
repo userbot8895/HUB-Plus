@@ -14,6 +14,10 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.configuration import getConfig
 from userbot import getConfig
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import ChatBannedRights
+from datetime import datetime, timedelta
+from telethon.errors import UserAdminInvalidError
 
 ehandler = EventHandler()
 VERSION = "2021.8"
@@ -54,11 +58,28 @@ async def infect(event):
 			f=open(pathjoin(FILES,"patients.txt"),"a+", encoding="utf-8")
 			f.write(f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})\n")
 			f.close()
-			await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}!")
-			await event.delete()
+			try:
+				await doInfect(event, replymsg)
+				await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}! Now you can't send stickers, GIFs, use inline bots or embed links.")
+				await event.delete()
+			except UserAdminInvalidError:
+				await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}!")
+				await event.delete()
 		else:
 			await event.edit("I don't know whom to infect!")
-		
+
+async def doInfect(event, mess):
+	peer_id = event.chat_id
+	rights = ChatBannedRights(
+		until_date=datetime.now() + timedelta(minutes=20),
+		send_stickers=True,
+		send_gifs=True,
+		send_games=True,
+		send_inline=True,
+		embed_links=True
+	)
+	await event.client(EditBannedRequest(peer_id, mess.sender, rights))
+
 @ehandler.on(command="infshare", hasArgs=False, outgoing=True)
 async def share(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
@@ -69,7 +90,8 @@ async def share(event):
 			\nReply with .infmerge to add the {pc.VIRUS}'s patients to your own virus' patient list."
         )
 		await event.delete()
-		
+
+
 @ehandler.on(command="infmerge", hasArgs=True, outgoing=True)
 async def infmerge(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
@@ -110,6 +132,15 @@ async def infmerge(event):
 			await event.edit("I don't know whom to merge lists with!")
 
 @ehandler.on(command="infstats", hasArgs=False, outgoing=True)
+async def infected(event):
+	if not event.text[0].isalpha() and event.text[0] in ("."):
+		rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
+		read=rf.read()
+		rf.close()
+		reply = f"List of people infected with the {pc.VIRUS}:\n{read}"
+		await event.edit(reply[0:4090])
+
+@ehandler.on(command="patients", hasArgs=False, outgoing=True)
 async def infected(event):
 	if not event.text[0].isalpha() and event.text[0] in ("."):
 		rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
