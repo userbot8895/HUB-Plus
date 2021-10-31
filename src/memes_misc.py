@@ -7,6 +7,7 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot.sysutils.event_handler import EventHandler
 from os.path import basename, isfile
 from os.path import join as pathjoin
+from pathlib import Path as lPath
 
 import asyncio
 import random
@@ -98,12 +99,13 @@ async def scam(event):
             return
 
 @ehandler.on(command="kill", hasArgs=True, outgoing=True)
-async def scam(event):
+async def kill(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if getConfig("USERDATA") == None:
                 raise Exception("kill requires a user data folder. Please set USERDATA in your config.")
 
         FILES = pathjoin(getConfig("USERDATA"),"plus", "killRsrc")
+        Path(FILES).mkdir(parents=True, exist_ok=True)
 
         if not isfile(pathjoin(FILES,'ded.png')):
             await event.edit("`Downloading resource 1/2`")
