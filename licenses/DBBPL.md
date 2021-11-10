@@ -1,8 +1,8 @@
 # DON'T BE BAD PUBLIC LICENSE
 
-> Version 1.0, August 2020
+> Version 2.0, November 2021
 
-> Copyright (C) 2020 githubcatw 
+> Copyright (C) 2021 githubcatw 
  
  Everyone is permitted to copy and distribute verbatim or modified
  copies of this license document.
@@ -15,7 +15,7 @@
      Being bad includes - but is not limited to - the following instances:
 
 	 1a. Outright copyright infringement - Don't just copy the original work/works and change the name.  
-	 1b. Selling the unmodified original with no work done what-so-ever, that's being REALLY bad. 
+	 1b. Selling the unmodified original with no work done what-so-ever, that's being REALLY bad.  
 	 1c. Modifying the original work to contain hidden harmful content. That would make you a VERY bad person.  
 	 1d. Selling a project with educational purposes without consulting the original creator. That would make you SUPER bad.
 	 
@@ -26,4 +26,5 @@
  3. Code is provided with no warranty. Using somebody else's code and getting angry when it goes wrong makes 
  you EXTRA bad. Fix the problem yourself or submit a [bug report](https://www.chiark.greenend.org.uk/~sgtatham/bugs.html), so that the 
  original creator can attempt to fix the problem. Just don't get angry about it.
-
+ 
+ 4. Please credit the authors of the original work in your modifications.
