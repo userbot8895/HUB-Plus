@@ -4,14 +4,27 @@
 # (c) 2021 githubcatw
 
 # =====================
-LATEST_VER = "2021.8"
+LATEST_STABLE = "2021.8"
+LATEST_BETA = "2022.1.b2"
 # =====================
-VER_REGEX = '20\d+\.\d( for HUB [0-9]+\.x)?( beta [0-9]+)?(?=\")'
+VER_REGEX = '20\d+\.\d+(\.b?a?\d+)?( for HUB [0-9]+\.x)?( beta [0-9]+)?(?=\")'
 SOURCE = "src/"
+LATEST_VER = ""
 # =====================
 import re
 import os
 
+while True:
+   bos = input(f"[B]eta ({LATEST_BETA}) or [S]table ({LATEST_STABLE})? (Default: stable) ").lower()
+
+   if bos == "b":
+      LATEST_VER = LATEST_BETA
+      break
+   elif bos == "s" or bos =="":
+      LATEST_VER = LATEST_STABLE
+      break
+   else:
+      print("Unknown option")
 
 for directory, subdirectories, files in os.walk(SOURCE):
   for file in files:
