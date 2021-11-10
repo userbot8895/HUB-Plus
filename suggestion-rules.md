@@ -2,7 +2,7 @@
 
 We accept suggestions for commands as well as pull requests, but the commands should comply with these rules.
 
-Forks aren't required to use these rules if they don't use "HUB++" or "userbot8895" in the name. You can reuse HUB++ modules in your module repos as long as you credit me.
+Forks aren't required to use these rules if they don't use "HUB++" or "userbot8895" in the name.
 
 ## These aren't allowed in HUB++:
 
