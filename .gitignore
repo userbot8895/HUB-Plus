@@ -8,3 +8,4 @@ src/.vs
 src/hash.ps1
 hbp_hashes.txt
 src/pplib.py
+hash-stable.txt
