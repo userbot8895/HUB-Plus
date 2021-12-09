@@ -1,6 +1,17 @@
 # How to install HUB++
 You need to already have [HyperUBot](https://www.github.com/prototype74/HyperUBot) installed.
-## Adding the repo
+
+## Installation using HUB++ Setup (beta)
+HUB++ 2021.4 introduces HUB++ Setup (beta), which is an installer for HUB++. If you have found this guide from HUB++ LTS's old branch (which has version 2021.3) go to Manual installation.
+
+**HUB++ Setup is considered beta software. A backup of the userbot from the HyperUBot Recovery is advised.**
+
+### HyperUBot 6.0 or later
+
+In Telegram, run `.pkg install -repo userbot8895/HUB-Plus setup`. The userbot will reboot as usual, and you'll be greeted by HUB++ Setup in the terminal.
+
+### HyperUBot 5.x
+
 Add `"userbot8895/HUB-Plus"` as a community repo in your config.
 
 Your community repo list should look like this:
@@ -11,12 +22,7 @@ Or, in case you have more repos,
 
 `COMMUNITY_REPOS = ["some_other_repo","userbot8895/HUB-Plus"]`
 
-## Installation using HUB++ Setup (beta)
-HUB++ 2021.4 introduces HUB++ Setup (beta), which is an installer for HUB++. If you have found this guide from HUB++ LTS's old branch (which has version 2021.3) go to Manual installation.
-
-**HUB++ Setup is considered beta software. A backup of the userbot from the HyperUBot Recovery is advised.**
-
-In Telegram, run `.pkg install setup`. The userbot will reboot as usual, and you'll be greeted by HUB++ Setup in the terminal.
+Start the userbot. In Telegram, run `.pkg install setup`. The userbot will reboot as usual, and you'll be greeted by HUB++ Setup in the terminal.
 
 After you're done installing, go to "Installing HUB++ modules".
 
