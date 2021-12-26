@@ -7,8 +7,7 @@ from os.path import basename
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
 from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChannelBannedRights
-
+from telethon.tl.types import ChatBannedRights
 ehandler = EventHandler()
 VERSION = "2022.1" 
 
@@ -105,14 +104,14 @@ async def delinactive(act):
         async for user in act.client.iter_participants(chat_id):
             if str(user.status) == "UserStatusOffline()" or str(user.status) == "UserStatusLastMonth()":
                 dels = dels + 1
-                tgclient(EditBannedRequest(chat, user, ChannelBannedRights(
+                await act.client(EditBannedRequest(chat, user, ChatBannedRights(
                     until_date=None,
                     view_messages=True
                 )))
         if dels == 0:
             reply = "This group is pretty active."
         else:
-            reply = f"Kicked {dels} users."
+            reply = f"Kicked {dels} user{'s' if dels > 1 else ''}."
         await act.edit(reply)
 
 register_module_desc("Extra commands for the chat module.")
