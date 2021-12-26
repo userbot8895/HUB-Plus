@@ -68,6 +68,13 @@ async def infect(event):
 		else:
 			await event.edit("I don't know whom to infect!")
 
+async def isInfected(name, id):
+	open(pathjoin(FILES,"patients.txt"), 'a').close()
+	rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
+	read=rf.read()
+	rf.close()
+	return f"[{name}](tg://user?id={id})" in read
+
 async def doInfect(event, mess):
 	peer_id = event.chat_id
 	rights = ChatBannedRights(
