@@ -400,6 +400,15 @@ async def get_pack_info(event):
             await event.edit("`This pack is full!`")
             return
 
+        async with event.client.conversation('Stickers') as conv:
+            await conv.send_message('/addsticker')
+            await conv.get_response()
+            # Ensure user doesn't get spamming notifications
+            await event.client.send_read_acknowledge(conv.chat_id)
+            await conv.send_message(packname)
+            x = await conv.get_response()
+            print(x)
+
         open("pack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
 
         ur = f"[{get_stickerset.set.title}](t.me/addstickers/{get_stickerset.set.short_name})"
