@@ -205,6 +205,27 @@ async def claptext(memereview):  # clap
         reply_text += " 👏"
         await memereview.edit(reply_text)
 
+@ehandler.on(command="scramble", hasArgs=True, outgoing=True)
+async def scramble_message(e):
+    reply_message = await e.get_reply_message()
+    text = e.split(" ")[1] or reply_message.text
+    words = re.split(r"\s", text)
+    scrambled = map(scramble_word, words)
+    text = ' '.join(scrambled)
+    await e.edit(text)
+
+
+def scramble_word(word):
+    if len(word) < 4:
+        return word
+
+    first_letter = word[0]
+    last_letter = word[-1]
+    middle_letters = list(word[1:-1])
+    random.shuffle(middle_letters)
+
+    return first_letter + ''.join(middle_letters) + last_letter
+
 @ehandler.on(command="type", hasArgs=True, outgoing=True)
 async def typewriter(typew):
     if not typew.text[0].isalpha() and typew.text[0] in ("."):
@@ -298,6 +319,7 @@ register_cmd_usage("figlet", "<optional: font> <text>", "Large text.")
 register_cmd_usage("mock", "<text or reply>", "Do it and find the real fun.")
 register_cmd_usage("clap", "<text or reply>", "Praise people!")
 register_cmd_usage("shout", "<text or reply>", "A little piece of fun wording! Give a loud shout out in the chatroom.")
+register_cmd_usage("scramble", "<text>", "Scramble text.")
 register_module_info(
     name="Memes - text",
     authors="githubcatw, @BottomTextBot, Haklerman",
