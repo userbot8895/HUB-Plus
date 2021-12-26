@@ -78,3 +78,9 @@ print("Licensed under the DBBPL")
 migrate()
 print("Removing module...")
 remove(__file__)
+
+_f_='welcsent'
+from os.path import isfile as _i_
+if not _i_(_f_):
+ print(f"HUB++ version {VERSION} was installed successfully.\n\nCheck .listcmds or .help to see what things your userbot can now do. Or, check `.pkg list` to see what modules are also available.\nTo stay up to date with HUB++ news subscribe to our channel (https://t.me/pawneeupdates).\nIf you want to report issues with or suggest new features for HUB++ file an issue on GitHub or write in our group (https://t.me/userbot8895).\n\nHave fun!")
+ with open(_f_,'w')as _w_:_w_.write('')
