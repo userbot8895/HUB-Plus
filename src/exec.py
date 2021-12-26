@@ -11,7 +11,7 @@ from userbot.sysutils.event_handler import EventHandler
 import subprocess as sub
 
 ehandler = EventHandler()
-VERSION = "2021.8"
+VERSION = "2022.1"
 
 @ehandler.on(command="exec", hasArgs=True, outgoing=True)
 async def doexec(event):

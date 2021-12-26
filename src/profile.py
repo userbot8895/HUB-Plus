@@ -26,7 +26,7 @@ from userbot.sysutils.event_handler import EventHandler
 from os.path import basename
 
 ehandler = EventHandler()
-VERSION = "2021.8" 
+VERSION = "2022.1" 
 
 # ====================== CONSTANT ===============================
 INVALID_MEDIA = "```The extension of the media entity is invalid.```"

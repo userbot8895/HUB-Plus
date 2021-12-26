@@ -22,7 +22,7 @@ from pyfiglet import Figlet
 from .memes_common import *
 
 ehandler = EventHandler()
-VERSION = "2021.8"
+VERSION = "2022.1"
 
 @ehandler.on(command="punch", hasArgs=True, outgoing=True)
 async def who(event): #punch
