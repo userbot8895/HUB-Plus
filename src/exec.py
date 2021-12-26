@@ -26,16 +26,9 @@ async def doeval(event):
 	code = ' '.join(codearr[1:])
 	ev = eval(code)
 	event.edit(f"Input:\n`{code}`\n\nResult:\n`{ev}`")
-
-@ehandler.on(command="sh", hasArgs=True, outgoing=True)
-async def execsh(event):
-	codearr = event.text.split(" ")
-	sub.run(codearr[1:], stdout=sub.PIPE)
-	event.edit(f"Input:\n`{code}`\n\nResult:\n`{ev}`")
  
 register_module_desc("Execute commands.\n**You are responsible for any damage done by using these commands.**")
 register_cmd_usage("exec", "command", "Execute a Python command.")
-register_cmd_usage("sh", "command", "Execute a shell command.")
 register_cmd_usage("eval", "command", "Execute a Python command using eval.\n**You are responsible for any damage done by using these commands.**")
 register_module_info(
     name="Execute",
