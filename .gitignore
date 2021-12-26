@@ -4,3 +4,4 @@ hbp_hashes.txt
 hash-stable.txt
 dev/
 *.pyc
+src/welcsent
