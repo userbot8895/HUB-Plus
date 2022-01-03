@@ -405,9 +405,13 @@ async def get_pack_info(event):
             await conv.get_response()
             # Ensure user doesn't get spamming notifications
             await event.client.send_read_acknowledge(conv.chat_id)
-            await conv.send_message(packname)
+            await conv.send_message(get_stickerset.set.short_name)
             x = await conv.get_response()
-            print(x)
+            # Ensure user doesn't get spamming notifications
+            await event.client.send_read_acknowledge(conv.chat_id)
+            if "Invalid pack selected." in x.text:
+                await event.edit("`You can't kang to others' packs!`")
+                return
 
         open("pack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
 
