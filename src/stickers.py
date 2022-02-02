@@ -104,7 +104,7 @@ async def kang(args):
 
             isCustom = os.path.exists("pack")
             if isCustom:
-                pac = open("pack", "r").read()
+                pac = open("apack", "r").read() if is_anim else open("pack","r").read()
                 psp = pac.split("\n")
                 pack = 0
                 packname = psp[1]
@@ -413,7 +413,10 @@ async def get_pack_info(event):
                 await event.edit("`You can't kang to others' packs!`")
                 return
 
-        open("pack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
+        if (rep_msg.sticker.mime_type == "application/x-tgsticker"):
+            open("apack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
+        else:
+            open("pack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
 
         ur = f"[{get_stickerset.set.title}](t.me/addstickers/{get_stickerset.set.short_name})"
         await event.edit(f"Successfully changed kang pack to {ur}. New kanged stickers will be added there.")
