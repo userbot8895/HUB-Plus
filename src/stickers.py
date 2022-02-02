@@ -343,7 +343,7 @@ async def get_pack_info(event):
             await event.edit("`This is not a sticker. Reply to a sticker.`")
             return
 
-        get_stickerset = await args.client(
+        get_stickerset = await event.client(
             GetStickerSetRequest(
                 InputStickerSetID(
                     id=stickerset_attr.stickerset.id,
