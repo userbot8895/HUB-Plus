@@ -47,7 +47,7 @@ async def make_qr(makeqr):  # makes qr
     if not makeqr.text[0].isalpha() and makeqr.text[0] in ("."):
         if makeqr.fwd_from:
             return
-        input_str = makeqr.split(" ")[1]
+        input_str = makeqr.text.split(" ")[1]
         message = "SYNTAX: `.makeqr <long text to include>`"
         reply_msg_id = None
         if input_str:
