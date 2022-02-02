@@ -409,7 +409,7 @@ async def get_pack_info(event):
             x = await conv.get_response()
             # Ensure user doesn't get spamming notifications
             await event.client.send_read_acknowledge(conv.chat_id)
-            if "Invalid pack selected." in x.text:
+            if "Invalid" in x.text:
                 await event.edit("`You can't kang to others' packs!`")
                 return
 
