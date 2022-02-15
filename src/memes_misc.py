@@ -53,7 +53,7 @@ async def payf(event):
 async def let_me_google_that_for_you(lmgtfy_q):  # img.gtfy
     if not lmgtfy_q.text[0].isalpha() and lmgtfy_q.text[0] in ("."):
         textx = await lmgtfy_q.get_reply_message()
-        qry = lmgtfy_q.text.split(" ")[1]
+        qry = " ".join(lmgtfy_q.text.split(" ")[1:])
         if qry:
             query = str(qry)
         elif textx:
