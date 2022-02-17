@@ -6,6 +6,8 @@ HUB++ 2021.4 introduces HUB++ Setup (beta), which is an installer for HUB++. If 
 
 **HUB++ Setup is considered beta software. A backup of the userbot from the HyperUBot Recovery is advised.**
 
+**HUB++ Setup requires input, so if you're running the userbot as a service (e.g. systemd) proceed to manual installation.**
+
 ### Install using -repo (HyperUBot 6.0 or later)
 
 In Telegram, run `.pkg update userbot8895/HUB-Plus`, then `.pkg install setup`. The userbot will reboot as usual, and you'll be greeted by HUB++ Setup in the terminal.
