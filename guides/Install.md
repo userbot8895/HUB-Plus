@@ -38,7 +38,7 @@ Then, to make sure the bot can install the extra modules, do `.pkg update`. Then
 Open the userbot's `config.py` (`config.env` and `config.ini` are not supported) in a text editor, and add this after the end:
 ```python
 class PlusConfig(object):
-    # Your best friends. Required for some modules.
+    # IDs of your best friends. Required for some modules.
     HOMIES = []
     # The name of your virus. Required for disease.
     VIRUS = "televirus"
@@ -50,7 +50,7 @@ Fill in or change the relevant fields.
 > Example config:
 ```python
 class PlusConfig(object):
-    # Your best friends. Required for some modules.
+    # IDs of your best friends. Required for some modules.
     HOMIES = [1337, 90210]
     # The name of your virus. Required for disease.
     VIRUS = "COVID-21"
