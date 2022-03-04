@@ -6,7 +6,7 @@ HUB++ 2021.4 introduces HUB++ Setup (beta), which is an installer for HUB++. If 
 
 **HUB++ Setup is considered beta software. A backup of the userbot from the HyperUBot Recovery is advised.**
 
-**HUB++ Setup requires input, so if you're running the userbot as a service (e.g. systemd) proceed to manual installation.**
+**HUB++ Setup requires input, so if you're running the userbot as a service (e.g. systemd) or headless proceed to [manual installation](https://github.com/userbot8895/HUB-Plus/blob/master/guides/Install.md#manual-installation).**
 
 ### Install using -repo (HyperUBot 6.0 or later)
 
