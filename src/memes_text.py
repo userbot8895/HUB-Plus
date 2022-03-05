@@ -107,65 +107,77 @@ async def Fingers(e):
                  f"👊🏿👆🏿👆🏿👆🏿👆🏿👆🏿{'👆🏿'*len(text)}👆🏿👆🏿👆🏿👆🏿👆🏿👊🏿\n")
 
 @ehandler.on(command="cowsay", hasArgs=True, outgoing=True)
-async def univsaye(cowmsg):
+async def univsaye(e):
     """ For .cowsay module, userbot wrapper for cow which says things. """
     if len(e.text.split(" ")) < 2:
+        await e.edit("`Give something to say!`")
         return
 
     splits = e.text.split(" ")
     arg = splits[1]
-    tch = splits
+    tch = splits[1:]
 
     if arg == "cow":
         arg = "default"
     elif arg not in cow.COWACTERS:
         arg = "default"
     else:
-        tch = splits[1:]
+        tch = splits[2:]
+        if len(splits) < 3:
+            await e.edit("`Give something to say!`")
+            return
     cheese = cow.get_cow(arg)
     cheese = cheese()
 
-    await cowmsg.edit(f"`{cheese.milk(' '.join(tch)).replace('`', '´')}`")
+    await e.edit(f"```.\n{cheese.milk(' '.join(tch)).replace('`', '´')}```")
     
 @ehandler.on(command="cowthink", hasArgs=True, outgoing=True)
-async def think(cowmsg):
+async def think(e):
     """ For .cowthink module, userbot wrapper for cow which thinks of things. """
     if len(e.text.split(" ")) < 2:
+        await e.edit("`Give something to think about!`")
         return
 
     splits = e.text.split(" ")
     arg = splits[1]
-    tch = splits
+    tch = splits[1:]
 
     if arg == "cow":
         arg = "default"
     elif arg not in cow.COWACTERS:
         arg = "default"
     else:
-        tch = splits[1:]
+        tch = splits[2:]
+        if len(splits) < 3:
+            await e.edit("`Give something to think about!`")
+            return
     cheese = cow.get_cow(arg)
     cheese = cheese(thoughts=True)
 
-    await cowmsg.edit(f"`{cheese.milk(' '.join(tch)).replace('`', '´')}`")
+    await e.edit(f"```.\n{cheese.milk(' '.join(tch)).replace('`', '´')}```")
     
 @ehandler.on(command="figlet", hasArgs=True, outgoing=True)
-async def figlet(figletmsg):
+async def figlet(e):
     """ For .figlet module. """
     if len(e.text.split(" ")) < 2:
+        await e.edit("`Give something to say!`")
         return
 
     splits = e.text.split(" ")
     arg = splits[1]
-    tch = splits
+    tch = splits[1:]
 
     if arg not in Figlet.getFonts(Figlet()):
         arg = "slant"
     else:
-        tch = splits[1:]
+        tch = splits[2:]
+        if len(splits) < 3:
+            await e.edit("`Give something to say!`")
+            return
 
     f = Figlet(font=arg)
     ft =  f.renderText(' '.join(tch))
-    await figletmsg.edit(f"`\n{ft}`")
+    await e.edit(f"```.\n{ft}```")
     
 @ehandler.on(command="mock", hasArgs=True, outgoing=True)
 async def spongemocktext(mock):
