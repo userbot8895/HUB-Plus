@@ -129,7 +129,7 @@ async def univsaye(e):
     cheese = cow.get_cow(arg)
     cheese = cheese()
 
-    await e.edit(f"```.\n{cheese.milk(' '.join(tch)).replace('`', '´')}```")
+    await e.edit(f"```⠀\n{cheese.milk(' '.join(tch)).replace('`', '´')}```")
     
 @ehandler.on(command="cowthink", hasArgs=True, outgoing=True)
 async def think(e):
@@ -154,7 +154,7 @@ async def think(e):
     cheese = cow.get_cow(arg)
     cheese = cheese(thoughts=True)
 
-    await e.edit(f"```.\n{cheese.milk(' '.join(tch)).replace('`', '´')}```")
+    await e.edit(f"```⠀\n{cheese.milk(' '.join(tch)).replace('`', '´')}```")
     
 @ehandler.on(command="figlet", hasArgs=True, outgoing=True)
 async def figlet(e):
@@ -177,7 +177,7 @@ async def figlet(e):
 
     f = Figlet(font=arg)
     ft =  f.renderText(' '.join(tch))
-    await e.edit(f"```.\n{ft}```")
+    await e.edit(f"```⠀\n{ft}```")
     
 @ehandler.on(command="mock", hasArgs=True, outgoing=True)
 async def spongemocktext(mock):
