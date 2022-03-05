@@ -281,8 +281,11 @@ async def isgei(gei):
                            
 @ehandler.on(command="say", hasArgs=True, outgoing=True)
 async def say(sae):
+    if len(sae.text.split(" ")) < 2:
+        await sae.edit("`Give something to say!`")
+        return
     if not sae.text[0].isalpha() and sae.text[0] in ("."):
-    	text = sae.text.split(" ")[1]
+        text = sae.text.split(" ")[1]
     	if len(text) > 19:
         	await sae.edit("`I can't say that.`")
     	if len(text) < 20:

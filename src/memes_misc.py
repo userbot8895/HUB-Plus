@@ -27,9 +27,9 @@ VERSION = "2022.1.2"
 async def payf(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if not " " in event.text:
-            await e.edit("`Give something to make an F out of.`")
-            return
-        paytext = event.pattern_match.group(1)
+            paytext = "F"
+        else:
+            paytext = event.text.split(" ")[1]
         pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
             paytext * 8, paytext * 8, paytext * 2, paytext * 2, paytext * 2,
             paytext * 6, paytext * 6, paytext * 2, paytext * 2, paytext * 2,
@@ -40,7 +40,7 @@ async def payf(event):
 async def payf(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if not " " in event.text:
-            await e.edit("`Give something to make a LOL out of.`")
+            await event.edit("`Give something to make a LOL out of.`")
             return
         paytext = event.text.split(" ")[1]
         pay = "```{}\n{}\n{}\n{}\n{}\n\n  {}\n {}\n{}\n {}\n  {}\n\n{}\n{}\n{}\n{}\n{}```".format(
@@ -59,6 +59,9 @@ async def let_me_google_that_for_you(lmgtfy_q):  # img.gtfy
         elif textx:
             query = textx
             query = query.message
+        else:
+            await lmgtfy_q.edit("`Give something to make a Google link for!`")
+            return
         query_encoded = query.replace(" ", "+")
         lfy_url = f"http://lmgtfy.com/?s=g&iie=1&q={query_encoded}"
         payload = {'format': 'json', 'url': lfy_url}
