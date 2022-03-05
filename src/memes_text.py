@@ -88,7 +88,7 @@ async def zal(zgfy):  # chaotic
 @ehandler.on(command="point", hasArgs=True, outgoing=True)
 async def Fingers(e):
     if len(e.text.split(" ")) > 1:
-        message = ' '.join(e.text.split(" ")[1:])
+        text = ' '.join(e.text.split(" ")[1:])
     else:
         await e.edit("Give some text!")
         return
