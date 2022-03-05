@@ -104,11 +104,16 @@ async def kang(args):
 
             isCustom = os.path.exists("pack")
             if isCustom:
-                pac = open("apack", "r").read() if is_anim else open("pack","r").read()
-                psp = pac.split("\n")
-                pack = 0
-                packname = psp[1]
-                packnick = psp[0]
+                try:
+                    pac = open("apack", "r").read() if is_anim else open("pack","r").read()
+                    psp = pac.split("\n")
+                    pack = 0
+                    packname = psp[1]
+                    packnick = psp[0]
+                except FileNotFoundError:
+                    packname = f"a{user.id}_by_{user.username}_{pack}"
+                    packnick = f"@{user.username}'s kang pack Vol.{pack}"
+
             else:
                 packname = f"a{user.id}_by_{user.username}_{pack}"
                 packnick = f"@{user.username}'s kang pack Vol.{pack}"
@@ -400,6 +405,7 @@ async def get_pack_info(event):
             await event.edit("`This pack is full!`")
             return
 
+        # don't let people attempt to kang to others' packs
         async with event.client.conversation('Stickers') as conv:
             await conv.send_message('/addsticker')
             await conv.get_response()
@@ -409,8 +415,11 @@ async def get_pack_info(event):
             x = await conv.get_response()
             # Ensure user doesn't get spamming notifications
             await event.client.send_read_acknowledge(conv.chat_id)
+            await conv.send_message("/cancel")
+            # Ensure user doesn't get spamming notifications
+            await event.client.send_read_acknowledge(conv.chat_id)
             if "Invalid" in x.text:
-                await event.edit("`You can't kang to others' packs!`")
+                await event.edit("`Cannot kang to others' packs!`")
                 return
 
         if (rep_msg.sticker.mime_type == "application/x-tgsticker"):
