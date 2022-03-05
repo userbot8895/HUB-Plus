@@ -64,7 +64,7 @@ async def flash(event):
     time.sleep(1)  # just so we can actually see a message
     await event.edit(f"Userbot rebooted. You have become a true memelord.\
     \nThis installer module has self-destructed. If you need it again, just re-install and re-run it.")
-    os.remove(USER_MODULES_DIR + "memes.py")
+    os.remove(USER_MODULES_DIR + "memes_installer.py")
     args = [EXECUTABLE, "-m", "userbot"]
     os.execle(sys.executable, *args, os.environ)
 

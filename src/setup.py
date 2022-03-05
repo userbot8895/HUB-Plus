@@ -74,17 +74,16 @@ qrcode
 pyAesCrypt
 """
 
-VERSION = "2022.1.2"
-MIN_UB_VERSION = "4.0.0"
-LTS_UB_VERSION = "4.0.0"
-OLD_UB_VERSION = "3.0.0"
+VERSION = "2022.2"
+MIN_UB_VERSION = 5
+LTS_UB_VERSION = 4
+OLD_UB_VERSION = 3
 
 #temp solution
-def isSupportedVersion(version: str) -> bool:
+def isSupportedVersion(version) -> bool:
     try:
-        bot_ver = tuple(map(int, hubot_version.split(".")))
-        req_ver = tuple(map(int, version.split(".")))
-        if bot_ver >= req_ver:
+        bot_ver = tuple(map(int, UB_VERSION.split(".")))
+        if bot_ver[0] >= version:
             return True
     except:
         pass
@@ -101,9 +100,10 @@ def init():
 	input()
 	print("========================")
 	print("Installing dependencies...")
-	if int(UB_VERSION[0:1]) > 4:
+	UB_MAJOR = tuple(map(int, UB_VERSION.split(".")))[0]
+	if UB_MAJOR > 4:
 		installReqs()
-	elif int(UB_VERSION[0:1]) == 4:
+	elif UB_MAJOR == 4:
 		if PIP_UTIL:
 			installReqs()
 		else:
