@@ -278,6 +278,34 @@ async def isgei(gei):
                            "┃┈╰╰━━━━╯\n"
                            "┗━━┻━┛`")
                            
+
+@ehandler.on(command="meh", hasArgs=False, outgoing=True)
+async def meh(gei):
+    if not gei.text[0].isalpha() and gei.text[0] in ("."):
+        await gei.edit("""
+`⠀
+  ███╗   ███╗
+  ████╗ ████║
+  ██╔████╔██║
+  ██║╚██╔╝██║
+  ██║ ╚═╝ ██║
+  ╚═╝     ╚═╝
+             
+  ███████╗   
+  ██╔════╝   
+  █████╗     
+  ██╔══╝     
+  ███████╗ 
+  ╚══════╝   
+             
+  ██╗  ██╗   
+  ██║  ██║   
+  ███████║   
+  ██╔══██║   
+  ██║  ██║   
+  ╚═╝  ╚═╝
+`
+""")
                            
 @ehandler.on(command="say", hasArgs=True, outgoing=True)
 async def say(sae):
@@ -304,6 +332,7 @@ register_cmd_usage("nou", "", "Return whatever someone said to themself.")
 register_cmd_usage("say", "<what to say>", "Say something.")
 register_cmd_usage("uno", "", "Reverse card! Like .nou, for the unaware.")
 register_cmd_usage("fortnite", "", "Cringydance.exe. Created by Watn3y.")
+register_cmd_usage("meh", "", "MEH.")
 register_module_info(
     name="Memes - copypasta",
     authors="githubcatw, @BottomTextBot, Watn3y, Haklerman",
