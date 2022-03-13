@@ -125,8 +125,9 @@ async def kang(args):
                 file.name = "sticker.png"
                 image.save(file, "PNG")
             else:
-                packname += "_anim"
-                packnick += " (Animated)"
+                if not isCustom:
+                    packname += "_anim"
+                    packnick += " (Animated)"
                 cmd = '/newanimated'
 
             response = urllib.request.urlopen(
