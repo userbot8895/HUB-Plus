@@ -21,7 +21,7 @@ from telethon.tl.types import MessageEntityMentionName
 from PIL import Image, ImageDraw, ImageFont
 
 ehandler = EventHandler()
-VERSION = "2022.1.5"
+VERSION = "2022.2"
 
 @ehandler.on(command="f", hasArgs=True, outgoing=True)
 async def payf(event):

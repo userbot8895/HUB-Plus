@@ -9,7 +9,7 @@ from userbot.sysutils.event_handler import EventHandler
 from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 ehandler = EventHandler()
-VERSION = "2022.1.5" 
+VERSION = "2022.2" 
 
 @ehandler.on(command="inactive", hasArgs=False, outgoing=True)
 async def inactive(act):

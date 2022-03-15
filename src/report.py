@@ -8,7 +8,7 @@ from userbot.sysutils.event_handler import EventHandler
 from telethon.tl.types import ChannelParticipantsAdmins
 
 ehandler = EventHandler()
-VERSION = "2022.1.5"
+VERSION = "2022.2"
 
 @ehandler.on(command="report", hasArgs=False, outgoing=True)
 async def flash(event):

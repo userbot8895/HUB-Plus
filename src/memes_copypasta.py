@@ -11,7 +11,7 @@ import asyncio
 import time
 
 ehandler = EventHandler()
-VERSION = "2022.1.5" 
+VERSION = "2022.2" 
 
 @ehandler.on(command="bt", hasArgs=False, outgoing=True)
 async def bluetext(bt_e):

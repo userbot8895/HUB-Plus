@@ -10,7 +10,7 @@ from userbot.sysutils.registration import register_cmd_usage, register_module_de
 from userbot.sysutils.event_handler import EventHandler
 
 ehandler = EventHandler()
-VERSION = "2022.1.5"
+VERSION = "2022.2"
 
 @ehandler.on(command="flash", hasArgs=True, outgoing=True)
 async def flash(event):

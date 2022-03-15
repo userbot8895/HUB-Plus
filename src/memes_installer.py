@@ -43,7 +43,7 @@ def list_updater():
     return MODULE_LIST
 
 ehandler = EventHandler()
-VERSION = "2022.1.5" 
+VERSION = "2022.2" 
 
 @ehandler.on(command="memes", hasArgs=False, outgoing=True)
 async def flash(event):

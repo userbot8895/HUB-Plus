@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
 from telethon.errors import UserAdminInvalidError
 
 ehandler = EventHandler()
-VERSION = "2022.1.5"
+VERSION = "2022.2"
 TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
 
 if getConfig("USERDATA") == None:
