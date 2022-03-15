@@ -260,9 +260,10 @@ async def kang(args):
                     # Ensure user doesn't get spamming notifications
                     await args.client.send_read_acknowledge(conv.chat_id)
 
+            cuMsg = "\n__Note: if kang failed you can try .resetkang to remove your custom kang pack settings (this doesn't remove the packs themselves).__"
             await args.edit(
                 f"`Sticker kanged successfully!`\
-                \nPack can be found [here](t.me/addstickers/{packname})",
+                \nPack can be found [here](t.me/addstickers/{packname}){cuMsg if isCustom else ''}",
                 parse_mode='md')
 
 
@@ -372,7 +373,7 @@ async def get_pack_info(event):
 async def get_pack_info(event):
     if not event.text[0].isalpha() and event.text[0] in ("."):
         if not event.is_reply:
-            await event.edit("`I can't fetch info from nothing, can I ?!`")
+            await event.edit("`I can't kang to nothing, can I ?!`")
             return
 
         rep_msg = await event.get_reply_message()
@@ -431,10 +432,39 @@ async def get_pack_info(event):
         ur = f"[{get_stickerset.set.title}](t.me/addstickers/{get_stickerset.set.short_name})"
         await event.edit(f"Successfully changed kang pack to {ur}. New kanged stickers will be added there.")
 
+@ehandler.on(command="resetkang", hasArgs=False, outgoing=True)
+async def get_pack_info(event):
+    if not event.text[0].isalpha() and event.text[0] in ("."):
+        await event.edit("Deleting custom pack settings...")
+
+        txt = " The saved kang packs were:"
+        if(os.path.isfile("apack")):
+            pf = open("apack", "r", encoding="utf8")
+            ps = pf.read().split("\n")
+            pf.close()
+            if len(ps) == 2:
+                print(f"Contents of apack: [{ps[0]}](t.me/addstickers/{ps[1]})")
+                txt += f"\n[{ps[0]}](t.me/addstickers/{ps[1]})"
+            print("Deleting apack...")
+            os.remove("apack")
+
+        if(os.path.isfile("pack")):
+            pf = open("pack", "r", encoding="utf8")
+            ps = pf.read().split("\n")
+            pf.close()
+            if len(ps) == 2:
+                print(f"Contents of pack: [{ps[0]}](t.me/addstickers/{ps[1]})")
+                txt += f"\n[{ps[0]}](t.me/addstickers/{ps[1]})"
+            print("Deleting pack...")
+            os.remove("pack")
+
+        await event.edit(f"Deleted custom kang pack settings.{txt if len(txt) > 27 else ''}")
+
 register_module_desc("Make a sticker pack.")
 register_cmd_usage("kang", "(emojis) (number)", "Reply .kang to a sticker or an image to kang it to your userbot pack.\nIf emojis isn't specified uses 🤔 as emoji. (number) sets the number of the pack, but overrides .setkang.")
 register_cmd_usage("stkrinfo", "", "Gets info about the replied sticker's pack.")
 register_cmd_usage("setkang", "", "Reply to a sticker to set its pack as the kang pack.")
+register_cmd_usage("resetkang", "", "Deletes custom kang pack settings. __Note: this doesn't delete the actual packs__")
 register_module_info(
     name="Stickers",
     authors="githubcatw, Haklerman, nunopenim, help from prototype74",
