@@ -424,9 +424,9 @@ async def get_pack_info(event):
                 return
 
         if (rep_msg.sticker.mime_type == "application/x-tgsticker"):
-            open("apack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
+            open("apack", "w", encoding="utf8").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
         else:
-            open("pack", "w").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
+            open("pack", "w", encoding="utf8").write(f"{get_stickerset.set.title}\n{get_stickerset.set.short_name}")
 
         ur = f"[{get_stickerset.set.title}](t.me/addstickers/{get_stickerset.set.short_name})"
         await event.edit(f"Successfully changed kang pack to {ur}. New kanged stickers will be added there.")
