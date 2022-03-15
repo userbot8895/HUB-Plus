@@ -24,7 +24,7 @@ from userbot.sysutils.configuration import getConfig
 LOGGING = getConfig("LOGGING")
 
 ehandler = EventHandler()
-VERSION = "2022.1.2" 
+VERSION = "2022.1.5" 
 
 KANGING_STR = [
     "Using Witchery to kang this sticker...",

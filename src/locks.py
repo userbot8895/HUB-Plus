@@ -11,7 +11,7 @@ from userbot.sysutils.event_handler import EventHandler
 from os.path import basename
 
 ehandler = EventHandler()
-VERSION = "2022.1.2"
+VERSION = "2022.1.5"
 
 @ehandler.on(command="lock", hasArgs=True, outgoing=True)
 async def locks(event):

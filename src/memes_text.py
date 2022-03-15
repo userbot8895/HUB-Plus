@@ -16,7 +16,7 @@ from pyfiglet import Figlet
 from .memes_common import *
 
 ehandler = EventHandler()
-VERSION = "2022.1.2"
+VERSION = "2022.1.5"
 
 @ehandler.on(command="vapor", hasArgs=True, outgoing=True)
 async def vapor(vpr):  # vapor

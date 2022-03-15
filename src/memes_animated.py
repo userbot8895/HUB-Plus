@@ -12,7 +12,7 @@ import random
 import time
 
 ehandler = EventHandler()
-VERSION = "2022.1.2" 
+VERSION = "2022.1.5" 
 
 @ehandler.on(command="oof", hasArgs=False, outgoing=True)
 async def Oof(e):

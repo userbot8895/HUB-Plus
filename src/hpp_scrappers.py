@@ -29,7 +29,7 @@ SECURE_CONFIG = None
 if getConfig("USERDATA") != None:
     SECURE_CONFIG = os.path.join(getConfig("USERDATA"), "secure_plus_config")
 ehandler = EventHandler()
-VERSION = "2022.1.2" 
+VERSION = "2022.1.5" 
 LOGGING = getConfig("LOGGING")
 
 __ytkey__ = ""
