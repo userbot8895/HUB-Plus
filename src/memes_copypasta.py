@@ -314,10 +314,10 @@ async def say(sae):
         return
     if not sae.text[0].isalpha() and sae.text[0] in ("."):
         text = sae.text.split(" ")[1]
-    	if len(text) > 19:
-        	await sae.edit("`I can't say that.`")
-    	if len(text) < 20:
-        	await sae.edit(f"`|^^^^^|<({text})\n"
+        if len(text) > 19:
+            await sae.edit("`I can't say that.`")
+        if len(text) < 20:
+            await sae.edit(f"`|^^^^^|<({text})\n"
                                            "| x x |\n"
                                            "|  o  |\n"
                                            "|_____|\n"
