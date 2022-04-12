@@ -37,6 +37,9 @@ After the installation is done, run `.req cowpy asyncurban google-play-scraper y
 Then, to make sure the bot can install the extra modules, do `.pkg update`. Then, run `.pkg list` and make sure a line starting with `Files in hb++_` shows up there.
 
 ### Adding extra config fields
+
+> This step is optional and currently only required for `disease` and `hpp_scrapers`. If you don't have a `config.py` and installed those modules please create one. **Note that if you use a `config.env` or `config.ini` and installed those modules you'll need to select `config.py`, and it's recommended to delete the other config files and move the configuration to the `config.py`.**
+
 Open the userbot's `config.py` (`config.env` and `config.ini` are not supported) in a text editor, and add this after the end:
 ```python
 class PlusConfig(object):
@@ -55,7 +58,7 @@ class PlusConfig(object):
     # IDs of your best friends. Required for some modules.
     HOMIES = [1337, 90210]
     # The name of your virus. Required for disease.
-    VIRUS = "COVID-21"
+    VIRUS = "HyperVirus"
     # YouTube API key, get it from slickremix.com/get-api-key-for-youtube/. Required for scrapers.
     YOUTUBE_API_KEY = "SomeAPIkey"
 ```
