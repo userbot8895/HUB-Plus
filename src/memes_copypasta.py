@@ -15,6 +15,13 @@ VERSION = "2022.2"
 
 @ehandler.on(command="bt", hasArgs=False, outgoing=True)
 async def bluetext(bt_e):
+    arg = await bt_e.get_reply_message()
+    if not bt_e.is_group:
+        await bt_e.edit("Run this in a group while replying to a message.")
+        return
+    if not arg:
+        await bt_e.edit("You are not replying to a message.")
+        return
     if not bt_e.text[0].isalpha() and bt_e.text[0] in ("."):
         if await bt_e.get_reply_message() and bt_e.is_group:
             await bt_e.edit(
@@ -326,7 +333,7 @@ async def say(sae):
                                            "  W W`")
 
 register_module_desc("Memes! This module contains copypasta.")
-register_cmd_usage("bt", "", "Believe me, you will find this useful.")
+register_cmd_usage("bt", "", "Prints out blue text that insuls people.")
 register_cmd_usage("gei", "", "Use this as a reply if your friend does something gei.")
 register_cmd_usage("nou", "", "Return whatever someone said to themself.")
 register_cmd_usage("say", "<what to say>", "Say something.")
