@@ -9,7 +9,6 @@ import random
 from os.path import basename
 from os.path import join as pathjoin
 import os
-from userbot.config import PlusConfig as pc
 from userbot.sysutils.registration import register_cmd_usage, register_module_desc, register_module_info
 from userbot.sysutils.event_handler import EventHandler
 from userbot.sysutils.configuration import getConfig
@@ -18,10 +17,13 @@ from telethon.tl.functions.channels import EditBannedRequest
 from telethon.tl.types import ChatBannedRights
 from datetime import datetime, timedelta
 from telethon.errors import UserAdminInvalidError
+from userbot.sysutils.configuration import getConfig
 
 ehandler = EventHandler()
 VERSION = "2022.2"
 TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
+VIRUS = None
+HOMIES = None
 
 if getConfig("USERDATA") == None:
     raise Exception("disease requires a user data folder. Please set USERDATA in your config.")
@@ -30,6 +32,18 @@ FILES = pathjoin(getConfig("USERDATA"),"plus")
 
 if not os.path.isdir(FILES):
     os.makedirs(FILES)
+
+def loadData():
+	global VIRUS, HOMIES
+	# attempt to load PlusConfig
+	try:
+		from userbot.config import PlusConfig as pc
+		VIRUS = pc.VIRUS
+		HOMIES = pc.HOMIES
+	# if it doesn't exist, load using getConfig
+	except ImportError:
+		VIRUS = getConfig("VIRUS")
+		HOMIES = getConfig("HOMIES")
 
 def progress(current, total):
     print("Downloaded {} of {}\nCompleted {}".format(current, total, (current / total) * 100))
@@ -52,18 +66,18 @@ async def infect(event):
 			if f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})" in read:
 				await event.edit(f"{replymsg.sender.first_name} was already infected by you or someone you merged patients with!")
 				return
-			if replymsg.sender.id in pc.HOMIES:
-				await event.edit(f"Your homies have natural immunity against the {pc.VIRUS}.")
+			if replymsg.sender.id in HOMIES:
+				await event.edit(f"Your homies have natural immunity against the {VIRUS}.")
 				return
 			f=open(pathjoin(FILES,"patients.txt"),"a+", encoding="utf-8")
 			f.write(f"[{replymsg.sender.first_name}](tg://user?id={replymsg.sender.id})\n")
 			f.close()
 			try:
 				await doInfect(event, replymsg)
-				await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}! Now you can't send stickers, GIFs, use inline bots or embed links.")
+				await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {VIRUS}! Now you can't send stickers, GIFs, use inline bots or embed links.")
 				await event.delete()
 			except UserAdminInvalidError:
-				await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {pc.VIRUS}!")
+				await replymsg.reply(f"{replymsg.sender.first_name}, you are now infected with the {VIRUS}!")
 				await event.delete()
 		else:
 			await event.edit("I don't know whom to infect!")
@@ -93,8 +107,8 @@ async def share(event):
 		await event.client.send_file(
 			event.chat_id,
 			pathjoin(FILES,"patients.txt"),
-			caption=f"This is a list of patients infected with the {pc.VIRUS}.\
-			\nReply with .infmerge to add the {pc.VIRUS}'s patients to your own virus' patient list."
+			caption=f"This is a list of patients infected with the {VIRUS}.\
+			\nReply with .infmerge to add the {VIRUS}'s patients to your own virus' patient list."
         )
 		await event.delete()
 
@@ -130,7 +144,7 @@ async def infmerge(event):
 							app.write(pat)
 							pats = pats + 1
 				if pats != 0:
-					await event.edit(f"The {pc.VIRUS} just infected {pats} more patients from {replymsg.sender.first_name}'s list!")
+					await event.edit(f"The {VIRUS} just infected {pats} more patients from {replymsg.sender.first_name}'s list!")
 				else:
 					await event.edit(f"Everyone who was infected by {replymsg.sender.first_name} were already in the list!")
 			else:
@@ -144,7 +158,7 @@ async def infected(event):
 		rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
 		read=rf.read()
 		rf.close()
-		reply = f"List of people infected with the {pc.VIRUS}:\n{read}"
+		reply = f"List of people infected with the {VIRUS}:\n{read}"
 		await event.edit(reply[0:4090])
 
 @ehandler.on(command="patients", hasArgs=False, outgoing=True)
@@ -153,7 +167,7 @@ async def infected(event):
 		rf=open(pathjoin(FILES,"patients.txt"), "r", encoding="utf-8")
 		read=rf.read()
 		rf.close()
-		reply = f"List of people infected with the {pc.VIRUS}:\n{read}"
+		reply = f"List of people infected with the {VIRUS}:\n{read}"
 		await event.edit(reply[0:4090])
 
 register_module_desc("Spread your own plague across Telegram!")
@@ -166,6 +180,8 @@ register_module_info(
     authors="githubcatw, help from prototype74",
     version=VERSION
 )
+
+loadData()
 
 _f_='welcsent'
 from os.path import isfile as _i_
