@@ -29,6 +29,21 @@ Start the userbot. In Telegram, run `.pkg install setup`. The userbot will reboo
 After you're done installing, go to "Installing HUB++ modules".
 
 ## Manual installation
+
+### Adding the repo
+
+Add `"userbot8895/HUB-Plus"` as a community repo in your config.
+
+Your community repo list should look like this:
+
+`COMMUNITY_REPOS = ["userbot8895/HUB-Plus"]`
+
+Or, in case you have more repos,
+
+`COMMUNITY_REPOS = ["some_other_repo","userbot8895/HUB-Plus"]`
+
+Start the userbot.
+
 ### Installing the pre-requisites
 In Telegram, run `.pkg install req_installer`.
 
@@ -64,8 +79,6 @@ class PlusConfig(object):
 ```
 
 ## Installing HUB++ modules
-Thanks to HyperUBot featuring a package manager, you can now install only the modules you need.
-
 Choose the modules you want from the table below:
 
 |Module|Description|
@@ -77,7 +90,7 @@ Choose the modules you want from the table below:
 |`locks`|Prevent people from posting certain types of media in a chat.|
 |`deldog`|Upload text to del.dog.|
 |`scramble`|Scramble text.|
-|`report`|Report people.|
+|`report`|Report people to the group's admins.|
 |`qrcode`|Create and read QR codes.|
 |`stickers`|Make your own sticker pack.|
 |`correction`|Correct people.|
