@@ -26,9 +26,31 @@ if not os.path.isdir(FILES):
 
 @ehandler.on(command="save", hasArgs=True, outgoing=True)
 async def save(event):
-    name = event.text.split(" ")[1]
-    text = event.text.split(" ")[2]
+    args = event.text.split(" ")
+    name = args[1]
+    # Check if we're replying to a message or not
+    try:
+        text = args[2]
+    except:
+        pass
     textx = await event.get_reply_message()
+    # Check if all arguments are given and we're not replying to a message
+    if len(args) < 3 and not textx:
+        await event.edit("Wrong syntax. Try .save <notename> <test>")
+        return
+    # Dont't save notes with an empty name
+    if name == "":
+        await event.edit("Refusing to save note as '.txt'. Please make sure there are no double spaces in the command")
+        return
+    # Don't save notes with empty text
+    if 'text' in locals():
+        if text == "":
+            await event.edit("Refusing to save empty note. Please make sure there are no double spaces in the command")
+            return
+        # Saving a note and a reply at the same time shouldn't work
+        if textx and text:
+            await event.edit("You can't save a reply and a custom note at the same time.")
+            return
     npath = pathjoin(FILES,name + ".txt")
     if not os.path.isdir("notes/"):
         os.makedirs("notes/")
@@ -36,10 +58,12 @@ async def save(event):
         await event.edit(f"Note `{name}` already exists.")
         return
     f=open(npath,"w+")
-    if text:
-        f.write(text)
-        await event.edit(f"Saved note `{name}`.\n"+
-                         f"Type `.note {name}` to get it.")
+    # Check if text is defined or not
+    if 'text' in locals():
+        if text:
+            f.write(text)
+            await event.edit(f"Saved note `{name}`.\n"+
+                             f"Type `.note {name}` to get it.")
     if textx:
         f.write(parse_markdown(textx.message, textx.entities) if textx.entities is not None else textx.message)
         await event.edit(f"Saved note `{name}`.\n"+
@@ -73,27 +97,13 @@ async def note(event):
         return
     npath = pathjoin(FILES,notes[1] + ".txt")
     if not path.exists(npath):
-        await event.edit(f"Note `{name}` doesn't exist.\n"+
-                           f"Type `.save {name} <text> to create the note.")
+        await event.edit(f"Note `{notes[1]}` doesn't exist.\n"+
+                           f"Type `.save {notes[1]} <text> to create the note.")
         return
     f=open(npath,"r+")
     await event.edit(f.read())
 
-@ehandler.on(command="n", hasArgs=True, outgoing=True)
-async def note_short(event):
-    notes = event.text.split(" ")
-    if len(notes) < 2:
-        await event.edit("Specify the note name.")
-        return
-    npath = pathjoin(FILES,notes[1] + ".txt")
-    if not path.exists(npath):
-        await event.edit(f"Note `{name}` doesn't exist.\n"+
-                           f"Type `.save {name} <text> to create the note.")
-        return
-    f=open(npath,"r+")
-    await event.edit(f.read())
-
-@ehandler.on(command="notes", hasArgs=True, outgoing=True)
+@ehandler.on(command="notes", hasArgs=False, outgoing=True)
 async def notes(mention):
     reply = "You have these notes:\n\n"
     allnotes = os.listdir(FILES)
@@ -105,25 +115,27 @@ async def notes(mention):
         reply = reply + "\nGet any of these notes by typing `.note <notename>` or `.n <notename>`."
     await mention.edit(reply)
     
-@ehandler.on(command="delnote", hasArgs=False, outgoing=True)
+@ehandler.on(command="delnote", hasArgs=True, outgoing=True)
 async def delnote(event):
-    notes = event.text.split(" ")
+    arg = event.text.split(" ")
+    if len(arg) < 2:
+        await event.edit("Specifiy the note you want to delete")
+        return
+    notes = arg[1]
     deleted = 0
     delnames = ""
-    for n in notes:
-        npath = pathjoin(FILES,n + ".txt")
-        if not path.exists(npath):
-            await event.edit(f"Note `{n}` doesn't exist.")
-            return
-        os.remove(npath)
-        deleted = deleted + 1
-        delnames = delnames + n + ", "
+    npath = pathjoin(FILES,notes + ".txt")
+    if not path.exists(npath):
+        await event.edit(f"Note `{notes}` doesn't exist.")
+        return
+    os.remove(npath)
+    deleted = deleted + 1
+    delnames = delnames + notes + ", "
     await event.edit(f"Deleted note{'s:' if deleted > 1 else ''} `{delnames if deleted > 1 else delnames.rstrip(', ')}`.")
 
 register_module_desc("Save text and quickly send it later.")
-register_cmd_usage("note", "<notename>", "Send a note.")
-register_cmd_usage("n", "<notename>", "Send a note.")
-register_cmd_usage("save", "<notename> <text>", "Save a note.")
+register_cmd_usage("note", "<notename>", "Get a specific note.")
+register_cmd_usage("save", "<notename> <text>", "Save a specific note or someone else's message. To save someone else's message just reply to it and leave the <text> parameter out.")
 register_cmd_usage("notes", "", "Get all of your notes.")
 register_cmd_usage("delnote", "<notename>", "Delete a note.")
 register_module_info(
