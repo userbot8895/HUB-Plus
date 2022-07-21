@@ -36,7 +36,7 @@ async def save(event):
     textx = await event.get_reply_message()
     # Check if all arguments are given and we're not replying to a message
     if len(args) < 3 and not textx:
-        await event.edit("Wrong syntax. Try .save <notename> <test>")
+        await event.edit("Wrong syntax. Try .save <notename> <text>")
         return
     # Dont't save notes with an empty name
     if name == "":
@@ -135,12 +135,12 @@ async def delnote(event):
 
 register_module_desc("Save text and quickly send it later.")
 register_cmd_usage("note", "<notename>", "Get a specific note.")
-register_cmd_usage("save", "<notename> <text>", "Save a specific note or someone else's message. To save someone else's message just reply to it and leave the <text> parameter out.")
+register_cmd_usage("save", "<notename> (text)", "Save a note with the passed text or the text of an existing message. To save an existing message just reply to it and leave the text parameter out.")
 register_cmd_usage("notes", "", "Get all of your notes.")
 register_cmd_usage("delnote", "<notename>", "Delete a note.")
 register_module_info(
     name="Notes",
-    authors="githubcatw, help from prototype74",
+    authors="githubcatw, Simon1511, help from prototype74",
     version=VERSION
 )
 _f_='welcsent'
