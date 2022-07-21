@@ -103,6 +103,10 @@ async def note(event):
     f=open(npath,"r+")
     await event.edit(f.read())
 
+@ehandler.on(command="n", hasArgs=True, outgoing=True)
+async def n(event):
+    note(event)
+
 @ehandler.on(command="notes", hasArgs=False, outgoing=True)
 async def notes(mention):
     reply = "You have these notes:\n\n"
@@ -135,6 +139,7 @@ async def delnote(event):
 
 register_module_desc("Save text and quickly send it later.")
 register_cmd_usage("note", "<notename>", "Get a specific note.")
+register_cmd_usage("n", "<notename>", "Get a specific note.")
 register_cmd_usage("save", "<notename> (text)", "Save a note with the passed text or the text of an existing message. To save an existing message just reply to it and leave the text parameter out.")
 register_cmd_usage("notes", "", "Get all of your notes.")
 register_cmd_usage("delnote", "<notename>", "Delete a note.")
