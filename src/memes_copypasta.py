@@ -17,7 +17,7 @@ VERSION = "2022.2"
 async def bluetext(bt_e):
     arg = await bt_e.get_reply_message()
     if not bt_e.is_group:
-        await bt_e.edit("Run this in a group while replying to a message.")
+        await bt_e.edit("Use this in a group while replying to a message.")
         return
     if not arg:
         await bt_e.edit("You are not replying to a message.")
@@ -333,7 +333,7 @@ async def say(sae):
                                            "  W W`")
 
 register_module_desc("Memes! This module contains copypasta.")
-register_cmd_usage("bt", "", "Prints out blue text that insuls people.")
+register_cmd_usage("bt", "", "Prints out blue text that insults people.")
 register_cmd_usage("gei", "", "Use this as a reply if your friend does something gei.")
 register_cmd_usage("nou", "", "Return whatever someone said to themself.")
 register_cmd_usage("say", "<what to say>", "Say something.")
@@ -342,7 +342,7 @@ register_cmd_usage("fortnite", "", "Cringydance.exe. Created by Watn3y.")
 register_cmd_usage("meh", "", "MEH.")
 register_module_info(
     name="Memes - copypasta",
-    authors="githubcatw, @BottomTextBot, Watn3y, Haklerman",
+    authors="githubcatw, @BottomTextBot, Watn3y, Haklerman, Simon1511",
     version=VERSION
 )
 
