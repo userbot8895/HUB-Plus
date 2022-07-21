@@ -4,7 +4,7 @@
 # (c) 2021 githubcatw
 
 # =====================
-LATEST_STABLE = "2022.2"
+LATEST_STABLE = "2022.2.1"
 LATEST_BETA = "2022.1.b2"
 # =====================
 VER_REGEX = '20\d+\.\d+(\.b?a?\d+)?( for HUB [0-9]+\.x)?( beta [0-9]+)?(?=\")'

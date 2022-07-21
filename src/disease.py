@@ -20,7 +20,7 @@ from telethon.errors import UserAdminInvalidError
 from userbot.sysutils.configuration import getConfig
 
 ehandler = EventHandler()
-VERSION = "2022.2"
+VERSION = "2022.2.1"
 TEMP_DL_DIR = getConfig("TEMP_DL_DIR")
 VIRUS = None
 HOMIES = None

@@ -6,7 +6,7 @@
 from userbot.sysutils.registration import register_module_desc, register_module_info
 from os.path import basename
 
-VERSION = "2022.2"
+VERSION = "2022.2.1"
 
 ZALG_LIST = [[
     "̖",
@@ -396,7 +396,7 @@ SLAP_TEMPLATES = [
 
 ITEMS = (
     "a Pixel 5",
-    "2022.2",
+    "2022.2.1",
     "a Pixel 4 bezel",
     "a Galaxy S20 FE",
     "One UI 3",
