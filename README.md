@@ -1,3 +1,5 @@
+# HUB++ has been discontinued, see [this](https://t.me/pawneeupdates/127)
+
 # HUB++ ![Download counter](https://img.shields.io/github/downloads/userbot8895/HUB-Plus/latest/total?color=%23aaaaa&label=downloads)
 
 HUB++ is an extension to nunopenim and prototype74's HyperUBot.
